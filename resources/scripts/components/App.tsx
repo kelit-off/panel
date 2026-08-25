@@ -9,6 +9,7 @@ import AuthenticationRouter from '@/routers/AuthenticationRouter';
 import { SiteSettings } from '@/state/settings';
 import ProgressBar from '@/components/elements/ProgressBar';
 import { NotFound } from '@/components/elements/ScreenBlock';
+import LandingContainer from '@/components/landing/LandingContainer';
 import tw from 'twin.macro';
 import { history } from '@/components/history';
 import { setupInterceptors } from '@/api/interceptors';
@@ -71,6 +72,9 @@ const App = () => {
                                 <Route path="/server/:id" component={ServerRouter}/>
                                 <Route path="/auth" component={AuthenticationRouter}/>
                                 <Route path="/admin" component={ChunkedAdminRouter}/>
+                                {!PterodactylUser &&
+                                <Route path="/" exact component={LandingContainer}/>
+                                }
                                 <Route path="/" component={DashboardRouter}/>
                                 <Route path={'*'} component={NotFound}/>
                             </Switch>

@@ -4,10 +4,10 @@
     "scripts": {
         "clean": "cd public/assets && find . \\( -name \"*.js\" -o -name \"*.map\" \\) -type f -delete",
         "lint": "$npm_execpath eslint ./resources/scripts/**/*.{ts,tsx} --ext .ts,.tsx",
-        "watch": "$npm_execpath cross-env NODE_ENV=development $npm_execpath webpack --watch --progress",
-        "build": "$npm_execpath cross-env NODE_ENV=development $npm_execpath webpack --progress",
-        "build:production": "$npm_execpath run clean && $npm_execpath cross-env NODE_ENV=production $npm_execpath webpack --mode production",
-        "serve": "$npm_execpath run clean && $npm_execpath cross-env WEBPACK_PUBLIC_PATH=/webpack@hmr/ NODE_ENV=development $npm_execpath webpack-dev-server --host 0.0.0.0 --port 8080 --public https://pterodactyl.test --hot"
+        "watch": "$npm_execpath cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider $npm_execpath webpack --watch --progress",
+        "build": "$npm_execpath cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider $npm_execpath webpack --progress",
+        "build:production": "$npm_execpath run clean && $npm_execpath cross-env NODE_ENV=production NODE_OPTIONS=--openssl-legacy-provider $npm_execpath webpack --mode production",
+        "serve": "$npm_execpath run clean && $npm_execpath cross-env WEBPACK_PUBLIC_PATH=/webpack@hmr/ NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider $npm_execpath webpack-dev-server --host 0.0.0.0 --port 8080 --public https://pterodactyl.test --hot"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^0.19.0",

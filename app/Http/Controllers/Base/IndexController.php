@@ -2,31 +2,27 @@
 
 namespace Pterodactyl\Http\Controllers\Base;
 
+use Illuminate\Support\Facades\Auth;
 use Pterodactyl\Http\Controllers\Controller;
 use Pterodactyl\Contracts\Repository\ServerRepositoryInterface;
 
 class IndexController extends Controller
 {
-    /**
-     * @var \Pterodactyl\Contracts\Repository\ServerRepositoryInterface
-     */
-    protected $repository;
-
-    /**
-     * IndexController constructor.
-     */
-    public function __construct(ServerRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * Returns listing of user's servers.
-     *
-     * @return \Illuminate\View\View
-     */
     public function index()
     {
         return view('templates/base.core');
+    }
+
+    /**
+     * Renders the public showcase page for guests, or the dashboard SPA
+     * shell for authenticated users.
+     */
+    public function welcome()
+    {
+        if (Auth::check()) {
+            return view('templates/base.core');
+        }
+
+        return view('templates/welcome.core');
     }
 }
