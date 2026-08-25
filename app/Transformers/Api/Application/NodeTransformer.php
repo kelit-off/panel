@@ -13,7 +13,7 @@ class NodeTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['allocations', 'database_host', 'location', 'mounts', 'servers'];
+    protected array $availableIncludes = ['allocations', 'database_host', 'location', 'mounts', 'servers'];
 
     public function getResourceName(): string
     {

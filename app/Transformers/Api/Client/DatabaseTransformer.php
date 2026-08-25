@@ -10,7 +10,7 @@ use Pterodactyl\Contracts\Extensions\HashidsInterface;
 
 class DatabaseTransformer extends Transformer
 {
-    protected $availableIncludes = ['password'];
+    protected array $availableIncludes = ['password'];
 
     protected Encrypter $encrypter;
 

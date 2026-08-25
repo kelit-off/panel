@@ -13,7 +13,7 @@ class NestTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'eggs',
         'servers',
     ];

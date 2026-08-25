@@ -13,7 +13,7 @@ class AllocationTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['node', 'server'];
+    protected array $availableIncludes = ['node', 'server'];
 
     public function getResourceName(): string
     {

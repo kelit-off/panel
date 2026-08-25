@@ -13,7 +13,7 @@ class EggTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'nest',
         'servers',
         'config',

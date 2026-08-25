@@ -14,7 +14,7 @@ class ServerVariableTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['parent'];
+    protected array $availableIncludes = ['parent'];
 
     /**
      * Return the resource name for the JSONAPI output.

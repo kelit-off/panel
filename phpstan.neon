@@ -1,6 +1,6 @@
 includes:
     - ./phpstan-baseline.neon
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
     - ./vendor/phpstan/phpstan-webmozart-assert/extension.neon
 
 parameters:
@@ -11,6 +11,4 @@ parameters:
     ignoreErrors:
         - "#Unsafe usage of new static#"
         - "#has no return type specified\\.#"
-        # Just ignore this entirey, causes a lot of noise for minimal gain on the requests.
-        - "#^Cannot call method parameter\\(\\) on object\\|string\\.$#"
     checkMissingIterableValueType: false

@@ -12,7 +12,7 @@ class ServerDatabaseTransformer extends Transformer
     /**
      * @var array
      */
-    protected $availableIncludes = ['password', 'host'];
+    protected array $availableIncludes = ['password', 'host'];
 
     protected Encrypter $encrypter;
 

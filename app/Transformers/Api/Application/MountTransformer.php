@@ -13,7 +13,7 @@ class MountTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['eggs', 'nodes', 'servers'];
+    protected array $availableIncludes = ['eggs', 'nodes', 'servers'];
 
     public function getResourceName(): string
     {

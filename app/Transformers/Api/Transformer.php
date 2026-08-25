@@ -9,7 +9,9 @@ use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
 use Pterodactyl\Models\User;
 use Webmozart\Assert\Assert;
+use League\Fractal\Resource\Item;
 use Illuminate\Container\Container;
+use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -65,11 +67,8 @@ abstract class Transformer extends TransformerAbstract
      *
      * @param mixed $data
      * @param callable|\League\Fractal\TransformerAbstract $transformer
-     * @param string|null $resourceKey
-     *
-     * @return \League\Fractal\Resource\Item
      */
-    protected function item($data, $transformer, $resourceKey = null)
+    protected function item($data, $transformer, ?string $resourceKey = null): Item
     {
         if (!$transformer instanceof Closure) {
             self::assertSameNamespace($transformer);
@@ -89,11 +88,8 @@ abstract class Transformer extends TransformerAbstract
      *
      * @param mixed $data
      * @param callable|\League\Fractal\TransformerAbstract $transformer
-     * @param string|null $resourceKey
-     *
-     * @return \League\Fractal\Resource\Collection
      */
-    protected function collection($data, $transformer, $resourceKey = null)
+    protected function collection($data, $transformer, ?string $resourceKey = null): Collection
     {
         if (!$transformer instanceof Closure) {
             self::assertSameNamespace($transformer);
@@ -112,7 +108,7 @@ abstract class Transformer extends TransformerAbstract
      * Sets the default timezone to use for transformed responses. Pass a null value
      * to return back to the default timezone (UTC).
      */
-    public static function setTimezone(string $tz = null)
+    public static function setTimezone(?string $tz = null)
     {
         static::$timezone = $tz ?? 'UTC';
     }
@@ -143,7 +139,7 @@ abstract class Transformer extends TransformerAbstract
      *
      * @param string|\DateTimeInterface|null $timestamp
      */
-    protected static function formatTimestamp($timestamp, string $tz = null): ?string
+    protected static function formatTimestamp($timestamp, ?string $tz = null): ?string
     {
         if (empty($timestamp)) {
             return null;

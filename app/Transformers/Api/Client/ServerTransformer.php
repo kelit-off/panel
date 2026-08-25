@@ -12,12 +12,12 @@ class ServerTransformer extends Transformer
     /**
      * @var string[]
      */
-    protected $defaultIncludes = ['allocations', 'variables'];
+    protected array $defaultIncludes = ['allocations', 'variables'];
 
     /**
      * @var array
      */
-    protected $availableIncludes = ['egg', 'subusers'];
+    protected array $availableIncludes = ['egg', 'subusers'];
 
     protected StartupCommandService $service;
 

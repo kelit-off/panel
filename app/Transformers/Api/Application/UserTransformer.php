@@ -13,7 +13,7 @@ class UserTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['role', 'servers'];
+    protected array $availableIncludes = ['role', 'servers'];
 
     public function getResourceName(): string
     {

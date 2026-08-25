@@ -13,7 +13,7 @@ class LocationTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['nodes', 'servers'];
+    protected array $availableIncludes = ['nodes', 'servers'];
 
     public function getResourceName(): string
     {

@@ -13,7 +13,7 @@ class SubuserTransformer extends Transformer
      *
      * @var array
      */
-    protected $availableIncludes = ['user', 'server'];
+    protected array $availableIncludes = ['user', 'server'];
 
     public function getResourceName(): string
     {

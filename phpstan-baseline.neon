@@ -21,7 +21,7 @@ parameters:
 			path: app/Console/Commands/Environment/DatabaseSettingsCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$value of function studly_case expects string, array\\|bool\\|string given\\.$#"
+			message: "#^Parameter \\#1 \\$value of function studly_case expects string, array\\|string given\\.$#"
 			count: 1
 			path: app/Console/Commands/Environment/EmailSettingsCommand.php
 
@@ -36,29 +36,19 @@ parameters:
 			path: app/Console/Commands/Environment/EmailSettingsCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$action of method Pterodactyl\\\\Repositories\\\\Wings\\\\DaemonPowerRepository\\:\\:send\\(\\) expects string, array\\|string\\|null given\\.$#"
+			message: "#^Property Pterodactyl\\\\Console\\\\Commands\\\\Location\\\\DeleteLocationCommand\\:\\:\\$locations with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Console/Commands/Location/DeleteLocationCommand.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Console\\\\Commands\\\\Server\\\\BulkPowerActionCommand\\:\\:getQueryBuilder\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
 			count: 1
 			path: app/Console/Commands/Server/BulkPowerActionCommand.php
 
 		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, array\\|string\\|true given\\.$#"
-			count: 2
+			message: "#^Variable \\$servers in empty\\(\\) always exists and is always falsy\\.$#"
+			count: 1
 			path: app/Console/Commands/Server/BulkPowerActionCommand.php
-
-		-
-			message: "#^Binary operation \"\\.\" between 'download/v' and non\\-empty\\-array\\|non\\-empty\\-string\\|true results in an error\\.$#"
-			count: 1
-			path: app/Console/Commands/UpgradeCommand.php
-
-		-
-			message: "#^Cannot access offset 'name' on array\\|false\\.$#"
-			count: 2
-			path: app/Console/Commands/UpgradeCommand.php
-
-		-
-			message: "#^Method Pterodactyl\\\\Console\\\\Commands\\\\UpgradeCommand\\:\\:getUrl\\(\\) should return string but returns array\\|string\\|true\\.$#"
-			count: 1
-			path: app/Console/Commands/UpgradeCommand.php
 
 		-
 			message: "#^Parameter \\#1 \\$group_id of function posix_getgrgid expects int, int\\|false given\\.$#"
@@ -71,9 +61,219 @@ parameters:
 			path: app/Console/Commands/UpgradeCommand.php
 
 		-
-			message: "#^Unable to resolve the template type TReturn in call to method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),array\\<int, mixed\\>\\>\\:\\:flatMap\\(\\)$#"
+			message: "#^Access to an undefined property Pterodactyl\\\\Models\\\\User\\:\\:\\$name_first\\.$#"
+			count: 1
+			path: app/Console/Commands/User/DeleteUserCommand.php
+
+		-
+			message: "#^Access to an undefined property Pterodactyl\\\\Models\\\\User\\:\\:\\$name_first\\.$#"
+			count: 1
+			path: app/Console/Commands/User/MakeUserCommand.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\DatabaseHostRepositoryInterface\\:\\:getWithViewDetails\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/DatabaseHostRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\DatabaseRepositoryInterface\\:\\:getDatabasesForHost\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Contracts/Repository/DatabaseRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\DatabaseRepositoryInterface\\:\\:getDatabasesForServer\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/DatabaseRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\EggRepositoryInterface\\:\\:getAllWithCopyAttributes\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Collection does not specify its types\\: TKey, TModel$#"
+			count: 1
+			path: app/Contracts/Repository/EggRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\EggVariableRepositoryInterface\\:\\:getEditableVariables\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/EggVariableRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\LocationRepositoryInterface\\:\\:getAllWithDetails\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/LocationRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\LocationRepositoryInterface\\:\\:getAllWithNodes\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/LocationRepositoryInterface.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$id \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Contracts/Repository/NestRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\NodeRepositoryInterface\\:\\:getNodesForServerCreation\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/NodeRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\RepositoryInterface\\:\\:all\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/RepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\RepositoryInterface\\:\\:findWhere\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/RepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\RepositoryInterface\\:\\:paginated\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Contracts/Repository/RepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\ScheduleRepositoryInterface\\:\\:findServerSchedules\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/ScheduleRepositoryInterface.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$server \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 2
+			path: app/Contracts/Repository/ServerRepositoryInterface.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$node \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 2
+			path: app/Contracts/Repository/ServerRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\ServerRepositoryInterface\\:\\:getDataForRebuild\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/ServerRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\ServerRepositoryInterface\\:\\:getDataForReinstall\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/ServerRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\ServerRepositoryInterface\\:\\:loadAllServersForNode\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Contracts/Repository/ServerRepositoryInterface.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Contracts\\\\Repository\\\\SessionRepositoryInterface\\:\\:getUserSessions\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Contracts/Repository/SessionRepositoryInterface.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$value \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Contracts/Repository/SettingsRepositoryInterface.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$previous \\(Throwable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/DisplayException.php
+
+		-
+			message: "#^PHPDoc type array\\<string\\> of property Pterodactyl\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Exceptions\\\\Handler\\:\\:\\$dontFlash\\.$#"
 			count: 1
 			path: app/Exceptions/Handler.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$message \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/Http/HttpForbiddenException.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$previous \\(Throwable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/Http/HttpForbiddenException.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#4 \\$previous \\(Throwable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/Http/QueryValueOutOfRangeHttpException.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$previous \\(Throwable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/Http/Server/ServerStateConflictException.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$previous \\(Throwable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/Http/TwoFactorAuthRequiredException.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$previous \\(Throwable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Exceptions/Service/ServiceLimitExceededException.php
+
+		-
+			message: "#^Class League\\\\Flysystem\\\\AdapterInterface not found\\.$#"
+			count: 2
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$name \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Instantiated class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter not found\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Instantiated class League\\\\Flysystem\\\\Memory\\\\MemoryAdapter not found\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:adapter\\(\\) has invalid return type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:callCustomCreator\\(\\) has invalid return type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:createS3Adapter\\(\\) has invalid return type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:createS3Adapter\\(\\) should return League\\\\Flysystem\\\\AdapterInterface but returns League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:createWingsAdapter\\(\\) has invalid return type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:createWingsAdapter\\(\\) should return League\\\\Flysystem\\\\AdapterInterface but returns League\\\\Flysystem\\\\Memory\\\\MemoryAdapter\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:get\\(\\) has invalid return type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:resolve\\(\\) has invalid return type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
+
+		-
+			message: "#^Parameter \\$disk of method Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:set\\(\\) has invalid type League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Extensions/Backups/BackupManager.php
 
 		-
 			message: "#^Possibly invalid array key type array\\<string\\>\\|string\\.$#"
@@ -81,19 +281,34 @@ parameters:
 			path: app/Extensions/Backups/BackupManager.php
 
 		-
-			message: "#^Parameter \\#2 \\$content of method Pterodactyl\\\\Services\\\\Eggs\\\\Sharing\\\\EggImporterService\\:\\:handleContent\\(\\) expects string, resource\\|string given\\.$#"
+			message: "#^Property Pterodactyl\\\\Extensions\\\\Backups\\\\BackupManager\\:\\:\\$adapters has unknown class League\\\\Flysystem\\\\AdapterInterface as its type\\.$#"
 			count: 1
-			path: app/Http/Controllers/Api/Application/Nests/NestController.php
+			path: app/Extensions/Backups/BackupManager.php
 
 		-
-			message: "#^Parameter \\#1 \\$perPage of method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\<Pterodactyl\\\\Models\\\\Backup\\>\\:\\:paginate\\(\\) expects int\\|null, array\\|int\\|string given\\.$#"
+			message: "#^Class Pterodactyl\\\\Extensions\\\\Illuminate\\\\Database\\\\Eloquent\\\\Builder extends generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder but does not specify its types\\: TModelClass$#"
+			count: 1
+			path: app/Extensions/Illuminate/Database/Eloquent/Builder.php
+
+		-
+			message: "#^Call to function is_null\\(\\) with League\\\\Fractal\\\\Pagination\\\\PaginatorInterface will always evaluate to false\\.$#"
+			count: 1
+			path: app/Extensions/Spatie/Fractalistic/Fractal.php
+
+		-
+			message: "#^Call to function is_null\\(\\) with League\\\\Fractal\\\\Serializer\\\\SerializerAbstract\\|string will always evaluate to false\\.$#"
+			count: 1
+			path: app/Extensions/Spatie/Fractalistic/Fractal.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: app/Extensions/Spatie/Fractalistic/Fractal.php
+
+		-
+			message: "#^Parameter \\#1 \\$perPage of method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\<Pterodactyl\\\\Models\\\\Backup\\>\\:\\:paginate\\(\\) expects int\\|null, array\\|int\\|string given\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/Client/Servers/BackupController.php
-
-		-
-			message: "#^Parameter \\#2 \\$content of method Pterodactyl\\\\Repositories\\\\Wings\\\\DaemonFileRepository\\:\\:putContent\\(\\) expects string, resource\\|string given\\.$#"
-			count: 1
-			path: app/Http/Controllers/Api/Client/Servers/FileController.php
 
 		-
 			message: "#^Access to an undefined property Pterodactyl\\\\Models\\\\EggVariable\\:\\:\\$server_value\\.$#"
@@ -101,9 +316,54 @@ parameters:
 			path: app/Http/Controllers/Api/Client/Servers/StartupController.php
 
 		-
+			message: "#^Call to method getBucket\\(\\) on an unknown class League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupRemoteUploadController.php
+
+		-
+			message: "#^Call to method getBucket\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupRemoteUploadController.php
+
+		-
+			message: "#^Call to method getClient\\(\\) on an unknown class League\\\\Flysystem\\\\AdapterInterface\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupRemoteUploadController.php
+
+		-
+			message: "#^Call to method getClient\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupRemoteUploadController.php
+
+		-
+			message: "#^Class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter not found\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupRemoteUploadController.php
+
+		-
 			message: "#^Property Pterodactyl\\\\Http\\\\Controllers\\\\Api\\\\Remote\\\\Backups\\\\BackupRemoteUploadController\\:\\:\\$repository is never read, only written\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/Remote/Backups/BackupRemoteUploadController.php
+
+		-
+			message: "#^Call to method getBucket\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupStatusController.php
+
+		-
+			message: "#^Call to method getClient\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupStatusController.php
+
+		-
+			message: "#^Class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter not found\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupStatusController.php
+
+		-
+			message: "#^Parameter \\$adapter of method Pterodactyl\\\\Http\\\\Controllers\\\\Api\\\\Remote\\\\Backups\\\\BackupStatusController\\:\\:completeMultipartUpload\\(\\) has invalid type League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Http/Controllers/Api/Remote/Backups/BackupStatusController.php
 
 		-
 			message: "#^Property Pterodactyl\\\\Http\\\\Controllers\\\\Api\\\\Remote\\\\Servers\\\\ServerTransferController\\:\\:\\$configurationStructureService is never read, only written\\.$#"
@@ -111,13 +371,28 @@ parameters:
 			path: app/Http/Controllers/Api/Remote/Servers/ServerTransferController.php
 
 		-
-			message: "#^Offset 'server' on array\\{username\\: string, server\\: non\\-empty\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
+			message: "#^Offset 'server' on array\\{username\\: string, server\\: non\\-falsy\\-string\\} on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 1
 			path: app/Http/Controllers/Api/Remote/SftpAuthenticationController.php
 
 		-
-			message: "#^Cannot call method named\\(\\) on object\\|string\\.$#"
-			count: 2
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$input \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Auth/AbstractLoginController.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$user \\(Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Auth/AbstractLoginController.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$user \\(Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Controllers/Auth/AbstractLoginController.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#3 \\$message \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
 			path: app/Http/Controllers/Auth/AbstractLoginController.php
 
 		-
@@ -131,18 +406,28 @@ parameters:
 			path: app/Http/Controllers/Auth/LoginCheckpointController.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function md5 expects string, string\\|false given\\.$#"
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Http\\\\Kernel\\:\\:\\$middleware is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Kernel\\:\\:\\$middleware\\.$#"
 			count: 1
-			path: app/Http/Controllers/Base/LocaleController.php
+			path: app/Http/Kernel.php
 
 		-
-			message: "#^Parameter \\#1 \\$route of method Illuminate\\\\Contracts\\\\Routing\\\\Registrar\\:\\:substituteImplicitBindings\\(\\) expects Illuminate\\\\Routing\\\\Route, object\\|string\\|null given\\.$#"
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Http\\\\Kernel\\:\\:\\$middlewareGroups is not covariant with PHPDoc type array\\<string, array\\<int, string\\>\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Kernel\\:\\:\\$middlewareGroups\\.$#"
 			count: 1
-			path: app/Http/Middleware/Api/Application/SubstituteApplicationApiBindings.php
+			path: app/Http/Kernel.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Http\\\\Kernel\\:\\:\\$routeMiddleware is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Foundation\\\\Http\\\\Kernel\\:\\:\\$routeMiddleware\\.$#"
+			count: 1
+			path: app/Http/Kernel.php
 
 		-
 			message: "#^Result of && is always false\\.$#"
 			count: 1
+			path: app/Http/Middleware/Api/Application/SubstituteApplicationApiBindings.php
+
+		-
+			message: "#^Undefined variable\\: \\$route$#"
+			count: 2
 			path: app/Http/Middleware/Api/Application/SubstituteApplicationApiBindings.php
 
 		-
@@ -156,12 +441,22 @@ parameters:
 			path: app/Http/Middleware/Api/Client/Server/AuthenticateServerAccess.php
 
 		-
-			message: "#^Cannot call method parameters\\(\\) on object\\|string\\.$#"
+			message: "#^Call to function is_null\\(\\) with array will always evaluate to false\\.$#"
 			count: 1
 			path: app/Http/Middleware/Api/Client/Server/ResourceBelongsToServer.php
 
 		-
-			message: "#^Parameter \\#1 \\$route of method Illuminate\\\\Contracts\\\\Routing\\\\Registrar\\:\\:substituteBindings\\(\\) expects Illuminate\\\\Routing\\\\Route, object\\|string\\|null given\\.$#"
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Middleware/Api/Client/Server/ResourceBelongsToServer.php
+
+		-
+			message: "#^Cannot access property \\$server_id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Middleware/Api/Client/Server/ResourceBelongsToServer.php
+
+		-
+			message: "#^Parameter \\#2 \\$ids of method Illuminate\\\\Database\\\\Eloquent\\\\ModelNotFoundException\\<Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:setModel\\(\\) expects array\\<int, int\\|string\\>\\|int\\|string, array\\<int, object\\|string\\|null\\> given\\.$#"
 			count: 1
 			path: app/Http/Middleware/Api/Client/SubstituteClientApiBindings.php
 
@@ -171,34 +466,24 @@ parameters:
 			path: app/Http/Middleware/Api/Client/SubstituteClientApiBindings.php
 
 		-
+			message: "#^Undefined variable\\: \\$route$#"
+			count: 2
+			path: app/Http/Middleware/Api/Client/SubstituteClientApiBindings.php
+
+		-
 			message: "#^Variable \\$route in empty\\(\\) is never defined\\.$#"
 			count: 1
 			path: app/Http/Middleware/Api/Client/SubstituteClientApiBindings.php
 
 		-
-			message: "#^Cannot call method getName\\(\\) on object\\|string\\.$#"
-			count: 1
-			path: app/Http/Middleware/Api/Daemon/DaemonAuthenticate.php
-
-		-
-			message: "#^Parameter \\#1 \\$json of function json_decode expects string, resource\\|string given\\.$#"
-			count: 1
-			path: app/Http/Middleware/Api/IsValidJson.php
-
-		-
-			message: "#^Cannot call method parameters\\(\\) on object\\|string\\.$#"
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: app/Http/Middleware/Api/PreventUnboundModels.php
 
 		-
-			message: "#^Cannot call method signatureParameters\\(\\) on object\\|string\\.$#"
+			message: "#^Parameter \\#1 \\$conditions of method Illuminate\\\\Routing\\\\Route\\:\\:signatureParameters\\(\\) expects array, string given\\.$#"
 			count: 1
 			path: app/Http/Middleware/Api/PreventUnboundModels.php
-
-		-
-			message: "#^Cannot call method getName\\(\\) on object\\|string\\.$#"
-			count: 1
-			path: app/Http/Middleware/RequireTwoFactorAuthentication.php
 
 		-
 			message: "#^Parameter \\#1 \\$array of function array_get expects array\\|ArrayAccess, array\\<string, int\\|string\\>\\|false given\\.$#"
@@ -206,14 +491,189 @@ parameters:
 			path: app/Http/Middleware/VerifyReCaptcha.php
 
 		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Databases/StoreDatabaseRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Databases/UpdateDatabaseRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Databases/UpdateDatabaseRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Eggs/StoreEggRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Eggs/UpdateEggRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Eggs/Variables/StoreEggVariableRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Eggs/Variables/UpdateEggVariablesRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Locations/UpdateLocationRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Mounts/MountEggsRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Mounts/MountNodesRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Mounts/StoreMountRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Mounts/UpdateMountRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Mounts/UpdateMountRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Nests/StoreNestRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Nests/UpdateNestRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Nests/UpdateNestRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Nodes/StoreNodeRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Nodes/UpdateNodeRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Nodes/UpdateNodeRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Roles/StoreRoleRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Roles/UpdateRoleRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Roles/UpdateRoleRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Servers/Databases/StoreServerDatabaseRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Servers/UpdateServerBuildConfigurationRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Servers/UpdateServerDetailsRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Servers/UpdateServerStartupRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Users/StoreUserRequest.php
+
+		-
+			message: "#^Cannot access property \\$id on object\\|string\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Users/UpdateUserRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$rules \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Http/Requests/Api/Application/Users/UpdateUserRequest.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$exception \\(Exception\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Jobs/Schedule/RunTaskJob.php
+
+		-
 			message: "#^Method Pterodactyl\\\\Jobs\\\\Schedule\\\\RunTaskJob\\:\\:__construct\\(\\) has parameter \\$manualRun with no type specified\\.$#"
 			count: 1
 			path: app/Jobs/Schedule/RunTaskJob.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\AdminRole\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\AdminRole\\:\\:permissions\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
 			count: 1
 			path: app/Models/AdminRole.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\AdminRole\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/AdminRole.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\AdminRole\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/AdminRole.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Allocation\\:\\:node\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Allocation.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Allocation\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Allocation.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Allocation\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Allocation.php
 
 		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Allocation\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
@@ -221,17 +681,122 @@ parameters:
 			path: app/Models/Allocation.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Database\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\AuditLog\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/AuditLog.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\AuditLog\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/AuditLog.php
+
+		-
+			message: "#^PHPDoc type array\\<string\\> of property Pterodactyl\\\\Models\\\\AuditLog\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/AuditLog.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Backup\\:\\:audits\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Backup.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Backup\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Backup.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Backup\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/Backup.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Backup\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Backup.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Database\\:\\:host\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
 			count: 1
 			path: app/Models/Database.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\DatabaseHost\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\Database\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Database.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Database\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Database.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Database\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/Database.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Database\\:\\:\\$hidden is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$hidden\\.$#"
+			count: 1
+			path: app/Models/Database.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\DatabaseHost\\:\\:databases\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
 			count: 1
 			path: app/Models/DatabaseHost.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Egg\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\DatabaseHost\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/DatabaseHost.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\DatabaseHost\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/DatabaseHost.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\DatabaseHost\\:\\:\\$hidden is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$hidden\\.$#"
+			count: 1
+			path: app/Models/DatabaseHost.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Egg\\:\\:configFrom\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Egg\\:\\:nest\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Egg\\:\\:scriptFrom\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Egg\\:\\:servers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Egg\\:\\:variables\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Egg\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Egg\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Egg.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Egg\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
 			count: 1
 			path: app/Models/Egg.php
 
@@ -241,14 +806,74 @@ parameters:
 			path: app/Models/EggMount.php
 
 		-
+			message: "#^Method Pterodactyl\\\\Models\\\\EggVariable\\:\\:egg\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/EggVariable.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\EggVariable\\:\\:serverVariable\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/EggVariable.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\EggVariable\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/EggVariable.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\EggVariable\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/EggVariable.php
+
+		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\EggVariable\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
 			count: 1
 			path: app/Models/EggVariable.php
 
 		-
+			message: "#^Class Pterodactyl\\\\Models\\\\Filters\\\\AdminServerFilter implements generic interface Spatie\\\\QueryBuilder\\\\Filters\\\\Filter but does not specify its types\\: TModelClass$#"
+			count: 1
+			path: app/Models/Filters/AdminServerFilter.php
+
+		-
+			message: "#^Class Pterodactyl\\\\Models\\\\Filters\\\\MultiFieldServerFilter implements generic interface Spatie\\\\QueryBuilder\\\\Filters\\\\Filter but does not specify its types\\: TModelClass$#"
+			count: 1
+			path: app/Models/Filters/MultiFieldServerFilter.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Location\\:\\:nodes\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Location.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Location\\:\\:servers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Location.php
+
+		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Location\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
 			count: 1
 			path: app/Models/Location.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Mount\\:\\:eggs\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Mount.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Mount\\:\\:nodes\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Mount.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Mount\\:\\:servers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Mount.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Mount\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Mount.php
 
 		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Mount\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
@@ -266,9 +891,29 @@ parameters:
 			path: app/Models/MountServer.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Nest\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\Nest\\:\\:eggs\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
 			count: 1
 			path: app/Models/Nest.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Nest\\:\\:servers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Nest.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Nest\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/Nest.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Node\\:\\:allocations\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Node\\:\\:databaseHost\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Node.php
 
 		-
 			message: "#^Method Pterodactyl\\\\Models\\\\Node\\:\\:getJsonConfiguration\\(\\) should return string but returns string\\|false\\.$#"
@@ -276,9 +921,44 @@ parameters:
 			path: app/Models/Node.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Node\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\Node\\:\\:location\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
 			count: 1
 			path: app/Models/Node.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Node\\:\\:mounts\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Node\\:\\:servers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Node\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Node\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Node\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Node\\:\\:\\$hidden is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$hidden\\.$#"
+			count: 1
+			path: app/Models/Node.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Permission\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Permission.php
 
 		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Permission\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
@@ -286,9 +966,144 @@ parameters:
 			path: app/Models/Permission.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Schedule\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\PersonalAccessToken\\:\\:tokenable\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/PersonalAccessToken.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\PersonalAccessToken\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/PersonalAccessToken.php
+
+		-
+			message: "#^PHPDoc type array\\<string\\> of property Pterodactyl\\\\Models\\\\PersonalAccessToken\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/PersonalAccessToken.php
+
+		-
+			message: "#^PHPDoc type array\\<string\\> of property Pterodactyl\\\\Models\\\\PersonalAccessToken\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/PersonalAccessToken.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\RecoveryToken\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/RecoveryToken.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Schedule\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
 			count: 1
 			path: app/Models/Schedule.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Schedule\\:\\:tasks\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Schedule.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Schedule\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/Schedule.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Schedule\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Schedule.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Schedule\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/Schedule.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Schedule\\:\\:\\$with is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$with\\.$#"
+			count: 1
+			path: app/Models/Schedule.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\SecurityKey\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/SecurityKey.php
+
+		-
+			message: "#^Parameter \\#6 \\$aaguid of class Webauthn\\\\PublicKeyCredentialSource constructor expects Symfony\\\\Component\\\\Uid\\\\Uuid, Ramsey\\\\Uuid\\\\UuidInterface given\\.$#"
+			count: 1
+			path: app/Models/SecurityKey.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:allocation\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:allocations\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:audits\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:backups\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:databases\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:egg\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:mounts\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasManyThrough does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:nest\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:node\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:schedule\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:subusers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:transfer\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Server\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Server\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Server\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Server.php
 
 		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Server\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
@@ -296,14 +1111,74 @@ parameters:
 			path: app/Models/Server.php
 
 		-
+			message: "#^PHPDoc type array\\<string\\> of property Pterodactyl\\\\Models\\\\Server\\:\\:\\$with is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$with\\.$#"
+			count: 1
+			path: app/Models/Server.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\ServerTransfer\\:\\:newNode\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/ServerTransfer.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\ServerTransfer\\:\\:oldNode\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/ServerTransfer.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\ServerTransfer\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/ServerTransfer.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\ServerTransfer\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/ServerTransfer.php
+
+		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\ServerTransfer\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
 			count: 1
 			path: app/Models/ServerTransfer.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Setting\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\ServerVariable\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/ServerVariable.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\ServerVariable\\:\\:variable\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/ServerVariable.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Session\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Session.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Setting\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
 			count: 1
 			path: app/Models/Setting.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Subuser\\:\\:permissions\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/Subuser.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Subuser\\:\\:server\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Subuser.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\Subuser\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/Subuser.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Subuser\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Subuser.php
 
 		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Subuser\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
@@ -311,9 +1186,29 @@ parameters:
 			path: app/Models/Subuser.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Task\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\Task\\:\\:schedule\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
 			count: 1
 			path: app/Models/Task.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Task\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Task\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\Task\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/Task.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\TaskLog\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/TaskLog.php
 
 		-
 			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\TaskLog\\:\\:\\$guarded is not covariant with PHPDoc type array\\<string\\>\\|bool of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$guarded\\.$#"
@@ -321,9 +1216,74 @@ parameters:
 			path: app/Models/TaskLog.php
 
 		-
-			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\User\\:\\:\\$fillable is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:accessibleServers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
 			count: 1
 			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:adminRole\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasOne does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:recoveryTokens\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:securityKeys\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:servers\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:sshKeys\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\User\\:\\:tokens\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\User\\:\\:\\$attributes is not covariant with PHPDoc type array\\<string, mixed\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attributes\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\User\\:\\:\\$casts is not covariant with PHPDoc type array\\<string, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$casts\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\User\\:\\:\\$fillable is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$fillable\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Models\\\\User\\:\\:\\$hidden is not covariant with PHPDoc type array\\<int, string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$hidden\\.$#"
+			count: 1
+			path: app/Models/User.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Models\\\\UserSSHKey\\:\\:user\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsTo does not specify its types\\: TRelatedModel, TChildModel$#"
+			count: 1
+			path: app/Models/UserSSHKey.php
+
+		-
+			message: "#^Access to an undefined property Pterodactyl\\\\Models\\\\User\\:\\:\\$name_first\\.$#"
+			count: 1
+			path: app/Notifications/AccountCreated.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$token \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Notifications/AccountCreated.php
 
 		-
 			message: "#^Access to an undefined property object\\:\\:\\$name\\.$#"
@@ -336,6 +1296,11 @@ parameters:
 			path: app/Notifications/AddedToServer.php
 
 		-
+			message: "#^Access to an undefined property Pterodactyl\\\\Models\\\\User\\:\\:\\$name_first\\.$#"
+			count: 1
+			path: app/Notifications/MailTested.php
+
+		-
 			message: "#^Access to an undefined property object\\:\\:\\$name\\.$#"
 			count: 1
 			path: app/Notifications/RemovedFromServer.php
@@ -346,19 +1311,114 @@ parameters:
 			path: app/Observers/UserObserver.php
 
 		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Providers\\\\AuthServiceProvider\\:\\:\\$policies is not covariant with PHPDoc type array\\<class\\-string, class\\-string\\> of overridden property Illuminate\\\\Foundation\\\\Support\\\\Providers\\\\AuthServiceProvider\\:\\:\\$policies\\.$#"
+			count: 1
+			path: app/Providers/AuthServiceProvider.php
+
+		-
+			message: "#^PHPDoc type array of property Pterodactyl\\\\Providers\\\\EventServiceProvider\\:\\:\\$listen is not covariant with PHPDoc type array\\<string, array\\<int, string\\>\\> of overridden property Illuminate\\\\Foundation\\\\Support\\\\Providers\\\\EventServiceProvider\\:\\:\\$listen\\.$#"
+			count: 1
+			path: app/Providers/EventServiceProvider.php
+
+		-
 			message: "#^Cannot access offset 'config' on Illuminate\\\\Contracts\\\\Foundation\\\\Application\\.$#"
 			count: 1
 			path: app/Providers/HashidsServiceProvider.php
 
 		-
-			message: "#^Cannot call method named\\(\\) on object\\|string\\.$#"
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\BackupRepository\\:\\:getBackupsGeneratedDuringTimespan\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
 			count: 1
-			path: app/Providers/RouteServiceProvider.php
+			path: app/Repositories/Eloquent/BackupRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\BackupRepository\\:\\:getNonFailedBackups\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Repositories/Eloquent/BackupRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\DatabaseHostRepository\\:\\:getWithViewDetails\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/DatabaseHostRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\DatabaseRepository\\:\\:getDatabasesForHost\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Repositories/Eloquent/DatabaseRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\DatabaseRepository\\:\\:getDatabasesForServer\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/DatabaseRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EggRepository\\:\\:getAllWithCopyAttributes\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Collection does not specify its types\\: TKey, TModel$#"
+			count: 1
+			path: app/Repositories/Eloquent/EggRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EggVariableRepository\\:\\:getEditableVariables\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/EggVariableRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:all\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/EloquentRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:findWhere\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/EloquentRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:getBuilder\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder does not specify its types\\: TModelClass$#"
+			count: 1
+			path: app/Repositories/Eloquent/EloquentRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:paginate\\(\\) has parameter \\$instance with generic class Illuminate\\\\Database\\\\Eloquent\\\\Builder but does not specify its types\\: TModelClass$#"
+			count: 1
+			path: app/Repositories/Eloquent/EloquentRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:paginate\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Repositories/Eloquent/EloquentRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:paginated\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Repositories/Eloquent/EloquentRepository.php
 
 		-
 			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\EloquentRepository\\:\\:updateOrCreate\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Model but returns bool\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 1
 			path: app/Repositories/Eloquent/EloquentRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\LocationRepository\\:\\:getAllWithDetails\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/LocationRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\LocationRepository\\:\\:getAllWithNodes\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/LocationRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\MountRepository\\:\\:getAllWithDetails\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/MountRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\MountRepository\\:\\:getMountListForServer\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/MountRepository.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$id \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Repositories/Eloquent/NestRepository.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$sum_disk\\.$#"
@@ -376,7 +1436,82 @@ parameters:
 			path: app/Repositories/Eloquent/NodeRepository.php
 
 		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\NodeRepository\\:\\:getNodesForServerCreation\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$collection contains generic class Illuminate\\\\Database\\\\Eloquent\\\\Collection but does not specify its types\\: TKey, TModel$#"
+			count: 1
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$filtered contains generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<\\(int\\|string\\),Illuminate\\\\Database\\\\Eloquent\\\\Model\\>\\:\\:map\\(\\) expects callable\\(Illuminate\\\\Database\\\\Eloquent\\\\Model, int\\|string\\)\\: array\\{id\\: int, text\\: string, allocations\\: Illuminate\\\\Support\\\\Collection\\<int, array\\{id\\: mixed, text\\: string\\}\\>\\}, Closure\\(Pterodactyl\\\\Models\\\\Node\\)\\: array\\{id\\: int, text\\: string, allocations\\: Illuminate\\\\Support\\\\Collection\\<int, array\\{id\\: mixed, text\\: string\\}\\>\\} given\\.$#"
+			count: 1
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^Unable to resolve the template type TMakeValue in call to method static method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:make\\(\\)$#"
+			count: 1
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 2
+			path: app/Repositories/Eloquent/NodeRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\ScheduleRepository\\:\\:findServerSchedules\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/ScheduleRepository.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$server \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 2
+			path: app/Repositories/Eloquent/ServerRepository.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$node \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 2
+			path: app/Repositories/Eloquent/ServerRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\ServerRepository\\:\\:getDataForRebuild\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/ServerRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\ServerRepository\\:\\:getDataForReinstall\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/ServerRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\ServerRepository\\:\\:loadAllServersForNode\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Repositories/Eloquent/ServerRepository.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Repositories\\\\Eloquent\\\\SessionRepository\\:\\:getUserSessions\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Repositories/Eloquent/SessionRepository.php
+
+		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$value\\.$#"
+			count: 1
+			path: app/Repositories/Eloquent/SettingsRepository.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$value \\(string\\) is implicitly nullable via default value null\\.$#"
 			count: 1
 			path: app/Repositories/Eloquent/SettingsRepository.php
 
@@ -396,9 +1531,59 @@ parameters:
 			path: app/Repositories/Repository.php
 
 		-
+			message: "#^Instantiated class Webauthn\\\\Server not found\\.$#"
+			count: 1
+			path: app/Repositories/SecurityKeys/WebauthnServerRepository.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$url \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Repositories/Wings/DaemonBackupRepository.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$notLargerThan \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Repositories/Wings/DaemonFileRepository.php
+
+		-
 			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: app/Repositories/Wings/DaemonFileRepository.php
+
+		-
+			message: "#^Call to method getBucket\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Services/Backups/DeleteBackupService.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$adapter contains unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Services/Backups/DeleteBackupService.php
+
+		-
+			message: "#^Call to method getBucket\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Services/Backups/DownloadLinkService.php
+
+		-
+			message: "#^Call to method getClient\\(\\) on an unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 2
+			path: app/Services/Backups/DownloadLinkService.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$adapter contains unknown class League\\\\Flysystem\\\\AwsS3v3\\\\AwsS3Adapter\\.$#"
+			count: 1
+			path: app/Services/Backups/DownloadLinkService.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$name \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Services/Backups/InitiateBackupService.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Services\\\\Backups\\\\InitiateBackupService\\:\\:getNonFailedBackups\\(\\) return type with generic class Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany does not specify its types\\: TRelatedModel$#"
+			count: 1
+			path: app/Services/Backups/InitiateBackupService.php
 
 		-
 			message: "#^Dead catch \\- Exception is never thrown in the try block\\.$#"
@@ -406,7 +1591,32 @@ parameters:
 			path: app/Services/Databases/DatabaseManagementService.php
 
 		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$perPage \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Services/Deployment/FindViableNodesService.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$page \\(int\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Services/Deployment/FindViableNodesService.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Services\\\\Deployment\\\\FindViableNodesService\\:\\:handle\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Deployment/FindViableNodesService.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Services\\\\Deployment\\\\FindViableNodesService\\:\\:handle\\(\\) return type with generic interface Illuminate\\\\Contracts\\\\Pagination\\\\LengthAwarePaginator does not specify its types\\: TItem$#"
+			count: 1
+			path: app/Services/Deployment/FindViableNodesService.php
+
+		-
 			message: "#^Argument of an invalid type iterable\\|object supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: app/Services/Eggs/EggConfigurationService.php
+
+		-
+			message: "#^Argument of an invalid type stdClass supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: app/Services/Eggs/EggConfigurationService.php
 
@@ -416,13 +1626,38 @@ parameters:
 			path: app/Services/Eggs/EggConfigurationService.php
 
 		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<int,Pterodactyl\\\\Models\\\\EggVariable\\>\\:\\:transform\\(\\) expects callable\\(Pterodactyl\\\\Models\\\\EggVariable, int\\)\\: Pterodactyl\\\\Models\\\\EggVariable, Closure\\(Pterodactyl\\\\Models\\\\EggVariable\\)\\: array given\\.$#"
+			count: 1
+			path: app/Services/Eggs/Sharing/EggExporterService.php
+
+		-
 			message: "#^Parameter \\#2 \\$content of method Pterodactyl\\\\Services\\\\Eggs\\\\Sharing\\\\EggImporterService\\:\\:handleContent\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: app/Services/Eggs/Sharing/EggImporterService.php
 
 		-
+			message: "#^Unable to resolve the template type TMakeKey in call to method static method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:make\\(\\)$#"
+			count: 2
+			path: app/Services/Eggs/Sharing/EggImporterService.php
+
+		-
+			message: "#^Unable to resolve the template type TMakeValue in call to method static method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:make\\(\\)$#"
+			count: 2
+			path: app/Services/Eggs/Sharing/EggImporterService.php
+
+		-
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 1
+			path: app/Services/Eggs/Sharing/EggUpdateImporterService.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 3
+			path: app/Services/Eggs/Sharing/EggUpdateImporterService.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 3
 			path: app/Services/Eggs/Sharing/EggUpdateImporterService.php
 
 		-
@@ -436,19 +1671,54 @@ parameters:
 			path: app/Services/Helpers/SoftwareVersionService.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<Pterodactyl\\\\Models\\\\Allocation\\>\\|Pterodactyl\\\\Models\\\\Allocation\\:\\:\\$node_id\\.$#"
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$author \\(string\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Services/Nests/NestCreationService.php
+
+		-
+			message: "#^Parameter \\#1 \\$contents of static method Lcobucci\\\\JWT\\\\Signer\\\\Key\\\\InMemory\\:\\:plainText\\(\\) expects non\\-empty\\-string, string given\\.$#"
+			count: 1
+			path: app/Services/Nodes/NodeJWTService.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Pterodactyl\\\\Models\\\\Allocation\\>\\|Pterodactyl\\\\Models\\\\Allocation\\:\\:\\$node_id\\.$#"
 			count: 1
 			path: app/Services/Servers/ServerCreationService.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<Pterodactyl\\\\Models\\\\Egg\\>\\|Pterodactyl\\\\Models\\\\Egg\\:\\:\\$nest_id\\.$#"
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Collection\\<int, Pterodactyl\\\\Models\\\\Egg\\>\\|Pterodactyl\\\\Models\\\\Egg\\:\\:\\$nest_id\\.$#"
 			count: 1
 			path: app/Services/Servers/ServerCreationService.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#2 \\$deployment \\(Pterodactyl\\\\Models\\\\Objects\\\\DeploymentObject\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Services/Servers/ServerCreationService.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Services\\\\Servers\\\\ServerCreationService\\:\\:storeEggVariables\\(\\) has parameter \\$variables with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Servers/ServerCreationService.php
+
+		-
+			message: "#^PHPDoc tag @var for variable \\$nodes contains generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Servers/ServerCreationService.php
+
+		-
+			message: "#^Method Pterodactyl\\\\Services\\\\Servers\\\\VariableValidatorService\\:\\:handle\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: app/Services/Servers/VariableValidatorService.php
 
 		-
 			message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\|string, string\\|false given\\.$#"
 			count: 1
 			path: app/Services/Subusers/SubuserCreationService.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#3 \\$toggleState \\(bool\\) is implicitly nullable via default value null\\.$#"
+			count: 1
+			path: app/Services/Users/ToggleTwoFactorService.php
 
 		-
 			message: "#^Cannot call method getResourceName\\(\\) on \\(callable&class\\-string\\)\\|\\(callable&object\\)\\|League\\\\Fractal\\\\TransformerAbstract\\.$#"
@@ -461,7 +1731,26 @@ parameters:
 			path: app/Transformers/Api/Transformer.php
 
 		-
+			message: "#^Parameter \\#1 \\$object of function get_class expects object, \\(callable&class\\-string\\<League\\\\Fractal\\\\TransformerAbstract\\>\\)\\|League\\\\Fractal\\\\TransformerAbstract given\\.$#"
+			count: 1
+			path: app/Transformers/Api/Transformer.php
+
+		-
 			message: "#^Parameter \\#1 \\$object_or_class of function method_exists expects object\\|string, \\(callable\\)\\|League\\\\Fractal\\\\TransformerAbstract given\\.$#"
 			count: 2
 			path: app/Transformers/Api/Transformer.php
 
+		-
+			message: "#^Parameter \\#1 \\$string of function substr expects string, class\\-string\\<League\\\\Fractal\\\\TransformerAbstract\\>\\|false given\\.$#"
+			count: 1
+			path: app/Transformers/Api/Transformer.php
+
+		-
+			message: "#^Method Database\\\\Seeders\\\\EggSeeder\\:\\:getEggsToImport\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: database/Seeders/EggSeeder.php
+
+		-
+			message: "#^Deprecated in PHP 8\\.4\\: Parameter \\#1 \\$nest \\(array\\) is implicitly nullable via default value null\\.$#"
+			count: 4
+			path: database/Seeders/NestSeeder.php
