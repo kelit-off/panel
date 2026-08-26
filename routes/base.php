@@ -11,7 +11,7 @@ use Pterodactyl\Http\Middleware\RequireTwoFactorAuthentication;
 | Endpoint: /
 |
 */
-Route::get('/account', 'IndexController@index')
+Route::get('/', 'IndexController@welcome')
     ->withoutMiddleware(RequireTwoFactorAuthentication::class)
     ->name('account');
 

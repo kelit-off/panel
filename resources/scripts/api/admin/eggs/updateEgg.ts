@@ -23,6 +23,7 @@ export default (id: number, egg: Partial<Egg2>): Promise<Egg> => {
                 script_entry: egg.scriptEntry,
                 script_is_privileged: egg.scriptIsPrivileged,
                 script_install: egg.scriptInstall,
+                is_active: egg.isActive,
             },
         )
             .then(({ data }) => resolve(rawDataToEgg(data)))

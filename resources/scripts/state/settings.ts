@@ -11,6 +11,11 @@ export interface SiteSettings {
     features: {
         pullFiles: boolean;
     };
+    nests: {
+        id: number;
+        name: string;
+        eggs: { id: number; name: string }[];
+    }[];
 }
 
 export interface SettingsStore {

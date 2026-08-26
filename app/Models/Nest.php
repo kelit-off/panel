@@ -36,12 +36,21 @@ class Nest extends Model
     protected $fillable = [
         'name',
         'description',
+        'is_active',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     public static array $validationRules = [
         'author' => 'sometimes|string|email',
         'name' => 'required|string|max:191',
         'description' => 'nullable|string',
+        'is_active' => 'sometimes|boolean',
     ];
 
     /**

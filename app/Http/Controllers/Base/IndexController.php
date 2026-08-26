@@ -10,7 +10,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return view('templates/base.core');
+        return view('templates/welcome.core');
     }
 
     /**

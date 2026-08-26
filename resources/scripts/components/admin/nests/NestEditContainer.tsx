@@ -20,6 +20,7 @@ import AdminBox from '@/components/admin/AdminBox';
 import CopyOnClick from '@/components/elements/CopyOnClick';
 import Input from '@/components/elements/Input';
 import Label from '@/components/elements/Label';
+import FormikSwitch from '@/components/elements/FormikSwitch';
 import NestDeleteButton from '@/components/admin/nests/NestDeleteButton';
 import NestEggTable from '@/components/admin/nests/NestEggTable';
 
@@ -59,6 +60,7 @@ export const Context = createContextStore<ctx>({
 interface Values {
     name: string;
     description: string;
+    isActive: boolean;
 }
 
 const EditInformationContainer = () => {
@@ -75,11 +77,11 @@ const EditInformationContainer = () => {
         );
     }
 
-    const submit = ({ name, description }: Values, { setSubmitting }: FormikHelpers<Values>) => {
+    const submit = ({ name, description, isActive }: Values, { setSubmitting }: FormikHelpers<Values>) => {
         clearFlashes('nest');
 
-        updateNest(nest.id, name, description)
-            .then(() => setNest({ ...nest, name, description }))
+        updateNest(nest.id, name, description, isActive)
+            .then(() => setNest({ ...nest, name, description, isActive }))
             .catch(error => {
                 console.error(error);
                 clearAndAddHttpError({ key: 'nest', error });
@@ -93,6 +95,7 @@ const EditInformationContainer = () => {
             initialValues={{
                 name: nest.name,
                 description: nest.description || '',
+                isActive: nest.isActive,
             }}
             validationSchema={object().shape({
                 name: string().required().min(1),
@@ -118,6 +121,13 @@ const EditInformationContainer = () => {
                                 name={'description'}
                                 label={'Description'}
                                 type={'text'}
+                            />
+
+                            <FormikSwitch
+                                name={'isActive'}
+                                label={'Statut'}
+                                description={'Un jeu inactif n’apparaît nulle part côté utilisateur.'}
+                                css={tw`mt-6`}
                             />
 
                             <div css={tw`w-full flex flex-row items-center mt-6`}>

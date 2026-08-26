@@ -35,6 +35,7 @@ class EggTransformer extends Transformer
             'nest' => $model->nest_id,
             'author' => $model->author,
             'description' => $model->description,
+            'is_active' => (bool) $model->is_active,
             // "docker_image" is deprecated, but left here to avoid breaking too many things at once
             // in external software. We'll remove it down the road once things have gotten the chance
             // to upgrade to using "docker_images".

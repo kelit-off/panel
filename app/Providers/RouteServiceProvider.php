@@ -36,13 +36,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware(['web', 'csrf'])
-                ->namespace("$this->namespace\\Base")
-                ->group(function () {
-                    Route::get('/', 'IndexController@welcome')->name('index')->fallback();
-                });
 
-            Route::middleware(['web', 'auth', 'csrf'])
+            Route::middleware(['web', 'csrf'])
                 ->namespace("$this->namespace\\Base")
                 ->group(base_path('routes/base.php'));
 

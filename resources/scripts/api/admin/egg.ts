@@ -25,6 +25,7 @@ export interface Egg extends Model {
     scriptEntry: string;
     scriptIsPrivileged: boolean;
     scriptInstall: string | null;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
     relationships: {

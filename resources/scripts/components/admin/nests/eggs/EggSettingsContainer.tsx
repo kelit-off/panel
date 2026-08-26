@@ -7,6 +7,7 @@ import Editor from '@/components/elements/Editor';
 import Field, { TextareaField } from '@/components/elements/Field';
 import Input from '@/components/elements/Input';
 import Label from '@/components/elements/Label';
+import FormikSwitch from '@/components/elements/FormikSwitch';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import useFlash from '@/plugins/useFlash';
 import { jsonLanguage } from '@codemirror/lang-json';
@@ -39,7 +40,13 @@ export function EggInformationContainer () {
                 name={'description'}
                 label={'Description'}
                 type={'text'}
-                css={tw`mb-2`}
+                css={tw`mb-6`}
+            />
+
+            <FormikSwitch
+                name={'isActive'}
+                label={'Statut'}
+                description={'Une version inactive n’apparaît nulle part côté utilisateur, même si le jeu parent est actif.'}
             />
         </AdminBox>
     );
@@ -204,6 +211,7 @@ interface Values {
     configStop: string;
     configStartup: string;
     configFiles: string;
+    isActive: boolean;
 }
 
 export default function EggSettingsContainer () {
@@ -244,6 +252,7 @@ export default function EggSettingsContainer () {
                 configStop: egg.configStop || '',
                 configStartup: JSON.stringify(egg.configStartup, null, '\t') || '',
                 configFiles: JSON.stringify(egg.configFiles, null, '\t') || '',
+                isActive: egg.isActive,
             }}
             validationSchema={object().shape({
             })}

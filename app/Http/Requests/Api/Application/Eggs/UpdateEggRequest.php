@@ -23,6 +23,7 @@ class UpdateEggRequest extends StoreEggRequest
             'script_container' => 'sometimes|string',
             'script_entry' => 'sometimes|string',
             'script_install' => 'sometimes|string',
+            'is_active' => 'sometimes|boolean',
         ];
     }
 }

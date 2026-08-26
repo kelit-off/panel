@@ -50,6 +50,7 @@ export interface Egg {
     scriptEntry: string;
     scriptIsPrivileged: boolean;
     scriptInstall: string | null;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
 
@@ -79,6 +80,7 @@ export const rawDataToEgg = ({ attributes }: FractalResponseData): Egg => ({
     scriptEntry: attributes.script?.entry,
     scriptIsPrivileged: attributes.script?.privileged,
     scriptInstall: attributes.script?.install,
+    isActive: attributes.is_active,
     createdAt: new Date(attributes.created_at),
     updatedAt: new Date(attributes.updated_at),
 

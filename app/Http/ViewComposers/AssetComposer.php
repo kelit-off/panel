@@ -3,6 +3,8 @@
 namespace Pterodactyl\Http\ViewComposers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cache;
+use Pterodactyl\Models\Nest;
 use Pterodactyl\Services\Helpers\AssetHashService;
 
 class AssetComposer
@@ -37,6 +39,36 @@ class AssetComposer
             'features' => [
                 'pullFiles' => config('features.pull_files'),
             ],
+            'nests' => $this->getNests(),
         ]);
+    }
+
+    /**
+     * Cached, lightweight list of nests and their eggs so the public landing
+     * page can build its "Jeux" navigation directly from the game categories
+     * configured in the admin panel.
+     */
+    private function getNests(): array
+    {
+        return Cache::remember('landing.nests', now()->addMinutes(15), function () {
+            return Nest::query()
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(fn (Nest $nest) => [
+                    'id' => $nest->id,
+                    'name' => $nest->name,
+                    'eggs' => $nest->eggs()
+                        ->where('is_active', true)
+                        ->orderBy('name')
+                        ->get(['id', 'name'])
+                        ->map(fn ($egg) => ['id' => $egg->id, 'name' => $egg->name])
+                        ->values(),
+                ])
+                // A nest with every egg hidden shouldn't show up as an empty category.
+                ->filter(fn (array $nest) => $nest['eggs']->isNotEmpty())
+                ->values()
+                ->toArray();
+        });
     }
 }

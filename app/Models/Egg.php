@@ -53,6 +53,7 @@ class Egg extends Model
         'script_entry',
         'script_container',
         'copy_script_from',
+        'is_active',
     ];
 
     /**
@@ -68,6 +69,7 @@ class Egg extends Model
         'features' => 'array',
         'docker_images' => 'array',
         'file_denylist' => 'array',
+        'is_active' => 'boolean',
     ];
 
     public static array $validationRules = [
@@ -87,6 +89,7 @@ class Egg extends Model
         'config_startup' => 'required_without:config_from|nullable|json',
         'config_files' => 'required_without:config_from|nullable|json',
         'update_url' => 'sometimes|nullable|string',
+        'is_active' => 'sometimes|boolean',
     ];
 
     /**

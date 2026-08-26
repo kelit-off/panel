@@ -151,6 +151,7 @@ export default class Transformers {
         scriptEntry: attributes.script?.entry,
         scriptIsPrivileged: attributes.script?.privileged,
         scriptInstall: attributes.script?.install,
+        isActive: attributes.is_active,
         createdAt: new Date(attributes.created_at),
         updatedAt: new Date(attributes.updated_at),
         relationships: {
@@ -203,6 +204,7 @@ export default class Transformers {
         author: attributes.author,
         name: attributes.name,
         description: attributes.description,
+        isActive: attributes.is_active,
         createdAt: new Date(attributes.created_at),
         updatedAt: new Date(attributes.updated_at),
         relationships: {

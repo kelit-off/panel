@@ -9,6 +9,7 @@ export interface Nest extends Model {
     author: string;
     name: string;
     description?: string;
+    isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
     relationships: {
