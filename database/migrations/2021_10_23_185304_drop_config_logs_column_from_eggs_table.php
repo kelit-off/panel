@@ -26,7 +26,7 @@ class DropConfigLogsColumnFromEggsTable extends Migration
     public function down()
     {
         Schema::table('eggs', function (Blueprint $table) {
-            $table->text('config_logs')->nullable()->after('docker_image');
+            $table->text('config_logs')->nullable();
         });
     }
 }

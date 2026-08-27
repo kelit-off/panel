@@ -8,6 +8,8 @@ module.exports = {
         extend: {
             fontFamily: {
                 header: [ '"IBM Plex Sans"', '"Roboto"', 'system-ui', 'sans-serif' ],
+                vitrine: [ '"Manrope"', 'system-ui', 'sans-serif' ],
+                'vitrine-display': [ '"Space Grotesk"', '"Manrope"', 'system-ui', 'sans-serif' ],
             },
             colors: {
                 black: '#131a20',

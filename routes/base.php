@@ -11,13 +11,13 @@ use Pterodactyl\Http\Middleware\RequireTwoFactorAuthentication;
 | Endpoint: /
 |
 */
-Route::get('/', 'IndexController@welcome')
-    ->withoutMiddleware(RequireTwoFactorAuthentication::class)
-    ->name('account');
+Route::get('/', 'IndexController@index');
+    // ->withoutMiddleware(RequireTwoFactorAuthentication::class)
+    // ->name('account');
 
 Route::get('/locales/{locale}/{namespace}.json', 'LocaleController')
     ->withoutMiddleware(RequireTwoFactorAuthentication::class)
     ->where('namespace', '.*');
 
-Route::get('/{react}', 'IndexController@index')
-    ->where('react', '^(?!(\/)?(api|auth|admin|daemon)).+');
+// Route::get('/{react}', 'IndexController@index')
+//     ->where('react', '^(?!(\/)?(api|auth|admin|daemon)).+');
