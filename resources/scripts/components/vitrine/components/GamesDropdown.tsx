@@ -18,18 +18,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
-// Best-effort icon based on the nest name so common categories feel less generic;
-// falls back to a plain gamepad icon for anything that isn't recognised.
-const nestIcon = (name: string): IconDefinition => {
+// Best-effort icon based on the category name so the left-hand list feels less
+// generic; falls back to a plain gamepad icon for anything that isn't recognised.
+const categoryIcon = (name: string): IconDefinition => {
     const value = name.toLowerCase();
 
-    if (value.includes('minecraft')) return faCube;
-    if (value.includes('voice') || value.includes('teamspeak') || value.includes('mumble')) return faMicrophone;
-    if (value.includes('rust')) return faIndustry;
-    if (value.includes('source') || value.includes('fps') || value.includes('csgo')) return faCrosshairs;
-    if (value.includes('ark')) return faPaw;
     if (value.includes('roleplay') || value.includes(' rp')) return faUsers;
     if (value.includes('survie') || value.includes('survival')) return faMountain;
+    if (value.includes('fps') || value.includes('tir')) return faCrosshairs;
+    if (value.includes('communication') || value.includes('voice') || value.includes('vocal')) return faMicrophone;
 
     return faGamepad;
 };
@@ -52,10 +49,10 @@ const accentStyles: Record<AccentKey, {
     cyan: { iconText: tw`text-cyan-500`, avatarBg: tw`bg-cyan-500`, hover: tw`hover:bg-cyan-50/60` },
 };
 
-// Recognised game servers get a matching brand-ish icon shown in colour with no
+// Recognised games get a matching brand-ish icon shown in colour with no
 // background; anything else falls back to a coloured letter avatar, the colour
 // picked deterministically from the name so a given game keeps its colour.
-const eggVisual = (name: string): { icon?: IconDefinition; letter?: string; accent: AccentKey } => {
+const nestVisual = (name: string): { icon?: IconDefinition; letter?: string; accent: AccentKey } => {
     const value = name.toLowerCase();
 
     if (value.includes('fivem')) return { icon: faCar, accent: 'blue' };
@@ -70,9 +67,9 @@ const eggVisual = (name: string): { icon?: IconDefinition; letter?: string; acce
 };
 
 export default () => {
-    const nests = useStoreState((state: ApplicationStore) => state.settings.data?.nests ?? []);
+    const categories = useStoreState((state: ApplicationStore) => state.settings.data?.categories ?? []);
     const [ open, setOpen ] = useState(false);
-    const [ activeNestId, setActiveNestId ] = useState<number | null>(null);
+    const [ activeCategoryId, setActiveCategoryId ] = useState<number | null>(null);
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -93,8 +90,10 @@ export default () => {
         };
     }, []);
 
-    const activeNest = nests.length ? (nests.find(nest => nest.id === activeNestId) ?? nests[0]) : null;
-    const totalEggs = nests.reduce((sum, nest) => sum + nest.eggs.length, 0);
+    const activeCategory = categories.length
+        ? (categories.find(category => category.id === activeCategoryId) ?? categories[0])
+        : null;
+    const totalNests = categories.reduce((sum, category) => sum + category.nests.length, 0);
 
     return (
         <div ref={ref} css={tw`relative`}>
@@ -133,60 +132,60 @@ export default () => {
                         </span>
                     </div>
 
-                    {!activeNest ? (
+                    {!activeCategory ? (
                         <p css={tw`py-6 text-center text-sm italic text-neutral-400`}>
                             Aucun jeu disponible pour le moment.
                         </p>
                     ) : (
                         <>
                             <div css={tw`flex flex-row gap-0`}>
-                                {/* Nests */}
+                                {/* Categories */}
                                 <div css={tw`flex w-[170px] flex-shrink-0 flex-col gap-0.5 border-r border-neutral-100 pr-3.5`}>
-                                    {nests.map(nest => {
-                                        const isActive = activeNest.id === nest.id;
+                                    {categories.map(category => {
+                                        const isActive = activeCategory.id === category.id;
 
                                         return (
                                             <button
-                                                key={nest.id}
+                                                key={category.id}
                                                 type={'button'}
-                                                onMouseEnter={() => setActiveNestId(nest.id)}
-                                                onClick={() => setActiveNestId(nest.id)}
+                                                onMouseEnter={() => setActiveCategoryId(category.id)}
+                                                onClick={() => setActiveCategoryId(category.id)}
                                                 css={[
                                                     tw`flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[13.5px] font-semibold text-neutral-500 transition-colors duration-150 hover:bg-neutral-100 hover:text-neutral-900`,
                                                     isActive && tw`bg-primary-50 text-neutral-900`,
                                                 ]}
                                             >
                                                 <FontAwesomeIcon
-                                                    icon={nestIcon(nest.name)}
+                                                    icon={categoryIcon(category.name)}
                                                     css={[ tw`w-[15px] flex-shrink-0 text-neutral-400`, isActive && tw`text-primary-600` ]}
                                                 />
-                                                <span css={tw`flex-1 truncate`}>{nest.name}</span>
+                                                <span css={tw`flex-1 truncate`}>{category.name}</span>
                                                 <span
                                                     css={[
                                                         tw`min-w-[22px] flex-shrink-0 rounded-md bg-neutral-100 px-1.5 py-0.5 text-center text-[11px] font-bold text-neutral-500`,
                                                         isActive && tw`bg-white`,
                                                     ]}
                                                 >
-                                                    {nest.eggs.length}
+                                                    {category.nests.length}
                                                 </span>
                                             </button>
                                         );
                                     })}
                                 </div>
 
-                                {/* Eggs of the active nest */}
+                                {/* Nests (games) of the active category */}
                                 <div css={tw`grid flex-1 grid-cols-2 content-start gap-1.5 pl-4`}>
-                                    {activeNest.eggs.length === 0 && (
-                                        <span css={tw`col-span-2 py-2 text-sm italic text-neutral-400`}>Aucune offre pour le moment</span>
+                                    {activeCategory.nests.length === 0 && (
+                                        <span css={tw`col-span-2 py-2 text-sm italic text-neutral-400`}>Aucun jeu pour le moment</span>
                                     )}
-                                    {activeNest.eggs.map(egg => {
-                                        const visual = eggVisual(egg.name);
+                                    {activeCategory.nests.map(nest => {
+                                        const visual = nestVisual(nest.name);
                                         const accent = accentStyles[visual.accent];
 
                                         return (
                                             <Link
-                                                key={egg.id}
-                                                to={'/auth/login'}
+                                                key={nest.id}
+                                                to={`/jeu/${nest.id}`}
                                                 css={[
                                                     tw`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-150`,
                                                     accent.hover,
@@ -202,8 +201,12 @@ export default () => {
                                                     </span>
                                                 )}
                                                 <span css={tw`min-w-0`}>
-                                                    <strong css={tw`block truncate text-sm font-bold text-neutral-900`}>{egg.name}</strong>
-                                                    <small css={tw`mt-0.5 block text-xs text-neutral-500`}>Installation automatique</small>
+                                                    <strong css={tw`block truncate text-sm font-bold text-neutral-900`}>{nest.name}</strong>
+                                                    <small css={tw`mt-0.5 block text-xs text-neutral-500`}>
+                                                        {nest.fromPrice
+                                                            ? `Dès ${Number(nest.fromPrice).toFixed(2).replace('.', ',')} €/mois`
+                                                            : 'Voir les offres'}
+                                                    </small>
                                                 </span>
                                             </Link>
                                         );
@@ -212,7 +215,7 @@ export default () => {
                             </div>
 
                             <div css={tw`mt-3.5 border-t border-neutral-100 pt-3 text-right text-xs text-neutral-500`}>
-                                {totalEggs} offre{totalEggs !== 1 && 's'} disponible{totalEggs !== 1 && 's'}
+                                {totalNests} jeu{totalNests !== 1 && 'x'} disponible{totalNests !== 1 && 's'}
                             </div>
                         </>
                     )}

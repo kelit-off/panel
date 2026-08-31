@@ -5,6 +5,7 @@ namespace Pterodactyl\Http\ViewComposers;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 use Pterodactyl\Models\Nest;
+use Pterodactyl\Models\Category;
 use Pterodactyl\Services\Helpers\AssetHashService;
 
 class AssetComposer
@@ -39,34 +40,44 @@ class AssetComposer
             'features' => [
                 'pullFiles' => config('features.pull_files'),
             ],
-            'nests' => $this->getNests(),
+            'categories' => $this->getCategories(),
         ]);
     }
 
     /**
-     * Cached, lightweight list of nests and their eggs so the public landing
-     * page can build its "Jeux" navigation directly from the game categories
-     * configured in the admin panel.
+     * Cached, lightweight tree of categories -> nests (games) so the public
+     * landing page can build its "Jeux" navigation directly from the storefront
+     * structure configured in the admin panel. Plans are fetched on demand once
+     * a visitor picks a specific game.
      */
-    private function getNests(): array
+    private function getCategories(): array
     {
-        return Cache::remember('landing.nests', now()->addMinutes(15), function () {
-            return Nest::query()
+        return Cache::remember('landing.categories', now()->addMinutes(15), function () {
+            return Category::query()
                 ->where('is_active', true)
                 ->orderBy('name')
                 ->get(['id', 'name'])
-                ->map(fn (Nest $nest) => [
-                    'id' => $nest->id,
-                    'name' => $nest->name,
-                    'eggs' => $nest->eggs()
+                ->map(fn (Category $category) => [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'nests' => $category->nests()
                         ->where('is_active', true)
                         ->orderBy('name')
                         ->get(['id', 'name'])
-                        ->map(fn ($egg) => ['id' => $egg->id, 'name' => $egg->name])
+                        ->map(fn (Nest $nest) => [
+                            'id' => $nest->id,
+                            'name' => $nest->name,
+                            // Cheapest active plan for this game, used as the "starting from"
+                            // price shown in the storefront navigation.
+                            'fromPrice' => $nest->products()
+                                ->where('is_active', true)
+                                ->orderBy('price')
+                                ->value('price'),
+                        ])
                         ->values(),
                 ])
-                // A nest with every egg hidden shouldn't show up as an empty category.
-                ->filter(fn (array $nest) => $nest['eggs']->isNotEmpty())
+                // A category with every nest hidden shouldn't show up as an empty entry.
+                ->filter(fn (array $category) => $category['nests']->isNotEmpty())
                 ->values()
                 ->toArray();
         });

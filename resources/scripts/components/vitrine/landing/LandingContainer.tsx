@@ -116,7 +116,8 @@ const FaqItem = ({ question, answer }: { question: string; answer: string }) => 
 
 export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
-    const nests = useStoreState((state: ApplicationStore) => state.settings.data?.nests ?? []);
+    const categories = useStoreState((state: ApplicationStore) => state.settings.data?.categories ?? []);
+    const nests = categories.flatMap(category => category.nests);
 
     return (
         <LandingLayout>
@@ -217,7 +218,7 @@ export default () => {
                     {nests.map((nest, index) => (
                         <Link
                             key={nest.id}
-                            to={'/auth/login'}
+                            to={`/jeu/${nest.id}`}
                             css={tw`relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-7 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg`}
                         >
                             <span css={tw`font-mono text-xs font-semibold text-neutral-400`}>
@@ -228,7 +229,9 @@ export default () => {
                             </div>
                             <h3 css={tw`mt-4 text-xl font-bold text-neutral-900`}>{nest.name}</h3>
                             <p css={tw`mt-2 text-sm leading-relaxed text-neutral-500`}>
-                                {nest.eggs.length} logiciel{nest.eggs.length !== 1 && 's'} disponible{nest.eggs.length !== 1 && 's'}, installation automatique.
+                                {nest.fromPrice
+                                    ? `Dès ${Number(nest.fromPrice).toFixed(2).replace('.', ',')} €/mois, installation automatique.`
+                                    : 'Installation automatique.'}
                             </p>
                             <b css={tw`mt-4 block text-primary-600`}>Voir les offres</b>
                         </Link>

@@ -11,10 +11,10 @@ export interface SiteSettings {
     features: {
         pullFiles: boolean;
     };
-    nests: {
+    categories: {
         id: number;
         name: string;
-        eggs: { id: number; name: string }[];
+        nests: { id: number; name: string; fromPrice: string | null }[];
     }[];
 }
 

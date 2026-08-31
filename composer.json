@@ -22,6 +22,7 @@
         "guzzlehttp/guzzle": "^7.4.1",
         "hashids/hashids": "^4.1.0",
         "laracasts/utilities": "^3.2.1",
+        "laravel/cashier": "^15.0",
         "laravel/framework": "^10.0",
         "laravel/helpers": "^1.5.0",
         "laravel/sanctum": "^3.2",

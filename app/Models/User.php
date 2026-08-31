@@ -3,6 +3,7 @@
 namespace Pterodactyl\Models;
 
 use Pterodactyl\Rules\Username;
+use Laravel\Cashier\Billable;
 use Illuminate\Support\Collection;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -28,6 +29,7 @@ class User extends Model implements
     use Authenticatable;
     use Authorizable;
     use AvailableLanguages;
+    use Billable;
     use CanResetPassword;
     use HasAccessTokens;
     use HasFactory;
