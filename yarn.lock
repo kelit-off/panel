@@ -3227,6 +3227,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/react-stripe-js@npm:^6.8.2":
+  version: 6.8.2
+  resolution: "@stripe/react-stripe-js@npm:6.8.2"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    "@stripe/stripe-js": ">=9.5.0 <10.0.0"
+    react: ">=16.8.0 <20.0.0"
+    react-dom: ">=16.8.0 <20.0.0"
+  checksum: f42c1ee6f1c1eee78e0204984d53c431d4f395beea204d49815f977390ecb60b3e2ef72cb9d0f4d4017b86b807b3da55a9d6b2e386f3c07f5006b624a24c43e8
+  languageName: node
+  linkType: hard
+
+"@stripe/stripe-js@npm:^9.15.0":
+  version: 9.15.0
+  resolution: "@stripe/stripe-js@npm:9.15.0"
+  checksum: c59b0da8b1897026ae55140a707efcfb7193918bd224699e5a91d11f65790911ed608f27d9d7b05375ce81dd36ec789511ba9891649856ff8b81b7b2c85595f6
+  languageName: node
+  linkType: hard
+
 "@tailwindcss/forms@npm:^0.4.0":
   version: 0.4.0
   resolution: "@tailwindcss/forms@npm:0.4.0"
@@ -13099,6 +13119,8 @@ fsevents@^1.2.7:
     "@headlessui/react": ^1.5.0
     "@heroicons/react": ^1.0.5
     "@hot-loader/react-dom": ^16.14.0
+    "@stripe/react-stripe-js": ^6.8.2
+    "@stripe/stripe-js": ^9.15.0
     "@tailwindcss/forms": ^0.4.0
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.4

@@ -4,7 +4,7 @@ namespace Pterodactyl\Providers;
 
 use Laravel\Cashier\Events\WebhookReceived;
 use Pterodactyl\Events\Server\Installed as ServerInstalledEvent;
-use Pterodactyl\Listeners\ProvisionServerOnCheckoutCompleted;
+use Pterodactyl\Listeners\ProvisionServerOnSubscriptionActivated;
 use Pterodactyl\Notifications\ServerInstalled as ServerInstalledNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
             ServerInstalledNotification::class,
         ],
         WebhookReceived::class => [
-            ProvisionServerOnCheckoutCompleted::class,
+            ProvisionServerOnSubscriptionActivated::class,
         ],
     ];
 }

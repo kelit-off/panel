@@ -12,12 +12,10 @@ import {
     faMemory,
     faMicrochip,
     faPlug,
-    faSpinner,
     faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import LandingLayout from '@/components/vitrine/landing/LandingLayout';
 import getNestProducts, { StoreNestProduct, StoreNestProducts } from '@/api/store/getNestProducts';
-import createCheckoutSession from '@/api/store/createCheckoutSession';
 import { httpErrorToHuman } from '@/api/http';
 
 const formatSize = (mb: number): string => (
@@ -44,41 +42,11 @@ const buttonStyle = (featured: boolean) => [
 
 const OrderButton = ({ product, featured }: { product: StoreNestProduct; featured: boolean }) => {
     const isLoggedIn = useStoreState((state: ApplicationStore) => !!state.user.data);
-    const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState('');
-
-    if (!isLoggedIn) {
-        return (
-            <Link to={'/auth/login'} css={buttonStyle(featured)}>
-                Commander
-            </Link>
-        );
-    }
-
-    const onOrder = () => {
-        setLoading(true);
-        setError('');
-
-        createCheckoutSession(product.id)
-            .then(url => {
-                window.location.href = url;
-            })
-            .catch(err => {
-                setError(httpErrorToHuman(err));
-                setLoading(false);
-            });
-    };
 
     return (
-        <>
-            <button type={'button'} onClick={onOrder} disabled={loading} css={buttonStyle(featured)}>
-                {loading && <FontAwesomeIcon icon={faSpinner} spin/>}
-                {loading ? 'Redirection…' : 'Commander'}
-            </button>
-            {error && (
-                <p css={tw`mt-2 text-center text-xs text-red-500`}>{error}</p>
-            )}
-        </>
+        <Link to={isLoggedIn ? `/commande/${product.id}` : '/auth/login'} css={buttonStyle(featured)}>
+            Commander
+        </Link>
     );
 };
 

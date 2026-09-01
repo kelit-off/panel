@@ -2,6 +2,7 @@
 
 namespace Pterodactyl\Http\Controllers\Base;
 
+use Laravel\Cashier\Cashier;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Pterodactyl\Models\Order;
@@ -29,9 +30,12 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Starts a Stripe Checkout session (recurring subscription) for the given
-     * plan. An Order is created up front in "pending" status so the webhook
-     * has something to attach the payment/provisioning outcome to.
+     * Starts a subscription in Stripe's "incomplete" state and returns the
+     * PaymentIntent client secret so the frontend can collect card details
+     * with Stripe Elements on our own page, without redirecting to a
+     * Stripe-hosted checkout page. The subscription only becomes active once
+     * the PaymentElement confirms payment; our webhook listener reacts to
+     * that transition to kick off server provisioning.
      */
     public function store(Request $request, Product $product): JsonResponse
     {
@@ -50,14 +54,24 @@ class CheckoutController extends Controller
             'status' => Order::STATUS_PENDING,
         ]);
 
-        $checkout = $request->user()->newSubscription('default', $product->stripe_price_id)->checkout([
-            'success_url' => url("/commande/succes?order={$order->id}"),
-            'cancel_url' => url("/jeu/{$product->nest_id}"),
+        $customer = $request->user()->createOrGetStripeCustomer();
+
+        $subscription = Cashier::stripe()->subscriptions->create([
+            'customer' => $customer->id,
+            'items' => [[ 'price' => $product->stripe_price_id ]],
+            'payment_behavior' => 'default_incomplete',
+            'payment_settings' => [ 'save_default_payment_method' => 'on_subscription' ],
+            'expand' => [ 'latest_invoice.payment_intent' ],
             'metadata' => [ 'order_id' => $order->id ],
         ]);
 
+        $order->update([ 'stripe_subscription_id' => $subscription->id ]);
+
         return response()->json([
-            'url' => $checkout->asStripeCheckoutSession()->url,
+            'order' => [ 'id' => $order->id ],
+            'product' => [ 'name' => $product->name, 'price' => $product->price ],
+            'publishableKey' => config('cashier.key'),
+            'clientSecret' => $subscription->latest_invoice->payment_intent->client_secret,
         ]);
     }
 }

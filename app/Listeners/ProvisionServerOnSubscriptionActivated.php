@@ -7,14 +7,18 @@ use Laravel\Cashier\Events\WebhookReceived;
 use Pterodactyl\Services\Orders\ServerProvisioningService;
 
 /**
- * Reacts to Stripe's "checkout.session.completed" webhook: marks the matching
+ * Reacts to Stripe's "customer.subscription.created/updated" webhooks: once a
+ * subscription (created "incomplete" while the customer confirms payment on
+ * our own Stripe Elements page) transitions to "active", marks the matching
  * Order as paid and kicks off automatic server provisioning. Listening on the
  * generic WebhookReceived event (fired for every Stripe event Cashier
  * receives) rather than overriding Cashier's WebhookController keeps all of
- * Cashier's own subscription-state handling untouched.
+ * Cashier's own subscription-state syncing untouched.
  */
-class ProvisionServerOnCheckoutCompleted
+class ProvisionServerOnSubscriptionActivated
 {
+    private const HANDLED_EVENTS = [ 'customer.subscription.created', 'customer.subscription.updated' ];
+
     public function __construct(private ServerProvisioningService $provisioningService)
     {
     }
@@ -23,12 +27,17 @@ class ProvisionServerOnCheckoutCompleted
     {
         $payload = $event->payload;
 
-        if (($payload['type'] ?? null) !== 'checkout.session.completed') {
+        if (!in_array($payload['type'] ?? null, self::HANDLED_EVENTS, true)) {
             return;
         }
 
-        $session = $payload['data']['object'] ?? [];
-        $orderId = $session['metadata']['order_id'] ?? null;
+        $subscription = $payload['data']['object'] ?? [];
+
+        if (($subscription['status'] ?? null) !== 'active') {
+            return;
+        }
+
+        $orderId = $subscription['metadata']['order_id'] ?? null;
 
         if (is_null($orderId)) {
             return;
@@ -43,8 +52,7 @@ class ProvisionServerOnCheckoutCompleted
 
         $order->update([
             'status' => Order::STATUS_PAID,
-            'stripe_checkout_session_id' => $session['id'] ?? null,
-            'stripe_subscription_id' => $session['subscription'] ?? null,
+            'stripe_subscription_id' => $subscription['id'] ?? $order->stripe_subscription_id,
         ]);
 
         $this->provisioningService->handle($order->fresh());
