@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="fr-FR">
     <head>
         <title>{{ config('app.name', 'Pterodactyl') }}</title>
 

@@ -19,6 +19,15 @@ export default ({ location }: RouteComponentProps) => (
                 <Route path={'/jeu/:nestId'} exact>
                     <NestProductsContainer/>
                 </Route>
+
+                {/* Paiement */}
+                <Route path={'/order/'} exact>
+                    
+                </Route>
+                <Route path={'/order/:productId'} exact>
+                    
+                </Route>
+
                 {/* Must come before /commande/:productId — otherwise "succes" would match as a product id. */}
                 <Route path={'/commande/succes'} exact>
                     <OrderSuccessContainer/>
