@@ -15,7 +15,7 @@ import {
     faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import LandingLayout from '@/components/vitrine/landing/LandingLayout';
-import getNestProducts, { StoreNestProduct, StoreNestProducts } from '@/api/store/getNestProducts';
+import getNestProducts, { StoreNestProduct, StoreNestProducts } from '@/api/vitrine/getNestProducts';
 import { httpErrorToHuman } from '@/api/http';
 
 const formatSize = (mb: number): string => (

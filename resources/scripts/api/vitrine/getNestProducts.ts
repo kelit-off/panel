@@ -19,7 +19,7 @@ export interface StoreNestProducts {
 }
 
 export default async (nestId: number | string): Promise<StoreNestProducts> => {
-    const { data } = await http.get(`/api/store/nests/${nestId}/products`);
+    const { data } = await http.get(`/api/vitrine/nests/${nestId}/products`);
 
     return data;
 };

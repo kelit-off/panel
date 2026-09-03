@@ -6,6 +6,6 @@ use Pterodactyl\Http\Controllers\Controller;
 
 class IndexController extends Controller {
     public function index() {
-        return view('template/welcome.core')
+        return view('templates.vitrine.core');
     }
 }

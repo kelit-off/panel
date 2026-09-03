@@ -38,8 +38,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () {
 
             Route::middleware(['web', 'csrf'])
-                ->namespace("$this->namespace\\Base")
-                ->group(base_path('routes/base.php'));
+                ->namespace("$this->namespace\\Vitrine")
+                ->group(base_path('routes/vitrine.php'));
 
             Route::middleware(['web', 'auth', 'admin', 'csrf'])->prefix('/admin')
                 ->namespace("$this->namespace\\Admin")
@@ -67,6 +67,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware(['daemon'])->prefix('/api/remote')
                 ->namespace("$this->namespace\\Api\\Remote")
                 ->group(base_path('routes/api-remote.php'));
+
+            Route::middleware(['web', 'csrf'])->prefix('/api/vitrine')
+                ->namespace("$this->namespace\\Api\\Vitrine")
+                ->group(base_path('routes/api-vitrine.php'));
         });
     }
 
