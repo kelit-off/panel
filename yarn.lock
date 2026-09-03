@@ -3584,21 +3584,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:*":
-  version: 17.0.9
-  resolution: "@types/react-dom@npm:17.0.9"
-  dependencies:
-    "@types/react": "*"
-  checksum: b7e898e1a22643a371f58e801a3d1d8cf13a82d77063c24be73e840ef8d877ca1d04adc5db168d0dac3167dc050a26b1d70efc5fe8566a7f46a3c488a8322989
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^16.9.14":
-  version: 16.9.14
-  resolution: "@types/react-dom@npm:16.9.14"
+"@types/react-dom@npm:16.9.24":
+  version: 16.9.24
+  resolution: "@types/react-dom@npm:16.9.24"
   dependencies:
     "@types/react": ^16
-  checksum: 68a4ee88f7a56cdbfbca24b1936b9aa5dad8b40ffbf1f047ddf990454aec6e0c9da2a01c9ae87045e95236602061646c90d02f01281533e14f1970687873030f
+  checksum: 2385bc4bb76d2c4f60b1955fcf2d88dba11db886f43d164f3f8d0dca32236c5ef01869b825c198a237b731f725f5803e5e6b836ca6ac6f1c1810e82c3b8d3d2a
   languageName: node
   linkType: hard
 
@@ -3675,42 +3666,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
-  version: 16.9.15
-  resolution: "@types/react@npm:16.9.15"
+"@types/react@npm:16.14.70":
+  version: 16.14.70
+  resolution: "@types/react@npm:16.14.70"
   dependencies:
     "@types/prop-types": "*"
-    csstype: ^2.2.0
-  checksum: f8308708101cb44fadbe2a2018eb536174ca608499784274c7a126f98514b0a76a30f2aa3d572dcecbe99fbe8e23362353976df84e3cd438b10228321ac78618
+    "@types/scheduler": ^0.16
+    csstype: ^3.2.2
+  checksum: 24a69b467465ce3b86d2f19e29ac66f8111c3d92b6bbc3d1f2af6574bca15b81e370c2671e1782ef2dc51a1204ac51effaa182e57c794fe303e5bb14a915415f
   languageName: node
   linkType: hard
 
-"@types/react@npm:^16":
-  version: 16.14.11
-  resolution: "@types/react@npm:16.14.11"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 090a48b395a328dbd3d5cf2a5095d268324518b43ceb10a76dc285d0fb365425b35470ff08cd0656cf4b194de77eb26e66e2c82c23d12be311e433b0348e3f17
-  languageName: node
-  linkType: hard
-
-"@types/react@npm:^16.14.20":
-  version: 16.14.20
-  resolution: "@types/react@npm:16.14.20"
-  dependencies:
-    "@types/prop-types": "*"
-    "@types/scheduler": "*"
-    csstype: ^3.0.2
-  checksum: 2fc0b83ce93c4cf003832b5451a4397d6840803162ce1dea3d889c16ffb516062bc5c32f7dd17762b16b4660bc093dc6edc0d97aa5a447f43019b4331e4f760b
-  languageName: node
-  linkType: hard
-
-"@types/scheduler@npm:*":
-  version: 0.16.2
-  resolution: "@types/scheduler@npm:0.16.2"
-  checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
+"@types/scheduler@npm:^0.16":
+  version: 0.16.8
+  resolution: "@types/scheduler@npm:0.16.8"
+  checksum: 6c091b096daa490093bf30dd7947cd28e5b2cd612ec93448432b33f724b162587fed9309a0acc104d97b69b1d49a0f3fc755a62282054d62975d53d7fd13472d
   languageName: node
   linkType: hard
 
@@ -5804,13 +5774,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"colorette@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "colorette@npm:1.2.1"
-  checksum: 06e2fcdb9e2a2c527ac84509a56eadf481cde1768933eb612808f3bb3a9d9872c06b4a9f95e4d0f7befeef8b38307f79b88242d9ea52470d1125520b8116de08
-  languageName: node
-  linkType: hard
-
 "colorette@npm:^1.2.2":
   version: 1.2.2
   resolution: "colorette@npm:1.2.2"
@@ -6318,7 +6281,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^2.2.0, csstype@npm:^2.6.7":
+"csstype@npm:^2.6.7":
   version: 2.6.7
   resolution: "csstype@npm:2.6.7"
   checksum: 4495eba98af6cd9d9c61b4bf8aa1ac457d98455effec77f58f1a88842457cb0ef740152bbaa5d47e05b0b7a41dae64ef978e0e1a17065241b4e5914707e801eb
@@ -6329,6 +6292,13 @@ __metadata:
   version: 3.0.5
   resolution: "csstype@npm:3.0.5"
   checksum: bf6a7c84c246b09e4ac21c4890f3e9f7cd203e819fa5f59fee4b642e6a11d403abc5e5fb611367737caec69dec9ccaaa92397d4d528dd99ff0f03791687dd136
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.2.2":
+  version: 3.2.3
+  resolution: "csstype@npm:3.2.3"
+  checksum: cb882521b3398958a1ce6ca98c011aec0bde1c77ecaf8a1dd4db3b112a189939beae3b1308243b2fe50fc27eb3edeb0f73a5a4d91d928765dc6d5ecc7bda92ee
   languageName: node
   linkType: hard
 
@@ -11377,30 +11347,12 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.1.20":
-  version: 3.1.20
-  resolution: "nanoid@npm:3.1.20"
+"nanoid@npm:^3.3.4":
+  version: 3.3.18
+  resolution: "nanoid@npm:3.3.18"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: f6246023d5d8313c2c16be05c18cdb189a6de50ab6418b513b34086eda4aabd12866b2cbe435548c760dc43cf11830b26b14b113afde47305398e3345795e433
-  languageName: node
-  linkType: hard
-
-"nanoid@npm:^3.1.23":
-  version: 3.1.23
-  resolution: "nanoid@npm:3.1.23"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 8fa8dc3283a4fa159700a36cb22f61197547c8155831cb74f1b9c51fbc29ea80c136fd91001468d147a31d3a77f884958aec6c1beabac903c89780acacca9327
-  languageName: node
-  linkType: hard
-
-"nanoid@npm:^3.2.0":
-  version: 3.3.1
-  resolution: "nanoid@npm:3.3.1"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 4ef0969e1bbe866fc223eb32276cbccb0961900bfe79104fa5abe34361979dead8d0e061410a5c03bc3d47455685adf32c09d6f27790f4a6898fb51f7df7ec86
+  checksum: db804317d337b41602666f23014e399d1263033d13a903955c246378256fd4e002519e87199ca40b19aff52274965ac7cc6e70c13a63e194e15c4664724602d3
   languageName: node
   linkType: hard
 
@@ -12905,36 +12857,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.6, postcss@npm:^8.1.8, postcss@npm:^8.2.1":
-  version: 8.2.1
-  resolution: "postcss@npm:8.2.1"
+"postcss@npm:8.4.21":
+  version: 8.4.21
+  resolution: "postcss@npm:8.4.21"
   dependencies:
-    colorette: ^1.2.1
-    nanoid: ^3.1.20
-    source-map: ^0.6.1
-  checksum: 1d697ef5d3772128bac4fdaa0c528d2fb74e745dd0e16ad615b285ee0ab155d1e7257d23de7acb8f95e6f1d7482842b307a5de9c068d4d1e8bd2992ad4cbd321
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.2.15":
-  version: 8.3.5
-  resolution: "postcss@npm:8.3.5"
-  dependencies:
-    colorette: ^1.2.2
-    nanoid: ^3.1.23
-    source-map-js: ^0.6.2
-  checksum: c73fc4825ed27396d453a942628cd8e34dd43c11b724f43f65f376d3900037736013b6446f1d9947ce5a847837cf96649e9a3f200ca2bd94a884e91e56ee1ceb
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.6":
-  version: 8.4.6
-  resolution: "postcss@npm:8.4.6"
-  dependencies:
-    nanoid: ^3.2.0
+    nanoid: ^3.3.4
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: 60e7808f39c4a9d0fa067bfd5eb906168c4eb6d3ff0093f7d314d1979b001a16363deedccd368a7df869c63ad4ae350d27da439c94ff3fb0f8fc93d49fe38a90
+  checksum: e39ac60ccd1542d4f9d93d894048aac0d686b3bb38e927d8386005718e6793dbbb46930f0a523fe382f1bbd843c6d980aaea791252bf5e176180e5a4336d9679
   languageName: node
   linkType: hard
 
@@ -14738,13 +14668,6 @@ resolve@^2.0.0-next.3:
   version: 2.0.0
   resolution: "source-list-map@npm:2.0.0"
   checksum: dcbd6de97fba7769eaa8f5691b878dc1925055f7f0969d1d787672511da9acd6f5cd1cf3343ff09e475248954bc62f46c95396785f392d02f3fc4d909cf72b7c
-  languageName: node
-  linkType: hard
-
-"source-map-js@npm:^0.6.2":
-  version: 0.6.2
-  resolution: "source-map-js@npm:0.6.2"
-  checksum: 9c8151a29e00fd8d3ba87709fdf9a9ce48313d653f4a29a39b4ae53d346ac79e005de624796ff42eff55cbaf26d2e87f4466001ca87831d400d818c5cf146a0e
   languageName: node
   linkType: hard
 

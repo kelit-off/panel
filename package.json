@@ -191,5 +191,10 @@
             "fileName": true
         }
     },
-    "packageManager": "yarn@3.2.0"
+    "packageManager": "yarn@3.2.0",
+    "resolutions": {
+        "postcss": "8.4.21",
+        "@types/react": "16.14.70",
+        "@types/react-dom": "16.9.24"
+    }
 }
