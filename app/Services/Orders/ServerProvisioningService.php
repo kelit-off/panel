@@ -60,7 +60,7 @@ class ServerProvisioningService
 
         try {
             $server = $this->serverCreationService->handle([
-                'name' => $order->user->username . ' - ' . $nest->name,
+                'name' => $order->name ?: ($order->user->username . ' - ' . $nest->name),
                 'owner_id' => $order->user_id,
                 'egg_id' => $egg->id,
                 'nest_id' => $egg->nest_id,

@@ -16,12 +16,15 @@ interface Values {
     password: string;
 }
 
-const LoginContainer = ({ history }: RouteComponentProps) => {
+const LoginContainer = ({ history, location }: RouteComponentProps) => {
     const ref = useRef<Reaptcha | null>(null);
     const [ token, setToken ] = useState('');
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { enabled: recaptchaEnabled, siteKey } = useStoreState(state => state.settings.data!.recaptcha);
+
+    const redirectTo = new URLSearchParams(location.search).get('redirect_to');
+    const query = redirectTo ? `?redirect_to=${encodeURIComponent(redirectTo)}` : '';
 
     useEffect(() => {
         clearFlashes(undefined);
@@ -46,7 +49,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
             .then(response => {
                 if (response.complete) {
                     // @ts-ignore
-                    window.location = response.intended || '/';
+                    window.location = redirectTo || response.intended || '/';
                     return;
                 }
 
@@ -78,16 +81,16 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
             onSubmit={onSubmit}
             initialValues={{ username: '', password: '' }}
             validationSchema={object().shape({
-                username: string().required('A username or email must be provided.'),
-                password: string().required('Please enter your account password.'),
+                username: string().required('Un identifiant ou un email est requis.'),
+                password: string().required('Veuillez saisir votre mot de passe.'),
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Login to Continue'} css={tw`w-full flex`}>
+                <LoginFormContainer title={'Connexion'} subtitle={'Accédez à votre espace client.'}>
                     <Field
                         light
                         type={'text'}
-                        label={'Username or Email'}
+                        label={'Identifiant ou email'}
                         name={'username'}
                         disabled={isSubmitting}
                     />
@@ -95,14 +98,14 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                         <Field
                             light
                             type={'password'}
-                            label={'Password'}
+                            label={'Mot de passe'}
                             name={'password'}
                             disabled={isSubmitting}
                         />
                     </div>
                     <div css={tw`mt-6`}>
                         <Button type={'submit'} size={'xlarge'} isLoading={isSubmitting} disabled={isSubmitting}>
-                            Login
+                            Se connecter
                         </Button>
                     </div>
                     {recaptchaEnabled &&
@@ -120,12 +123,18 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                         }}
                     />
                     }
-                    <div css={tw`mt-6 text-center`}>
+                    <div css={tw`mt-6 flex items-center justify-center gap-4 text-center`}>
                         <Link
                             to={'/auth/password'}
                             css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
                         >
-                            Forgot password?
+                            Mot de passe oublié ?
+                        </Link>
+                        <Link
+                            to={`/auth/register${query}`}
+                            css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
+                        >
+                            Créer un compte
                         </Link>
                     </div>
                 </LoginFormContainer>

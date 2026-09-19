@@ -7,7 +7,7 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                header: [ '"IBM Plex Sans"', '"Roboto"', 'system-ui', 'sans-serif' ],
+                header: [ '"Manrope"', '"IBM Plex Sans"', 'system-ui', 'sans-serif' ],
                 vitrine: [ '"Manrope"', 'system-ui', 'sans-serif' ],
                 'vitrine-display': [ '"Space Grotesk"', '"Manrope"', 'system-ui', 'sans-serif' ],
             },

@@ -15,11 +15,11 @@ interface Props {
 }
 
 const AdminBox = ({ icon, title, className, isLoading, children, button, noPadding }: Props) => (
-    <div css={tw`relative rounded shadow-md bg-neutral-700`} className={className}>
+    <div css={tw`relative rounded-xl border border-white border-opacity-5 bg-neutral-800`} className={className}>
         <SpinnerOverlay visible={isLoading || false}/>
-        <div css={tw`flex flex-row bg-neutral-900 rounded-t px-4 xl:px-5 py-3 border-b border-black`}>
+        <div css={tw`flex flex-row items-center rounded-t-xl px-5 py-4 border-b border-white border-opacity-5`}>
             {typeof title === 'string' ?
-                <p css={tw`text-sm uppercase`}>
+                <p css={tw`font-header text-sm font-bold text-neutral-100`}>
                     {icon && <FontAwesomeIcon icon={icon} css={tw`mr-2 text-neutral-300`}/>}{title}
                 </p>
                 :

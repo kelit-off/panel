@@ -72,9 +72,7 @@ const App = () => {
                                 <Route path="/server/:id" component={ServerRouter}/>
                                 <Route path="/auth" component={AuthenticationRouter}/>
                                 <Route path="/admin" component={ChunkedAdminRouter}/>
-                                {!PterodactylUser &&
-                                <Route path="/panel" exact component={DashboardRouter}/>
-                                }
+                                <Route path="/account" component={DashboardRouter}/>
                                 <Route path="/" component={VitrineRouter}/>
                                 <Route path={'*'} component={NotFound}/>
                             </Switch>

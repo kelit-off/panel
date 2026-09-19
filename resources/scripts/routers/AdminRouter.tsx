@@ -12,6 +12,14 @@ import NewNodeContainer from '@/components/admin/nodes/NewNodeContainer';
 import NodeRouter from '@/components/admin/nodes/NodeRouter';
 import LocationsContainer from '@/components/admin/locations/LocationsContainer';
 import LocationEditContainer from '@/components/admin/locations/LocationEditContainer';
+import InvoicesContainer from '@/components/admin/invoices/InvoicesContainer';
+import TicketsContainer from '@/components/admin/tickets/TicketsContainer';
+import TicketEditContainer from '@/components/admin/tickets/TicketEditContainer';
+import CategoriesContainer from '@/components/admin/categories/CategoriesContainer';
+import CategoryEditContainer from '@/components/admin/categories/CategoryEditContainer';
+import ProductsContainer from '@/components/admin/products/ProductsContainer';
+import NewProductContainer from '@/components/admin/products/NewProductContainer';
+import ProductEditContainer from '@/components/admin/products/ProductEditContainer';
 import ServersContainer from '@/components/admin/servers/ServersContainer';
 import NewServerContainer from '@/components/admin/servers/NewServerContainer';
 import ServerRouter from '@/components/admin/servers/ServerRouter';
@@ -30,19 +38,24 @@ import { NotFound } from '@/components/elements/ScreenBlock';
 import { ApplicationStore } from '@/state';
 import { AdminContext } from '@/state/admin';
 import {
+    ChatAltIcon,
     CogIcon,
+    CreditCardIcon,
     DatabaseIcon,
     FolderIcon,
     GlobeIcon,
     OfficeBuildingIcon,
     ReplyIcon,
     ServerIcon,
+    ShoppingCartIcon,
+    TagIcon,
     TerminalIcon,
     UserGroupIcon,
     UsersIcon,
     ViewGridIcon,
 } from '@heroicons/react/outline';
-import CollapsedIcon from '@/assets/images/pterodactyl.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faServer } from '@fortawesome/free-solid-svg-icons';
 import Sidebar from '@/components/admin/Sidebar';
 import useUserPersistedState from '@/plugins/useUserPersistedState';
 import UsersContainer from '@/components/admin/users/UsersContainer';
@@ -59,52 +72,70 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
         <div css={tw`h-screen flex`}>
             <Sidebar css={tw`flex-none`} $collapsed={collapsed}>
                 <div
-                    css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}
+                    css={tw`h-16 w-full flex items-center justify-center gap-3 mb-4 select-none cursor-pointer flex-shrink-0`}
+                    style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}
                     onClick={() => setCollapsed(!collapsed)}
                 >
-                    {!collapsed ?
-                        <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}>{applicationName}</h1>
-                        :
-                        <img src={CollapsedIcon} css={tw`mt-4 w-20`} alt={'Pterodactyl Icon'}/>
+                    <div css={tw`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary-600 shadow-lg`}>
+                        <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
+                    </div>
+                    {!collapsed &&
+                    <div css={tw`flex flex-col`}>
+                        <span css={tw`font-header text-base font-extrabold leading-tight text-neutral-50 whitespace-nowrap`}>{applicationName}</span>
+                        <span css={tw`text-xs leading-tight text-neutral-500`}>Administration</span>
+                    </div>
                     }
                 </div>
                 <Sidebar.Wrapper>
-                    <Sidebar.Section>Administration</Sidebar.Section>
+                    <Sidebar.Section>Général</Sidebar.Section>
                     <NavLink to={`${match.url}`} exact>
-                        <OfficeBuildingIcon/><span>Overview</span>
+                        <OfficeBuildingIcon/><span>Vue d&apos;ensemble</span>
                     </NavLink>
                     <NavLink to={`${match.url}/settings`}>
-                        <CogIcon/><span>Settings</span>
+                        <CogIcon/><span>Paramètres</span>
                     </NavLink>
-                    <Sidebar.Section>Management</Sidebar.Section>
+                    <Sidebar.Section>Infrastructure</Sidebar.Section>
                     <NavLink to={`${match.url}/databases`}>
-                        <DatabaseIcon/><span>Databases</span>
+                        <DatabaseIcon/><span>Bases de données</span>
                     </NavLink>
                     <NavLink to={`${match.url}/locations`}>
-                        <GlobeIcon/><span>Locations</span>
+                        <GlobeIcon/><span>Emplacements</span>
                     </NavLink>
                     <NavLink to={`${match.url}/nodes`}>
                         <ServerIcon/><span>Nodes</span>
                     </NavLink>
                     <NavLink to={`${match.url}/servers`}>
-                        <TerminalIcon/><span>Servers</span>
+                        <TerminalIcon/><span>Serveurs</span>
                     </NavLink>
                     <NavLink to={`${match.url}/users`}>
-                        <UsersIcon/><span>Users</span>
+                        <UsersIcon/><span>Utilisateurs</span>
                     </NavLink>
                     <NavLink to={`${match.url}/roles`}>
-                        <UserGroupIcon/><span>Roles</span>
+                        <UserGroupIcon/><span>Rôles</span>
                     </NavLink>
-                    <Sidebar.Section>Service Management</Sidebar.Section>
+                    <Sidebar.Section>Services</Sidebar.Section>
                     <NavLink to={`${match.url}/nests`}>
-                        <ViewGridIcon/><span>Nests</span>
+                        <ViewGridIcon/><span>Jeux (Nests)</span>
                     </NavLink>
                     <NavLink to={`${match.url}/mounts`}>
-                        <FolderIcon/><span>Mounts</span>
+                        <FolderIcon/><span>Montages</span>
+                    </NavLink>
+                    <Sidebar.Section>Boutique</Sidebar.Section>
+                    <NavLink to={`${match.url}/categories`}>
+                        <TagIcon/><span>Catégories</span>
+                    </NavLink>
+                    <NavLink to={`${match.url}/products`}>
+                        <ShoppingCartIcon/><span>Offres</span>
+                    </NavLink>
+                    <NavLink to={`${match.url}/invoices`}>
+                        <CreditCardIcon/><span>Factures</span>
+                    </NavLink>
+                    <NavLink to={`${match.url}/tickets`}>
+                        <ChatAltIcon/><span>Tickets</span>
                     </NavLink>
                 </Sidebar.Wrapper>
                 <NavLink to={'/'} css={tw`mt-auto mb-3`}>
-                    <ReplyIcon/><span>Return</span>
+                    <ReplyIcon/><span>Retour au site</span>
                 </NavLink>
                 <Sidebar.User>
                     {avatarURL &&
@@ -144,6 +175,14 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                         <Route path={`${match.path}/mounts`} component={MountsContainer} exact/>
                         <Route path={`${match.path}/mounts/new`} component={NewMountContainer} exact/>
                         <Route path={`${match.path}/mounts/:id`} component={MountEditContainer} exact/>
+                        <Route path={`${match.path}/categories`} component={CategoriesContainer} exact/>
+                        <Route path={`${match.path}/categories/:id`} component={CategoryEditContainer} exact/>
+                        <Route path={`${match.path}/products`} component={ProductsContainer} exact/>
+                        <Route path={`${match.path}/products/new`} component={NewProductContainer} exact/>
+                        <Route path={`${match.path}/products/:id`} component={ProductEditContainer} exact/>
+                        <Route path={`${match.path}/invoices`} component={InvoicesContainer} exact/>
+                        <Route path={`${match.path}/tickets`} component={TicketsContainer} exact/>
+                        <Route path={`${match.path}/tickets/:id`} component={TicketEditContainer} exact/>
                         <Route path={'*'} component={NotFound}/>
                     </Switch>
                 </div>

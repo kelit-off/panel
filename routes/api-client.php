@@ -17,6 +17,14 @@ use Pterodactyl\Http\Middleware\Api\Client\Server\AuthenticateServerAccess;
 Route::get('/', 'ClientController@index')->name('api:client.index');
 Route::get('/permissions', 'ClientController@permissions');
 
+Route::group(['prefix' => '/tickets'], function () {
+    Route::get('/', [Client\TicketController::class, 'index']);
+    Route::post('/', [Client\TicketController::class, 'store']);
+    Route::get('/{ticket}', [Client\TicketController::class, 'show']);
+    Route::post('/{ticket}/replies', [Client\TicketController::class, 'reply']);
+    Route::post('/{ticket}/close', [Client\TicketController::class, 'close']);
+});
+
 Route::group(['prefix' => '/account'], function () {
     Route::get('/', 'AccountController@index')->name('api:client.account')->withoutMiddleware(RequireTwoFactorAuthentication::class);
     Route::get('/two-factor', 'TwoFactorController@index')->withoutMiddleware(RequireTwoFactorAuthentication::class);
@@ -34,6 +42,9 @@ Route::group(['prefix' => '/account'], function () {
     Route::get('/security-keys/register', [Client\SecurityKeyController::class, 'create'])->withoutMiddleware(RequireTwoFactorAuthentication::class);
     Route::post('/security-keys/register', [Client\SecurityKeyController::class, 'store'])->withoutMiddleware(RequireTwoFactorAuthentication::class);
     Route::delete('/security-keys/{securityKey}', [Client\SecurityKeyController::class, 'delete'])->withoutMiddleware(RequireTwoFactorAuthentication::class);
+
+    Route::get('/billing/invoices', [Client\BillingController::class, 'index']);
+    Route::get('/billing/invoices/{invoice}', [Client\BillingController::class, 'show']);
 
     Route::get('/ssh', 'SSHKeyController@index');
     Route::post('/ssh', 'SSHKeyController@store');

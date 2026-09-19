@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Pterodactyl\Models\Task;
 use Illuminate\Routing\Route;
 use Pterodactyl\Models\Server;
+use Pterodactyl\Models\SupportTicket;
 use Illuminate\Container\Container;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Contracts\Routing\Registrar;
@@ -33,6 +34,10 @@ class SubstituteClientApiBindings
     {
         $this->router->bind('server', function ($value) {
             return Server::query()->where(Str::length($value) === 8 ? 'uuidShort' : 'uuid', $value)->firstOrFail();
+        });
+
+        $this->router->bind('ticket', function ($value) use ($request) {
+            return SupportTicket::query()->where('user_id', $request->user()->id)->findOrFail($value);
         });
 
         $this->router->bind('allocation', function ($value, $route) {

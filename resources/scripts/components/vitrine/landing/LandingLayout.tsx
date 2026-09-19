@@ -12,6 +12,7 @@ interface Props {
 
 export default ({ children }: Props) => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
+    const accountLink = useStoreState((state: ApplicationStore) => (state.user.data ? '/account' : '/auth/login'));
 
     return (
         <div css={tw`flex min-h-screen flex-col bg-[#f6f8fb] font-vitrine text-neutral-900`}>
@@ -56,7 +57,7 @@ export default ({ children }: Props) => {
                     <h4 css={tw`mb-3.5 text-xs font-bold uppercase tracking-wider text-neutral-400`}>Ressources</h4>
                     <ul css={tw`space-y-2.5`}>
                         <li><a href={'#faq'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Questions fréquentes</a></li>
-                        <li><Link to={'/auth/login'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Espace client</Link></li>
+                        <li><Link to={accountLink} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Espace client</Link></li>
                         <li><a href={'#'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Mentions légales</a></li>
                     </ul>
                 </div>

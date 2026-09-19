@@ -1,76 +1,74 @@
 import React, { forwardRef } from 'react';
 import { Form } from 'formik';
 import FlashMessageRender from '@/components/FlashMessageRender';
-import tw, { styled } from 'twin.macro';
-import PterodactylLogo from '@/assets/images/pterodactyl.svg';
+import tw from 'twin.macro';
 import { Link } from 'react-router-dom';
+import { useStoreState } from 'easy-peasy';
+import { ApplicationStore } from '@/state';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faServer } from '@fortawesome/free-solid-svg-icons';
 
-const Wrapper = styled.div`
-  ${tw`sm:w-4/5 sm:mx-auto md:p-10 lg:w-3/5 xl:w-full`}
-  max-width: 700px;
-`;
-
-interface InnerContentProps {
-    children: React.ReactNode;
+interface ContainerProps {
+    title?: string;
+    subtitle?: string;
     sidebar?: React.ReactNode;
+    children: React.ReactNode;
 }
 
-const InnerContainer = ({ children, sidebar }: InnerContentProps) => (
-    <div css={tw`md:flex w-full bg-white shadow-lg rounded-lg p-6 md:pl-0 mx-1`}>
-        <div css={tw`flex-none select-none mb-6 md:mb-0 self-center w-48 md:w-64 mx-auto`}>
-            {sidebar || <Link to={'/auth/login'}><img src={PterodactylLogo} css={tw`block w-full`}/></Link>}
-        </div>
-        <div css={tw`flex-1`}>
-            {children}
-        </div>
-    </div>
-);
+const Container = ({ title, subtitle, sidebar, children }: ContainerProps) => {
+    const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
 
-const Container = ({ title, children }: { title?: string, children: React.ReactNode }) => (
-    <Wrapper>
-        {title &&
-        <h2 css={tw`text-3xl text-center text-neutral-100 font-medium py-4`}>
-            {title}
-        </h2>
-        }
-        <FlashMessageRender css={tw`mb-2 px-1`}/>
-        {children}
-        <p css={tw`text-center text-neutral-500 text-xs mt-4`}>
-            &copy; 2015 - {(new Date()).getFullYear()}&nbsp;
-            <a
-                rel={'noopener nofollow noreferrer'}
-                href={'https://pterodactyl.io'}
-                target={'_blank'}
-                css={tw`no-underline text-neutral-500 hover:text-neutral-300`}
-            >
-                Pterodactyl Software
-            </a>
-        </p>
-    </Wrapper>
-);
+    return (
+        <div css={tw`flex min-h-screen flex-col items-center justify-center bg-[#f6f8fb] px-4 py-10 font-vitrine text-neutral-900`}>
+            <Link to={'/'} css={tw`mb-8 flex items-center gap-2.5`}>
+                <div css={tw`flex h-9 w-9 items-center justify-center rounded-lg bg-primary-600 shadow-lg`}>
+                    <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
+                </div>
+                <span css={tw`font-vitrine-display text-xl font-bold tracking-tight`}>{name}</span>
+            </Link>
+
+            <div css={tw`w-full max-w-md`}>
+                {sidebar && <div css={tw`mb-5 text-primary-600`}>{sidebar}</div>}
+                {title && <h1 css={tw`text-center font-vitrine-display text-2xl font-bold tracking-tight text-neutral-900`}>{title}</h1>}
+                {subtitle && <p css={tw`mt-1.5 text-center text-sm text-neutral-500`}>{subtitle}</p>}
+                <FlashMessageRender css={tw`mt-5`}/>
+                <div css={tw`mt-6 rounded-2xl border border-neutral-200 bg-white p-7 shadow-sm`}>
+                    {children}
+                </div>
+            </div>
+
+            <Link to={'/'} css={tw`mt-8 inline-flex items-center gap-2 text-sm font-semibold text-neutral-500 hover:text-neutral-900`}>
+                <FontAwesomeIcon icon={faArrowLeft} css={tw`text-xs`}/> Retour au site
+            </Link>
+        </div>
+    );
+};
 
 type FormContainerProps = React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> & {
     title?: string;
+    subtitle?: string;
     sidebar?: React.ReactNode;
 }
 
-const FormContainer = forwardRef<HTMLFormElement, FormContainerProps>(({ title, sidebar, ...props }, ref) => (
-    <Container title={title}>
-        <Form {...props} ref={ref}>
-            <InnerContainer sidebar={sidebar}>{props.children}</InnerContainer>
+const FormContainer = forwardRef<HTMLFormElement, FormContainerProps>(({ title, subtitle, sidebar, className: _className, ...props }, ref) => (
+    <Container title={title} subtitle={subtitle} sidebar={sidebar}>
+        <Form {...props} ref={ref} css={tw`m-0`}>
+            {props.children}
         </Form>
     </Container>
 ));
+FormContainer.displayName = 'FormContainer';
 
 type DivContainerProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
     title?: string;
+    subtitle?: string;
     sidebar?: React.ReactNode;
 }
 
-export const DivContainer = ({ title, sidebar, ...props }: DivContainerProps) => (
-    <Container title={title}>
+export const DivContainer = ({ title, subtitle, sidebar, className: _className, ...props }: DivContainerProps) => (
+    <Container title={title} subtitle={subtitle} sidebar={sidebar}>
         <div {...props}>
-            <InnerContainer sidebar={sidebar}>{props.children}</InnerContainer>
+            {props.children}
         </div>
     </Container>
 );

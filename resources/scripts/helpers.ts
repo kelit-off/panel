@@ -90,3 +90,11 @@ export const decodeSecurityKeyCredentials = (credentials: PublicKeyCredentialDes
     type: c.type,
     transports: c.transports,
 }));
+
+export const cpuToCores = (percent: number): number => Math.round((percent / 100) * 100) / 100;
+
+export const formatCpu = (percent: number): string => {
+    const cores = cpuToCores(percent);
+
+    return `${String(cores).replace('.', ',')} vCore${cores > 1 ? 's' : ''}`;
+};

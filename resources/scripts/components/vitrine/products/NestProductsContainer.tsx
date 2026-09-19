@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useStoreState } from 'easy-peasy';
-import { ApplicationStore } from '@/state';
 import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -17,6 +15,7 @@ import {
 import LandingLayout from '@/components/vitrine/landing/LandingLayout';
 import getNestProducts, { StoreNestProduct, StoreNestProducts } from '@/api/vitrine/getNestProducts';
 import { httpErrorToHuman } from '@/api/http';
+import { formatCpu } from '@/helpers';
 
 const formatSize = (mb: number): string => (
     mb >= 1024 ? `${(mb / 1024).toFixed(mb % 1024 === 0 ? 0 : 1)} Go` : `${mb} Mo`
@@ -27,7 +26,7 @@ const formatPrice = (price: string): string => Number(price).toFixed(2).replace(
 const specs = (product: StoreNestProduct) => [
     { icon: faMemory, label: 'RAM', value: formatSize(product.memory) },
     { icon: faHdd, label: 'Disque', value: formatSize(product.disk) },
-    { icon: faMicrochip, label: 'CPU', value: `${product.cpu}%` },
+    { icon: faMicrochip, label: 'CPU', value: product.cpu === 0 ? 'Illimité' : formatCpu(product.cpu) },
     { icon: faDatabase, label: 'Bases de données', value: String(product.databases) },
     { icon: faCloudUploadAlt, label: 'Sauvegardes', value: String(product.backups) },
     { icon: faPlug, label: 'Emplacements réseau', value: String(product.allocations) },
@@ -40,15 +39,11 @@ const buttonStyle = (featured: boolean) => [
         : tw`border border-neutral-200 text-neutral-900 hover:border-neutral-300 hover:bg-neutral-50`,
 ];
 
-const OrderButton = ({ product, featured }: { product: StoreNestProduct; featured: boolean }) => {
-    const isLoggedIn = useStoreState((state: ApplicationStore) => !!state.user.data);
-
-    return (
-        <Link to={isLoggedIn ? `/commande/${product.id}` : '/auth/login'} css={buttonStyle(featured)}>
-            Commander
-        </Link>
-    );
-};
+const OrderButton = ({ product, featured }: { product: StoreNestProduct; featured: boolean }) => (
+    <Link to={`/commande/${product.id}`} css={buttonStyle(featured)}>
+        Commander
+    </Link>
+);
 
 export default () => {
     const { nestId } = useParams<{ nestId: string }>();

@@ -159,7 +159,7 @@ const LocationEditContainer = () => {
         <AdminContentBlock title={'Location - ' + location.short}>
             <div css={tw`w-full flex flex-row items-center mb-8`}>
                 <div css={tw`flex flex-col flex-shrink`} style={{ minWidth: '0' }}>
-                    <h2 css={tw`text-2xl text-neutral-50 font-header font-medium`}>{location.short}</h2>
+                    <h2 css={tw`text-2xl text-neutral-50 font-header font-extrabold tracking-tight`}>{location.short}</h2>
                     {
                         (location.long || '').length < 1 ?
                             <p css={tw`text-base text-neutral-400`}>

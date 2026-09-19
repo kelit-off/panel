@@ -34,7 +34,7 @@ export const TableHeader = ({ name, onClick, direction }: { name?: string, onCli
     return (
         <th css={tw`px-6 py-2`} onClick={onClick}>
             <span css={tw`flex flex-row items-center cursor-pointer`}>
-                <span css={tw`text-xs font-medium tracking-wider uppercase text-neutral-300 whitespace-nowrap select-none`}>{name}</span>
+                <span css={tw`text-xs font-bold tracking-wider uppercase text-neutral-400 whitespace-nowrap select-none`}>{name}</span>
 
                 {direction !== undefined ?
                     <div css={tw`ml-1`}>
@@ -53,7 +53,7 @@ export const TableHeader = ({ name, onClick, direction }: { name?: string, onCli
 
 export const TableHead = ({ children }: { children: React.ReactNode }) => {
     return (
-        <thead css={tw`bg-neutral-900 border-t border-b border-neutral-500`}>
+        <thead css={tw`bg-neutral-900 bg-opacity-40 border-b border-white border-opacity-5`}>
             <tr>
                 <TableHeader/>
                 {children}
@@ -72,7 +72,7 @@ export const TableBody = ({ children }: { children: React.ReactNode }) => {
 
 export const TableRow = ({ children }: { children: React.ReactNode }) => {
     return (
-        <tr css={tw`h-12 hover:bg-neutral-600`}>
+        <tr css={tw`h-14 border-b border-white border-opacity-5 transition-colors duration-150 hover:bg-white hover:bg-opacity-5`}>
             {children}
         </tr>
     );
@@ -86,16 +86,16 @@ interface Props<T> {
 }
 
 const PaginationButton = styled.button<{ active?: boolean }>`
-    ${tw`relative items-center px-3 py-1 -ml-px text-sm font-normal leading-5 transition duration-150 ease-in-out border border-neutral-500 focus:z-10 focus:outline-none focus:border-primary-300 inline-flex`};
+    ${tw`relative items-center px-3 py-1 -ml-px text-sm font-normal leading-5 transition duration-150 ease-in-out border border-white border-opacity-10 focus:z-10 focus:outline-none focus:border-primary-300 inline-flex`};
 
-    ${props => props.active ? tw`bg-neutral-500 text-neutral-50` : tw`bg-neutral-600 text-neutral-200 hover:text-neutral-50`};
+    ${props => props.active ? tw`bg-primary-600 border-primary-600 text-white` : tw`bg-neutral-800 text-neutral-300 hover:text-neutral-50`};
 `;
 
 const PaginationArrow = styled.button`
-    ${tw`relative inline-flex items-center px-1 py-1 text-sm font-medium leading-5 transition duration-150 ease-in-out border border-neutral-500 bg-neutral-600 text-neutral-400 hover:text-neutral-50 focus:z-10 focus:outline-none focus:border-primary-300`};
+    ${tw`relative inline-flex items-center px-1 py-1 text-sm font-medium leading-5 transition duration-150 ease-in-out border border-white border-opacity-10 bg-neutral-800 text-neutral-400 hover:text-neutral-50 focus:z-10 focus:outline-none focus:border-primary-300`};
 
     &:disabled {
-        ${tw`bg-neutral-700`}
+        ${tw`bg-neutral-900`}
     }
 
     &:hover:disabled {
@@ -153,9 +153,9 @@ export function Pagination<T> ({ data, onPageSelect, children }: Props<T>) {
         <>
             {children}
 
-            <div css={tw`h-12 flex flex-row items-center w-full px-6 py-3 border-t border-neutral-500`}>
+            <div css={tw`h-14 flex flex-row items-center w-full px-6 py-3 border-t border-white border-opacity-5`}>
                 <p css={tw`text-sm leading-5 text-neutral-400`}>
-                    Showing <span css={tw`text-neutral-300`}>{((pagination.currentPage - 1) * pagination.perPage) + (pagination.total > 0 ? 1 : 0)}</span> to <span css={tw`text-neutral-300`}>{((pagination.currentPage - 1) * pagination.perPage) + pagination.count}</span> of <span css={tw`text-neutral-300`}>{pagination.total}</span> results
+                    Affichage de <span css={tw`text-neutral-300`}>{((pagination.currentPage - 1) * pagination.perPage) + (pagination.total > 0 ? 1 : 0)}</span> à <span css={tw`text-neutral-300`}>{((pagination.currentPage - 1) * pagination.perPage) + pagination.count}</span> sur <span css={tw`text-neutral-300`}>{pagination.total}</span> résultats
                 </p>
 
                 {isFirstPage && isLastPage ?
@@ -203,7 +203,7 @@ export const NoItems = ({ className }: { className?: string }) => {
                 <img src={'/assets/svgs/not_found.svg'} alt={'No Items'} css={tw`h-full select-none`}/>
             </div>
 
-            <p css={tw`text-lg text-neutral-300 text-center font-normal sm:mt-8`}>No items could be found, it&apos;s almost like they are hiding.</p>
+            <p css={tw`text-lg text-neutral-300 text-center font-normal sm:mt-8`}>Rien à afficher pour le moment.</p>
         </div>
     );
 };
@@ -254,7 +254,7 @@ export const ContentWrapper = ({ checked, onSelectAllClick, onSearch, children }
                         <Input
                             value={inputText}
                             css={tw`h-8`}
-                            placeholder="Search..."
+                            placeholder="Rechercher…"
                             onChange={e => {
                                 setInputText(e.currentTarget.value);
                                 search(e.currentTarget.value);
@@ -272,7 +272,7 @@ export const ContentWrapper = ({ checked, onSelectAllClick, onSearch, children }
 export default ({ children }: { children: React.ReactNode }) => {
     return (
         <div css={tw`flex flex-col w-full`}>
-            <div css={tw`rounded-lg shadow-md bg-neutral-700`}>
+            <div css={tw`overflow-hidden rounded-xl border border-white border-opacity-5 bg-neutral-800`}>
                 {children}
             </div>
         </div>

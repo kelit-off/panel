@@ -10,6 +10,7 @@ import GamesDropdown from '@/components/vitrine/components/GamesDropdown';
 
 export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
+    const accountLink = useStoreState((state: ApplicationStore) => (state.user.data ? '/account' : '/auth/login'));
 
     return (
         <div css={tw`sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/90 font-vitrine backdrop-blur`}>
@@ -48,7 +49,7 @@ export default () => {
                         <FontAwesomeIcon icon={faDiscord}/>
                     </a>
                     <Link
-                        to={'/auth/login'}
+                        to={accountLink}
                         css={tw`inline-flex h-10 items-center rounded-lg bg-primary-600 px-4 text-sm font-bold text-white shadow-lg transition-colors duration-150 hover:bg-primary-700`}
                     >
                         Espace client

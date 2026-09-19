@@ -7,8 +7,8 @@ export interface SubscriptionIntent {
     clientSecret: string;
 }
 
-export default async (productId: number | string): Promise<SubscriptionIntent> => {
-    const { data } = await http.post(`/api/store/products/${productId}/checkout`);
+export default async (productId: number | string, name: string): Promise<SubscriptionIntent> => {
+    const { data } = await http.post(`/api/store/products/${productId}/checkout`, { name });
 
     return data;
 };

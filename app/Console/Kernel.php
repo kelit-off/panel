@@ -28,6 +28,9 @@ class Kernel extends ConsoleKernel
             $schedule->command('p:maintenance:prune-backups')->everyThirtyMinutes();
         }
 
+        // Suspend unpaid servers that are still running and delete the ones past their grace period.
+        $schedule->command('p:orders:enforce-billing')->everyFifteenMinutes()->withoutOverlapping();
+
         // Every day cleanup any internal backups of service files.
         $schedule->command('p:maintenance:clean-service-backups')->daily();
     }

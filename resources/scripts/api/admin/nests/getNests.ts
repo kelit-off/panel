@@ -10,6 +10,7 @@ export interface Nest {
     author: string;
     name: string;
     description?: string;
+    categoryId: number | null;
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -25,6 +26,7 @@ export const rawDataToNest = ({ attributes }: FractalResponseData): Nest => ({
     author: attributes.author,
     name: attributes.name,
     description: attributes.description,
+    categoryId: attributes.category_id,
     isActive: attributes.is_active,
     createdAt: new Date(attributes.created_at),
     updatedAt: new Date(attributes.updated_at),

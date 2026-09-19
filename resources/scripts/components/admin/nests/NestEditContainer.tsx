@@ -9,9 +9,12 @@ import FlashMessageRender from '@/components/FlashMessageRender';
 import { Nest } from '@/api/admin/nests/getNests';
 import getNest from '@/api/admin/nests/getNest';
 import updateNest from '@/api/admin/nests/updateNest';
+import getAllCategories from '@/api/admin/categories/getAllCategories';
+import { Category } from '@/api/admin/categories/getCategories';
 import { object, string } from 'yup';
 import Button from '@/components/elements/Button';
 import Field from '@/components/elements/Field';
+import Select from '@/components/elements/Select';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import { ApplicationStore } from '@/state';
 import { action, Action, Actions, createContextStore, useStoreActions } from 'easy-peasy';
@@ -60,16 +63,22 @@ export const Context = createContextStore<ctx>({
 interface Values {
     name: string;
     description: string;
+    categoryId: number;
     isActive: boolean;
 }
 
 const EditInformationContainer = () => {
     const history = useHistory();
+    const [ categories, setCategories ] = useState<Category[]>([]);
 
     const { clearFlashes, clearAndAddHttpError } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
 
     const nest = Context.useStoreState(state => state.nest);
     const setNest = Context.useStoreActions(actions => actions.setNest);
+
+    useEffect(() => {
+        getAllCategories().then(setCategories).catch(console.error);
+    }, []);
 
     if (nest === undefined) {
         return (
@@ -77,11 +86,11 @@ const EditInformationContainer = () => {
         );
     }
 
-    const submit = ({ name, description, isActive }: Values, { setSubmitting }: FormikHelpers<Values>) => {
+    const submit = ({ name, description, categoryId, isActive }: Values, { setSubmitting }: FormikHelpers<Values>) => {
         clearFlashes('nest');
 
-        updateNest(nest.id, name, description, isActive)
-            .then(() => setNest({ ...nest, name, description, isActive }))
+        updateNest(nest.id, name, description, categoryId || null, isActive)
+            .then(() => setNest({ ...nest, name, description, categoryId: categoryId || null, isActive }))
             .catch(error => {
                 console.error(error);
                 clearAndAddHttpError({ key: 'nest', error });
@@ -95,6 +104,7 @@ const EditInformationContainer = () => {
             initialValues={{
                 name: nest.name,
                 description: nest.description || '',
+                categoryId: nest.categoryId || 0,
                 isActive: nest.isActive,
             }}
             validationSchema={object().shape({
@@ -102,7 +112,7 @@ const EditInformationContainer = () => {
                 description: string().max(255, ''),
             })}
         >
-            {({ isSubmitting, isValid }) => (
+            {({ isSubmitting, isValid, values, setFieldValue }) => (
                 <React.Fragment>
                     <AdminBox title={'Edit Nest'} css={tw`flex-1 self-start w-full relative mb-8 lg:mb-0 mr-0 lg:mr-4`}>
                         <SpinnerOverlay visible={isSubmitting}/>
@@ -122,6 +132,19 @@ const EditInformationContainer = () => {
                                 label={'Description'}
                                 type={'text'}
                             />
+
+                            <div css={tw`mt-6`}>
+                                <Label htmlFor={'categoryId'}>Catégorie</Label>
+                                <Select
+                                    id={'categoryId'}
+                                    name={'categoryId'}
+                                    value={values.categoryId}
+                                    onChange={e => setFieldValue('categoryId', Number(e.currentTarget.value))}
+                                >
+                                    <option value={0}>Aucune catégorie</option>
+                                    {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
+                                </Select>
+                            </div>
 
                             <FormikSwitch
                                 name={'isActive'}
@@ -240,7 +263,7 @@ const NestEditContainer = () => {
         <AdminContentBlock title={'Nests - ' + nest.name}>
             <div css={tw`w-full flex flex-row items-center mb-8`}>
                 <div css={tw`flex flex-col flex-shrink`} style={{ minWidth: '0' }}>
-                    <h2 css={tw`text-2xl text-neutral-50 font-header font-medium`}>{nest.name}</h2>
+                    <h2 css={tw`text-2xl text-neutral-50 font-header font-extrabold tracking-tight`}>{nest.name}</h2>
                     {
                         (nest.description || '').length < 1 ?
                             <p css={tw`text-base text-neutral-400`}>

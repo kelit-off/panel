@@ -40,7 +40,7 @@ export default ({ match, location }: RouteComponentProps<{ token: string }>) => 
                 console.error(error);
 
                 setSubmitting(false);
-                addFlash({ type: 'error', title: 'Error', message: httpErrorToHuman(error) });
+                addFlash({ type: 'error', title: 'Erreur', message: httpErrorToHuman(error) });
             });
     };
 
@@ -52,36 +52,36 @@ export default ({ match, location }: RouteComponentProps<{ token: string }>) => 
                 passwordConfirmation: '',
             }}
             validationSchema={object().shape({
-                password: string().required('A new password is required.')
-                    .min(8, 'Your new password should be at least 8 characters in length.'),
+                password: string().required('Un nouveau mot de passe est requis.')
+                    .min(8, '8 caractères minimum.'),
                 passwordConfirmation: string()
-                    .required('Your new password does not match.')
+                    .required('La confirmation ne correspond pas.')
                     // @ts-ignore
-                    .oneOf([ ref('password'), null ], 'Your new password does not match.'),
+                    .oneOf([ ref('password'), null ], 'La confirmation ne correspond pas.'),
             })}
         >
             {({ isSubmitting }) => (
                 <LoginFormContainer
-                    title={'Reset Password'}
-                    css={tw`w-full flex`}
+                    title={'Nouveau mot de passe'}
+                    subtitle={'Choisissez un mot de passe sécurisé.'}
                 >
                     <div>
-                        <label>Email</label>
+                        <label css={tw`mb-1.5 block text-sm font-semibold text-neutral-700`}>Adresse email</label>
                         <Input value={email} isLight disabled/>
                     </div>
                     <div css={tw`mt-6`}>
                         <Field
                             light
-                            label={'New Password'}
+                            label={'Nouveau mot de passe'}
                             name={'password'}
                             type={'password'}
-                            description={'Passwords must be at least 8 characters in length.'}
+                            description={'8 caractères minimum.'}
                         />
                     </div>
                     <div css={tw`mt-6`}>
                         <Field
                             light
-                            label={'Confirm New Password'}
+                            label={'Confirmer le mot de passe'}
                             name={'passwordConfirmation'}
                             type={'password'}
                         />
@@ -93,7 +93,7 @@ export default ({ match, location }: RouteComponentProps<{ token: string }>) => 
                             disabled={isSubmitting}
                             isLoading={isSubmitting}
                         >
-                            Reset Password
+                            Réinitialiser le mot de passe
                         </Button>
                     </div>
                     <div css={tw`mt-6 text-center`}>
@@ -101,7 +101,7 @@ export default ({ match, location }: RouteComponentProps<{ token: string }>) => 
                             to={'/auth/login'}
                             css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
                         >
-                            Return to Login
+                            Retour à la connexion
                         </Link>
                     </div>
                 </LoginFormContainer>

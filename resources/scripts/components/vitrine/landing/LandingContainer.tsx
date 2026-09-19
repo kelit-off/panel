@@ -116,6 +116,7 @@ const FaqItem = ({ question, answer }: { question: string; answer: string }) => 
 
 export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
+    const accountLink = useStoreState((state: ApplicationStore) => (state.user.data ? '/account' : '/auth/login'));
     const categories = useStoreState((state: ApplicationStore) => state.settings.data?.categories ?? []);
     const nests = categories.flatMap(category => category.nests);
 
@@ -143,7 +144,7 @@ export default () => {
                             Voir les offres
                         </a>
                         <Link
-                            to={'/auth/login'}
+                            to={accountLink}
                             css={tw`inline-flex h-12 items-center justify-center rounded-full border border-neutral-200 bg-white px-6 text-sm font-bold text-neutral-900 transition-colors duration-150 hover:border-neutral-300 hover:bg-neutral-50`}
                         >
                             Espace client
@@ -320,7 +321,7 @@ export default () => {
                             Voir les offres
                         </a>
                         <Link
-                            to={'/auth/login'}
+                            to={accountLink}
                             css={tw`inline-flex h-12 items-center justify-center rounded-full border border-white/50 px-6 text-sm font-bold text-white transition-colors duration-150 hover:bg-white/10`}
                         >
                             Espace client

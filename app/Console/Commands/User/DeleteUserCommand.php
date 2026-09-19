@@ -69,7 +69,14 @@ class DeleteUserCommand extends Command
             }
 
             $this->table(['User ID', 'Email', 'Name'], $tableValues);
-            if (!$deleteUser = $this->ask(trans('command/messages.user.select_search_user'))) {
+            if (!$selectedId = $this->ask(trans('command/messages.user.select_search_user'))) {
+                return $this->handle();
+            }
+
+            $deleteUser = $results->firstWhere('id', (int) $selectedId);
+            if (is_null($deleteUser)) {
+                $this->error(trans('command/messages.user.no_users_found'));
+
                 return $this->handle();
             }
         } else {

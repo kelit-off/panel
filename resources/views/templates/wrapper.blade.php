@@ -44,6 +44,7 @@
     <body class="{{ $css['body'] ?? 'bg-neutral-50' }}">
         @section('content')
             @yield('above-container')
+            <div id="modal-portal"></div>
             @yield('container')
             @yield('below-container')
         @show

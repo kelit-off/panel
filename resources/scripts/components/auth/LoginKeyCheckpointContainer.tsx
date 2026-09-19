@@ -92,22 +92,22 @@ export default ({ history, location }: Props) => {
 
     return (
         <LoginFormContainer
-            title={'Two-Factor Authentication'}
-            css={tw`w-full flex`}
+            title={'Double authentification'}
+            subtitle={'Confirmez votre identité pour continuer.'}
             sidebar={<FingerPrintIcon css={tw`h-24 w-24 mx-auto animate-pulse`}/>}
         >
             <SpinnerOverlay size={'base'} visible={redirecting}/>
             <div css={tw`flex flex-col md:h-full`}>
                 <div css={tw`flex-1 mb-12`}>
-                    <p css={tw`text-neutral-700`}>Insert your security key and touch it.</p>
+                    <p css={tw`text-neutral-700`}>Insérez votre clé de sécurité et touchez-la.</p>
                     <p css={tw`text-neutral-700 mt-2`}>
-                        If your security key does not respond,&nbsp;
+                        Si votre clé ne répond pas,&nbsp;
                         <a
                             href={'#'}
                             css={tw`text-primary-500 font-medium hover:underline`}
                             onClick={triggerChallengePrompt}
                         >
-                            click here
+                            cliquez ici
                         </a>.
                     </p>
                 </div>
@@ -117,7 +117,7 @@ export default ({ history, location }: Props) => {
                     to={{ pathname: '/auth/login/checkpoint', state: location.state }}
                 >
                     <Button size={'small'} type={'button'} css={tw`block w-full`}>
-                        Use a Different Method
+                        Utiliser une autre méthode
                     </Button>
                 </Link>
                 }

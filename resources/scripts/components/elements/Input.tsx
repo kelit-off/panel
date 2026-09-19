@@ -6,8 +6,15 @@ export interface Props {
 }
 
 const light = css<Props>`
-    ${tw`bg-white border-neutral-200 text-neutral-800`};
-    &:focus { ${tw`border-primary-400`} }
+    ${tw`bg-white border-neutral-200 text-neutral-800 rounded-lg`};
+    border-width: 1px;
+    padding: 0.7rem 0.875rem;
+
+    &:hover:not(:disabled) { ${tw`border-neutral-300`} }
+
+    &:not(:disabled):not(:read-only):focus {
+        ${tw`border-primary-400 shadow-none ring-2 ring-primary-100`};
+    }
 
     &:disabled {
         ${tw`bg-neutral-100 border-neutral-200`};
@@ -37,8 +44,8 @@ const inputStyle = css<Props>`
     // Reset to normal styling.
     resize: none;
     ${tw`appearance-none outline-none w-full min-w-0`};
-    ${tw`p-3 border-2 rounded text-sm transition-all duration-150`};
-    ${tw`bg-neutral-600 border-neutral-500 hover:border-neutral-400 text-neutral-200 shadow-none focus:ring-0`};
+    ${tw`px-3.5 py-2.5 border rounded-lg text-sm transition-all duration-150`};
+    ${tw`bg-neutral-900 border-neutral-700 hover:border-neutral-600 text-neutral-100 shadow-none focus:ring-0`};
 
     & + .input-help {
         ${tw`mt-1 text-xs`};
@@ -50,7 +57,7 @@ const inputStyle = css<Props>`
     }
 
     &:not(:disabled):not(:read-only):focus {
-        ${tw`shadow-md border-primary-300 ring-2 ring-primary-400 ring-opacity-50`};
+        ${tw`shadow-none border-primary-400 ring-2 ring-primary-400 ring-opacity-30`};
         ${props => props.hasError && tw`border-red-300 ring-red-200`};
     }
 

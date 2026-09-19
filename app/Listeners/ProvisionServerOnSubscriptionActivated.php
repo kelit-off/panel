@@ -25,6 +25,12 @@ class ProvisionServerOnSubscriptionActivated
 
     public function handle(WebhookReceived $event): void
     {
+        // Without a webhook secret Cashier accepts unsigned requests: anybody could forge an
+        // "active" subscription and get a free server.
+        if (empty(config('cashier.webhook.secret'))) {
+            return;
+        }
+
         $payload = $event->payload;
 
         if (!in_array($payload['type'] ?? null, self::HANDLED_EVENTS, true)) {

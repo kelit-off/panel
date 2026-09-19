@@ -28,6 +28,9 @@ Route::group(['middleware' => 'guest'], function () {
         Route::post('/login/checkpoint', [Auth\LoginCheckpointController::class, 'token'])->name('auth.checkpoint');
         Route::post('/login/checkpoint/key', [Auth\LoginCheckpointController::class, 'key'])->name('auth.checkpoint.key');
 
+        // Self-service account creation for storefront customers.
+        Route::post('/register', [Auth\RegisterController::class, 'register'])->middleware('recaptcha');
+
         // Forgot password route. A post to this endpoint will trigger an
         // email to be sent containing a reset token.
         Route::post('/password', 'ForgotPasswordController@sendResetLinkEmail')

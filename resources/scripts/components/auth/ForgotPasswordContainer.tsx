@@ -38,7 +38,7 @@ export default () => {
                 console.error(error);
 
                 setSubmitting(false);
-                addFlash({ type: 'error', title: 'Error', message: httpErrorToHuman(error) });
+                addFlash({ type: 'error', title: 'Erreur', message: httpErrorToHuman(error) });
             });
 
             return;
@@ -47,11 +47,11 @@ export default () => {
         requestPasswordResetEmail(email, token)
             .then(response => {
                 resetForm();
-                addFlash({ type: 'success', title: 'Success', message: response });
+                addFlash({ type: 'success', title: 'Succès', message: response });
             })
             .catch(error => {
                 console.error(error);
-                addFlash({ type: 'error', title: 'Error', message: httpErrorToHuman(error) });
+                addFlash({ type: 'error', title: 'Erreur', message: httpErrorToHuman(error) });
             })
             .then(() => {
                 setToken('');
@@ -66,19 +66,19 @@ export default () => {
             onSubmit={handleSubmission}
             initialValues={{ email: '' }}
             validationSchema={object().shape({
-                email: string().email('A valid email address must be provided to continue.')
-                    .required('A valid email address must be provided to continue.'),
+                email: string().email('Une adresse email valide est requise.')
+                    .required('Une adresse email valide est requise.'),
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
                 <LoginFormContainer
-                    title={'Request Password Reset'}
-                    css={tw`w-full flex`}
+                    title={'Mot de passe oublié'}
+                    subtitle={'Recevez un lien pour choisir un nouveau mot de passe.'}
                 >
                     <Field
                         light
-                        label={'Email'}
-                        description={'Enter your account email address to receive instructions on resetting your password.'}
+                        label={'Adresse email'}
+                        description={'Saisissez l\'adresse email de votre compte pour recevoir les instructions.'}
                         name={'email'}
                         type={'email'}
                     />
@@ -89,7 +89,7 @@ export default () => {
                             disabled={isSubmitting}
                             isLoading={isSubmitting}
                         >
-                            Send Email
+                            Envoyer le lien
                         </Button>
                     </div>
                     {recaptchaEnabled &&
@@ -112,7 +112,7 @@ export default () => {
                             to={'/auth/login'}
                             css={tw`text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
                         >
-                            Return to Login
+                            Retour à la connexion
                         </Link>
                     </div>
                 </LoginFormContainer>

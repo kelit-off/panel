@@ -3,6 +3,26 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/version', 'VersionController');
+Route::get('/overview', [\Pterodactyl\Http\Controllers\Api\Application\Overview\OverviewController::class, 'index']);
+
+/*
+|--------------------------------------------------------------------------
+| Category Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/categories
+|
+*/
+Route::group(['prefix' => '/categories'], function () {
+    Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\Categories\CategoryController::class, 'index']);
+    Route::get('/{category}', [\Pterodactyl\Http\Controllers\Api\Application\Categories\CategoryController::class, 'view']);
+
+    Route::post('/', [\Pterodactyl\Http\Controllers\Api\Application\Categories\CategoryController::class, 'store']);
+
+    Route::patch('/{category}', [\Pterodactyl\Http\Controllers\Api\Application\Categories\CategoryController::class, 'update']);
+
+    Route::delete('/{category}', [\Pterodactyl\Http\Controllers\Api\Application\Categories\CategoryController::class, 'delete']);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +63,18 @@ Route::group(['prefix' => '/eggs'], function () {
 
     Route::delete('/{egg}', [\Pterodactyl\Http\Controllers\Api\Application\Eggs\EggController::class, 'delete']);
     Route::delete('/{egg}/variables/{eggVariable}', [\Pterodactyl\Http\Controllers\Api\Application\Eggs\EggVariableController::class, 'delete']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Invoice Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/invoices
+|
+*/
+Route::group(['prefix' => '/invoices'], function () {
+    Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\Invoices\InvoiceController::class, 'index']);
 });
 
 /*
@@ -135,6 +167,40 @@ Route::group(['prefix' => '/nodes'], function () {
         Route::post('/', [\Pterodactyl\Http\Controllers\Api\Application\Nodes\AllocationController::class, 'store']);
         Route::delete('/{allocation}', [\Pterodactyl\Http\Controllers\Api\Application\Nodes\AllocationController::class, 'delete']);
     });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Product Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/products
+|
+*/
+Route::group(['prefix' => '/products'], function () {
+    Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\Products\ProductController::class, 'index']);
+    Route::get('/{product}', [\Pterodactyl\Http\Controllers\Api\Application\Products\ProductController::class, 'view']);
+
+    Route::post('/', [\Pterodactyl\Http\Controllers\Api\Application\Products\ProductController::class, 'store']);
+
+    Route::patch('/{product}', [\Pterodactyl\Http\Controllers\Api\Application\Products\ProductController::class, 'update']);
+
+    Route::delete('/{product}', [\Pterodactyl\Http\Controllers\Api\Application\Products\ProductController::class, 'delete']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Ticket Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/tickets
+|
+*/
+Route::group(['prefix' => '/tickets'], function () {
+    Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\Tickets\TicketController::class, 'index']);
+    Route::get('/{ticket}', [\Pterodactyl\Http\Controllers\Api\Application\Tickets\TicketController::class, 'view']);
+    Route::post('/{ticket}/replies', [\Pterodactyl\Http\Controllers\Api\Application\Tickets\TicketController::class, 'reply']);
+    Route::patch('/{ticket}', [\Pterodactyl\Http\Controllers\Api\Application\Tickets\TicketController::class, 'update']);
 });
 
 /*
