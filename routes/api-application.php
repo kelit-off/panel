@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/version', 'VersionController');
 Route::get('/overview', [\Pterodactyl\Http\Controllers\Api\Application\Overview\OverviewController::class, 'index']);
+Route::get('/analytics', [\Pterodactyl\Http\Controllers\Api\Application\Overview\AnalyticsController::class, 'index']);
 
 /*
 |--------------------------------------------------------------------------
