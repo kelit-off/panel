@@ -33,5 +33,11 @@ class Kernel extends ConsoleKernel
 
         // Every day cleanup any internal backups of service files.
         $schedule->command('p:maintenance:clean-service-backups')->daily();
+
+        // Anonymous storefront visits are only useful for recent trends.
+        $schedule->call(function () {
+            \Pterodactyl\Models\StorefrontVisit::query()->where('created_at', '<', now()->subDays(400))->delete();
+            \Illuminate\Support\Facades\DB::table('ai_crawler_hits')->where('day', '<', now()->subDays(400)->toDateString())->delete();
+        })->daily();
     }
 }

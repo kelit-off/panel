@@ -44,6 +44,17 @@ const niceScale = (max: number, count = 4): { top: number; ticks: number[] } => 
     return { top, ticks };
 };
 
+// Fewer date labels on narrow charts so neighbours never overlap.
+const axisLabelIndexes = (count: number, width: number): number[] => {
+    if (count <= 1) {
+        return [ 0 ];
+    }
+
+    const steps = width < 460 ? 2 : 4;
+
+    return Array.from(new Set(Array.from({ length: steps + 1 }, (_, i) => Math.round((i / steps) * (count - 1)))));
+};
+
 export interface ChartSeries {
     key: string;
     name: string;
@@ -146,7 +157,7 @@ export const LineChart = ({ data, series, formatValue, height = 240, area = fals
     const x = (index: number) => margin.left + (count <= 1 ? plotWidth / 2 : (index / (count - 1)) * plotWidth);
     const y = (value: number) => margin.top + plotHeight - (value / top) * plotHeight;
 
-    const labelIndexes = count <= 1 ? [ 0 ] : Array.from(new Set([ 0, 1, 2, 3, 4 ].map(i => Math.round((i / 4) * (count - 1)))));
+    const labelIndexes = axisLabelIndexes(count, width);
 
     const pathFor = (key: string) => data.map((point, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)} ${y(Number(point[key])).toFixed(1)}`).join(' ');
 
@@ -369,6 +380,120 @@ export const SegmentedBar = ({ segments }: { segments: Segment[] }) => {
                     </li>
                 ))}
             </ul>
+        </div>
+    );
+};
+
+export const DivergingBars = ({ data, upLabel, downLabel, formatValue, height = 240 }: {
+    data: { date: Date; up: number; down: number }[];
+    upLabel: string;
+    downLabel: string;
+    formatValue: (value: number) => string;
+    height?: number;
+}) => {
+    const [ ref, width ] = useWidth();
+    const [ active, setActive ] = useState<number | null>(null);
+
+    const margin = { top: 12, right: 14, bottom: 26, left: 52 };
+    const plotWidth = Math.max(0, width - margin.left - margin.right);
+    const plotHeight = height - margin.top - margin.bottom;
+    const count = data.length;
+
+    const upTop = niceScale(Math.max(0, ...data.map(point => point.up)), 2).top;
+    const downTop = niceScale(Math.max(0, ...data.map(point => point.down)), 2).top;
+    const unit = plotHeight / (upTop + downTop);
+    const zeroY = margin.top + upTop * unit;
+    const slot = count > 0 ? plotWidth / count : 0;
+    const barWidth = Math.max(1, Math.min(18, slot * 0.7));
+    const centerX = (index: number) => margin.left + (index + 0.5) * slot;
+
+    const labelIndexes = axisLabelIndexes(count, width);
+
+    const onPointerMove = (event: React.PointerEvent<SVGRectElement>) => {
+        const box = event.currentTarget.getBoundingClientRect();
+        const ratio = box.width === 0 ? 0 : (event.clientX - box.left) / box.width;
+        setActive(Math.min(count - 1, Math.max(0, Math.floor(ratio * count))));
+    };
+
+    const activePoint = active !== null ? data[active] : null;
+    const tooltipLeft = active !== null ? centerX(active) : 0;
+    const flip = width > 0 && tooltipLeft > width * 0.6;
+
+    return (
+        <div ref={ref} css={tw`relative w-full`} style={{ height }}>
+            {width > 0 && (
+                <svg width={width} height={height} role={'img'} aria-label={`${upLabel} et ${downLabel} par jour`} css={tw`block`}>
+                    {[ upTop, 0, -downTop ].map(tick => (
+                        <g key={tick}>
+                            <line
+                                x1={margin.left}
+                                x2={width - margin.right}
+                                y1={zeroY - tick * unit}
+                                y2={zeroY - tick * unit}
+                                stroke={tick === 0 ? palette.axis : palette.grid}
+                                strokeOpacity={tick === 0 ? 0.5 : 1}
+                                strokeWidth={1}
+                            />
+                            <text x={margin.left - 8} y={zeroY - tick * unit} textAnchor={'end'} dominantBaseline={'middle'} fill={palette.axis} fontSize={11}>
+                                {formatValue(Math.abs(tick))}
+                            </text>
+                        </g>
+                    ))}
+
+                    {labelIndexes.map(index => (
+                        <text
+                            key={index}
+                            x={centerX(index)}
+                            y={height - 6}
+                            textAnchor={index === 0 ? 'start' : index === count - 1 ? 'end' : 'middle'}
+                            fill={palette.axis}
+                            fontSize={11}
+                        >
+                            {formatDay(data[index].date)}
+                        </text>
+                    ))}
+
+                    {data.map((point, i) => (
+                        <g key={i} opacity={active === null || active === i ? 1 : 0.45}>
+                            {point.up > 0 && (
+                                <rect x={centerX(i) - barWidth / 2} y={zeroY - point.up * unit} width={barWidth} height={point.up * unit} rx={2} fill={palette.good}/>
+                            )}
+                            {point.down > 0 && (
+                                <rect x={centerX(i) - barWidth / 2} y={zeroY} width={barWidth} height={point.down * unit} rx={2} fill={palette.critical}/>
+                            )}
+                        </g>
+                    ))}
+
+                    <rect
+                        x={margin.left}
+                        y={margin.top}
+                        width={plotWidth}
+                        height={plotHeight}
+                        fill={'transparent'}
+                        onPointerMove={onPointerMove}
+                        onPointerLeave={() => setActive(null)}
+                    />
+                </svg>
+            )}
+
+            {activePoint && (
+                <div
+                    css={tw`pointer-events-none absolute z-10 rounded-lg border border-white border-opacity-10 bg-neutral-900 px-3 py-2 shadow-lg`}
+                    style={{ top: 8, left: tooltipLeft, transform: `translateX(${flip ? 'calc(-100% - 12px)' : '12px'})`, minWidth: 150 }}
+                >
+                    <p css={tw`mb-1 text-xs text-neutral-400`}>{formatDayLong(activePoint.date)}</p>
+                    <p css={tw`flex items-center gap-2 text-xs`}>
+                        <span css={tw`inline-block rounded-full`} style={{ width: 10, height: 10, background: palette.good }}/>
+                        <strong css={tw`font-semibold text-neutral-50`}>+{formatValue(activePoint.up)}</strong>
+                        <span css={tw`text-neutral-400`}>{upLabel}</span>
+                    </p>
+                    <p css={tw`flex items-center gap-2 text-xs`}>
+                        <span css={tw`inline-block rounded-full`} style={{ width: 10, height: 10, background: palette.critical }}/>
+                        <strong css={tw`font-semibold text-neutral-50`}>−{formatValue(activePoint.down)}</strong>
+                        <span css={tw`text-neutral-400`}>{downLabel}</span>
+                    </p>
+                </div>
+            )}
         </div>
     );
 };

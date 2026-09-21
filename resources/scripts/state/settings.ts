@@ -14,8 +14,11 @@ export interface SiteSettings {
     categories: {
         id: number;
         name: string;
-        nests: { id: number; name: string; fromPrice: string | null }[];
+        nests: { id: number; name: string; slug: string; fromPrice: string | null }[];
     }[];
+    hero: { title: string; text: string };
+    faqs: { question: string; answer: string }[];
+    inclusions: { key: string; title: string; description: string }[];
 }
 
 export interface SettingsStore {

@@ -3,14 +3,18 @@
 namespace Pterodactyl\Http\Controllers\Api\Vitrine;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 use Pterodactyl\Models\Nest;
 use Pterodactyl\Models\Product;
 use Pterodactyl\Http\Controllers\Controller;
 
 class GameController extends Controller
 {
-    public function nestProducts(Nest $nest): JsonResponse
+    public function nestProducts(string $slug): JsonResponse
     {
+        $nest = Nest::query()->get()->first(fn (Nest $nest) => Str::slug($nest->name) === $slug);
+        abort_if($nest === null, 404);
+
         return response()->json([
             'nest' => [
                 'id' => $nest->id,

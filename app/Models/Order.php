@@ -62,6 +62,8 @@ class Order extends Model
         'error',
         'suspended_at',
         'terminate_at',
+        'paid_at',
+        'ended_at',
     ];
 
     /**
@@ -70,6 +72,8 @@ class Order extends Model
     protected $casts = [
         'suspended_at' => 'datetime',
         'terminate_at' => 'datetime',
+        'paid_at' => 'datetime',
+        'ended_at' => 'datetime',
         'user_id' => 'integer',
         'product_id' => 'integer',
         'nest_id' => 'integer',
@@ -88,7 +92,35 @@ class Order extends Model
         'error' => 'sometimes|nullable|string',
         'suspended_at' => 'sometimes|nullable|date',
         'terminate_at' => 'sometimes|nullable|date',
+        'paid_at' => 'sometimes|nullable|date',
+        'ended_at' => 'sometimes|nullable|date',
     ];
+
+    /**
+     * Stamps paid_at / ended_at the first time an order reaches those states,
+     * whichever service moves it, so analytics never depend on a caller
+     * remembering to set them.
+     */
+    protected static function boot()
+    {
+        // Registered before parent::boot(): the base model's validation listener
+        // returns true, which halts the "saving" event for every listener after it.
+        static::saving(function (Order $order) {
+            if (!$order->isDirty('status')) {
+                return;
+            }
+
+            if ($order->status !== self::STATUS_PENDING && is_null($order->paid_at)) {
+                $order->paid_at = now();
+            }
+
+            if (in_array($order->status, [ self::STATUS_CANCELLED, self::STATUS_TERMINATED ], true) && is_null($order->ended_at)) {
+                $order->ended_at = now();
+            }
+        });
+
+        parent::boot();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

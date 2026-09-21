@@ -3,8 +3,9 @@ import Chart, { ChartConfiguration } from 'chart.js';
 import { ServerContext } from '@/state/server';
 import { bytesToMegabytes } from '@/helpers';
 import merge from 'deepmerge';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { faMemory, faMicrochip } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tw from 'twin.macro';
 import { SocketEvent } from '@/components/server/events';
 import useWebsocketEvent from '@/plugins/useWebsocketEvent';
@@ -27,8 +28,9 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
             },
             line: {
                 tension: 0.3,
-                backgroundColor: 'rgba(15, 178, 184, 0.45)',
-                borderColor: '#32D0D9',
+                borderWidth: 2,
+                backgroundColor: 'rgba(59, 130, 246, 0.18)',
+                borderColor: '#60a5fa',
             },
         },
         scales: {
@@ -43,14 +45,14 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
             yAxes: [ {
                 gridLines: {
                     drawTicks: false,
-                    color: 'rgba(229, 232, 235, 0.15)',
-                    zeroLineColor: 'rgba(15, 178, 184, 0.45)',
-                    zeroLineWidth: 3,
+                    color: 'rgba(229, 232, 235, 0.08)',
+                    zeroLineColor: 'rgba(96, 165, 250, 0.4)',
+                    zeroLineWidth: 2,
                 },
                 ticks: merge(ticks || {}, {
                     fontSize: 10,
                     fontFamily: '"IBM Plex Mono", monospace',
-                    fontColor: 'rgb(229, 232, 235)',
+                    fontColor: 'rgb(156, 163, 175)',
                     min: 0,
                     beginAtZero: true,
                     maxTicksLimit: 5,
@@ -69,12 +71,31 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
     },
 });
 
+const GraphCard = ({ title, icon, current, children }: {
+    title: string;
+    icon: IconDefinition;
+    current?: string;
+    children: React.ReactNode;
+}) => (
+    <section css={tw`overflow-hidden rounded-xl border border-white border-opacity-5 bg-neutral-900`}>
+        <header css={tw`flex items-center justify-between gap-3 px-4 pt-4 sm:px-5 sm:pt-5`}>
+            <h3 css={tw`flex items-center gap-2 text-xs font-semibold text-neutral-400`}>
+                <FontAwesomeIcon icon={icon} fixedWidth css={tw`text-neutral-500`}/>
+                {title}
+            </h3>
+            {current && <span css={tw`font-header text-sm font-bold text-neutral-50`} style={{ fontVariantNumeric: 'tabular-nums' }}>{current}</span>}
+        </header>
+        <div css={tw`px-4 pb-4 pt-3 sm:px-5 sm:pb-5`}>{children}</div>
+    </section>
+);
+
 export default () => {
     const status = ServerContext.useStoreState(state => state.status.value);
     const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
     const [ memory, setMemory ] = useState<Chart>();
     const [ cpu, setCpu ] = useState<Chart>();
+    const [ latest, setLatest ] = useState({ memory: 0, cpu: 0 });
 
     const memoryRef = useCallback<(node: HTMLCanvasElement | null) => void>(node => {
         if (!node) {
@@ -83,7 +104,7 @@ export default () => {
 
         setMemory(
             new Chart(node.getContext('2d')!, chartDefaults({
-                callback: (value) => `${value}Mb  `,
+                callback: (value) => `${value} Mo  `,
                 suggestedMax: limits.memory,
             })),
         );
@@ -96,7 +117,7 @@ export default () => {
 
         setCpu(
             new Chart(node.getContext('2d')!, chartDefaults({
-                callback: (value) => `${value}%  `,
+                callback: (value) => `${value} %  `,
                 suggestedMax: limits.cpu,
             })),
         );
@@ -109,6 +130,8 @@ export default () => {
         } catch (e) {
             return;
         }
+
+        setLatest({ memory: bytesToMegabytes(stats.memory_bytes), cpu: stats.cpu_absolute });
 
         if (memory && memory.data.datasets) {
             const data = memory.data.datasets[0].data!;
@@ -129,35 +152,29 @@ export default () => {
         }
     });
 
+    const offline = status === 'offline';
+
     return (
-        <div css={tw`flex flex-wrap mt-4`}>
-            <div css={tw`w-full sm:w-1/2`}>
-                <TitledGreyBox title={'Memory usage'} icon={faMemory} css={tw`mr-0 sm:mr-4`}>
-                    {status !== 'offline' ?
-                        <canvas
-                            id={'memory_chart'}
-                            ref={memoryRef}
-                            aria-label={'Server Memory Usage Graph'}
-                            role={'img'}
-                        />
-                        :
-                        <p css={tw`text-xs text-neutral-400 text-center p-3`}>
-                            Server is offline.
-                        </p>
-                    }
-                </TitledGreyBox>
-            </div>
-            <div css={tw`w-full sm:w-1/2 mt-4 sm:mt-0`}>
-                <TitledGreyBox title={'CPU usage'} icon={faMicrochip} css={tw`ml-0 sm:ml-4`}>
-                    {status !== 'offline' ?
-                        <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Server CPU Usage Graph'} role={'img'}/>
-                        :
-                        <p css={tw`text-xs text-neutral-400 text-center p-3`}>
-                            Server is offline.
-                        </p>
-                    }
-                </TitledGreyBox>
-            </div>
+        <div css={tw`mt-4 grid grid-cols-1 gap-4 md:grid-cols-2`}>
+            <GraphCard title={'Utilisation de la mémoire'} icon={faMemory} current={offline ? undefined : `${latest.memory.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} Mo`}>
+                {!offline ?
+                    <canvas
+                        id={'memory_chart'}
+                        ref={memoryRef}
+                        aria-label={'Graphique d’utilisation de la mémoire du serveur'}
+                        role={'img'}
+                    />
+                    :
+                    <p css={tw`py-8 text-center text-sm text-neutral-500`}>Le serveur est hors ligne.</p>
+                }
+            </GraphCard>
+            <GraphCard title={'Utilisation du processeur'} icon={faMicrochip} current={offline ? undefined : `${latest.cpu.toFixed(1)} %`}>
+                {!offline ?
+                    <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Graphique d’utilisation du processeur du serveur'} role={'img'}/>
+                    :
+                    <p css={tw`py-8 text-center text-sm text-neutral-500`}>Le serveur est hors ligne.</p>
+                }
+            </GraphCard>
         </div>
     );
 };

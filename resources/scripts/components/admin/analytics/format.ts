@@ -7,6 +7,16 @@ export const formatMoney = (value: number): string => value.toLocaleString('fr-F
 
 export const formatCount = (value: number): string => value.toLocaleString('fr-FR');
 
+export const formatPercent = (value: number | null, digits = 1): string => (
+    value === null ? '—' : `${value.toLocaleString('fr-FR', { maximumFractionDigits: digits })} %`
+);
+
+export const formatMonth = (cohort: string): string => {
+    const [ year, month ] = cohort.split('-').map(Number);
+
+    return new Date(year, month - 1, 1).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' });
+};
+
 export const formatSize = (mb: number): string => (
     mb >= 1024 ? `${(mb / 1024).toLocaleString('fr-FR', { maximumFractionDigits: 1 })} Go` : `${mb} Mo`
 );

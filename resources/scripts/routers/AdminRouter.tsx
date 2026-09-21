@@ -3,6 +3,7 @@ import React from 'react';
 import { NavLink, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import tw from 'twin.macro';
 import OverviewContainer from '@/components/admin/overview/OverviewContainer';
+import AnalyticsContainer from '@/components/admin/analytics/AnalyticsContainer';
 import SettingsContainer from '@/components/admin/settings/SettingsContainer';
 import DatabasesContainer from '@/components/admin/databases/DatabasesContainer';
 import NewDatabaseContainer from '@/components/admin/databases/NewDatabaseContainer';
@@ -38,6 +39,7 @@ import { NotFound } from '@/components/elements/ScreenBlock';
 import { ApplicationStore } from '@/state';
 import { AdminContext } from '@/state/admin';
 import {
+    ChartBarIcon,
     ChatAltIcon,
     CogIcon,
     CreditCardIcon,
@@ -90,6 +92,9 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                     <Sidebar.Section>Général</Sidebar.Section>
                     <NavLink to={`${match.url}`} exact>
                         <OfficeBuildingIcon/><span>Vue d&apos;ensemble</span>
+                    </NavLink>
+                    <NavLink to={`${match.url}/analytics`}>
+                        <ChartBarIcon/><span>Analytics</span>
                     </NavLink>
                     <NavLink to={`${match.url}/settings`}>
                         <CogIcon/><span>Paramètres</span>
@@ -151,6 +156,7 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                 <div css={tw`w-full flex flex-col mx-auto`} style={{ maxWidth: '86rem' }}>
                     <Switch location={location}>
                         <Route path={`${match.path}`} component={OverviewContainer} exact/>
+                        <Route path={`${match.path}/analytics`} component={AnalyticsContainer} exact/>
                         <Route path={`${match.path}/settings`} component={SettingsContainer}/>
                         <Route path={`${match.path}/databases`} component={DatabasesContainer} exact/>
                         <Route path={`${match.path}/databases/new`} component={NewDatabaseContainer} exact/>

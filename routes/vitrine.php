@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Pterodactyl\Http\Middleware\RecordAiCrawler;
 use Pterodactyl\Http\Middleware\RequireTwoFactorAuthentication;
 
 /*
@@ -11,11 +12,27 @@ use Pterodactyl\Http\Middleware\RequireTwoFactorAuthentication;
 | Endpoint: /
 |
 */
-Route::get('/', 'IndexController@index')->name('vitrine.index')->fallback();
-    // ->withoutMiddleware(RequireTwoFactorAuthentication::class)
-    // ->name('account');
+// Public pages and the files made for crawlers: visits by known AI bots are counted.
+Route::middleware(RecordAiCrawler::class)->group(function () {
+    Route::get('/', 'PageController@home')->name('vitrine.index')->fallback();
+        // ->withoutMiddleware(RequireTwoFactorAuthentication::class)
+        // ->name('account');
 
-Route::get('/jeu/{idJeu}', 'IndexController@index')->name('vitrine.jeu')->fallback();
+    // Markdown twins of the pages, for AI assistants. They must be registered before
+    // the HTML routes, which would otherwise read "minecraft.md" as a game slug.
+    Route::get('/index.md', 'SeoController@homeMarkdown');
+    Route::get('/jeu/{slugJeu}.md', 'SeoController@gameMarkdown')->where('slugJeu', '[^/]+?');
+    Route::get(config('storefront.ram_tool.path') . '.md', 'SeoController@toolMarkdown');
+
+    Route::get('/jeu/{slugJeu}', 'PageController@game')->name('vitrine.jeu');
+
+    Route::get(config('storefront.ram_tool.path'), 'PageController@ramTool')->name('vitrine.outils.ram');
+
+    Route::get('/robots.txt', 'SeoController@robots');
+    Route::get('/sitemap.xml', 'SeoController@sitemap');
+    Route::get('/llms.txt', 'SeoController@llms');
+    Route::get('/llms-full.txt', 'SeoController@llmsFull');
+});
 
 // Route::get('/locales/{locale}/{namespace}.json', 'LocaleController')
 //     ->withoutMiddleware(RequireTwoFactorAuthentication::class)

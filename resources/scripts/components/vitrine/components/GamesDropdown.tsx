@@ -36,7 +36,7 @@ const categoryIcon = (name: string): IconDefinition => {
 const ACCENT_KEYS = [ 'blue', 'purple', 'green', 'yellow', 'pink', 'cyan' ] as const;
 type AccentKey = typeof ACCENT_KEYS[number];
 
-const accentStyles: Record<AccentKey, {
+export const accentStyles: Record<AccentKey, {
     iconText: TwStyle;
     avatarBg: TwStyle;
     hover: TwStyle;
@@ -52,7 +52,7 @@ const accentStyles: Record<AccentKey, {
 // Recognised games get a matching brand-ish icon shown in colour with no
 // background; anything else falls back to a coloured letter avatar, the colour
 // picked deterministically from the name so a given game keeps its colour.
-const nestVisual = (name: string): { icon?: IconDefinition; letter?: string; accent: AccentKey } => {
+export const nestVisual = (name: string): { icon?: IconDefinition; letter?: string; accent: AccentKey } => {
     const value = name.toLowerCase();
 
     if (value.includes('fivem')) return { icon: faCar, accent: 'blue' };
@@ -93,7 +93,6 @@ export default () => {
     const activeCategory = categories.length
         ? (categories.find(category => category.id === activeCategoryId) ?? categories[0])
         : null;
-    const totalNests = categories.reduce((sum, category) => sum + category.nests.length, 0);
 
     return (
         <div ref={ref} css={tw`relative`}>
@@ -117,107 +116,90 @@ export default () => {
 
             {open && (
                 <div
-                    css={tw`absolute left-1/2 top-full z-50 mt-2.5 w-[680px] max-w-[90vw] -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-5 shadow-2xl`}
+                    css={tw`absolute left-1/2 top-full z-50 mt-2.5 w-[600px] max-w-[90vw] -translate-x-1/2 rounded-2xl border border-neutral-200 bg-white p-2 shadow-2xl`}
                 >
-                    {/* Header */}
-                    <div css={tw`mb-4 flex items-start justify-between gap-3.5 border-b border-neutral-100 pb-3.5`}>
-                        <div>
-                            <strong css={tw`block text-[15px] font-bold text-neutral-900`}>Serveurs de jeux</strong>
-                            <span css={tw`mt-1 block text-[12.5px] text-neutral-500`}>
-                                Hébergez vos jeux préférés avec une performance optimale.
-                            </span>
-                        </div>
-                        <span css={tw`flex-shrink-0 whitespace-nowrap rounded-full bg-primary-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-primary-600`}>
-                            Anti-DDoS inclus
-                        </span>
-                    </div>
-
                     {!activeCategory ? (
-                        <p css={tw`py-6 text-center text-sm italic text-neutral-400`}>
+                        <p css={tw`px-3 py-6 text-center text-sm text-neutral-400`}>
                             Aucun jeu disponible pour le moment.
                         </p>
                     ) : (
-                        <>
-                            <div css={tw`flex flex-row gap-0`}>
-                                {/* Categories */}
-                                <div css={tw`flex w-[170px] flex-shrink-0 flex-col gap-0.5 border-r border-neutral-100 pr-3.5`}>
-                                    {categories.map(category => {
-                                        const isActive = activeCategory.id === category.id;
+                        <div css={tw`flex`} style={{ minHeight: '14rem' }}>
+                            {/* Categories */}
+                            <div css={tw`flex w-[220px] flex-shrink-0 flex-col gap-0.5 border-r border-neutral-100 p-1 pr-2`}>
+                                {categories.map(category => {
+                                    const isActive = activeCategory.id === category.id;
 
-                                        return (
-                                            <button
-                                                key={category.id}
-                                                type={'button'}
-                                                onMouseEnter={() => setActiveCategoryId(category.id)}
-                                                onClick={() => setActiveCategoryId(category.id)}
+                                    return (
+                                        <button
+                                            key={category.id}
+                                            type={'button'}
+                                            onMouseEnter={() => setActiveCategoryId(category.id)}
+                                            onFocus={() => setActiveCategoryId(category.id)}
+                                            onClick={() => setActiveCategoryId(category.id)}
+                                            css={[
+                                                tw`flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[13.5px] font-semibold transition-colors duration-150 focus:outline-none`,
+                                                isActive ? tw`bg-primary-50 text-neutral-900` : tw`text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900`,
+                                            ]}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={categoryIcon(category.name)}
+                                                css={[ tw`w-[15px] flex-shrink-0`, isActive ? tw`text-primary-600` : tw`text-neutral-400` ]}
+                                            />
+                                            <span css={tw`flex-1 truncate`}>{category.name}</span>
+                                            <span
                                                 css={[
-                                                    tw`flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[13.5px] font-semibold text-neutral-500 transition-colors duration-150 hover:bg-neutral-100 hover:text-neutral-900`,
-                                                    isActive && tw`bg-primary-50 text-neutral-900`,
+                                                    tw`min-w-[22px] flex-shrink-0 rounded-md px-1.5 py-0.5 text-center text-[11px] font-bold`,
+                                                    isActive ? tw`bg-white text-primary-600` : tw`bg-neutral-100 text-neutral-500`,
                                                 ]}
                                             >
-                                                <FontAwesomeIcon
-                                                    icon={categoryIcon(category.name)}
-                                                    css={[ tw`w-[15px] flex-shrink-0 text-neutral-400`, isActive && tw`text-primary-600` ]}
-                                                />
-                                                <span css={tw`flex-1 truncate`}>{category.name}</span>
-                                                <span
-                                                    css={[
-                                                        tw`min-w-[22px] flex-shrink-0 rounded-md bg-neutral-100 px-1.5 py-0.5 text-center text-[11px] font-bold text-neutral-500`,
-                                                        isActive && tw`bg-white`,
-                                                    ]}
-                                                >
-                                                    {category.nests.length}
-                                                </span>
-                                            </button>
-                                        );
-                                    })}
-                                </div>
-
-                                {/* Nests (games) of the active category */}
-                                <div css={tw`grid flex-1 grid-cols-2 content-start gap-1.5 pl-4`}>
-                                    {activeCategory.nests.length === 0 && (
-                                        <span css={tw`col-span-2 py-2 text-sm italic text-neutral-400`}>Aucun jeu pour le moment</span>
-                                    )}
-                                    {activeCategory.nests.map(nest => {
-                                        const visual = nestVisual(nest.name);
-                                        const accent = accentStyles[visual.accent];
-
-                                        return (
-                                            <Link
-                                                key={nest.id}
-                                                to={`/jeu/${nest.id}`}
-                                                css={[
-                                                    tw`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-150`,
-                                                    accent.hover,
-                                                ]}
-                                            >
-                                                {visual.icon ? (
-                                                    <span css={[ tw`grid h-9 w-9 flex-shrink-0 place-items-center text-lg`, accent.iconText ]}>
-                                                        <FontAwesomeIcon icon={visual.icon}/>
-                                                    </span>
-                                                ) : (
-                                                    <span css={[ tw`grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg text-sm font-bold text-white`, accent.avatarBg ]}>
-                                                        {visual.letter}
-                                                    </span>
-                                                )}
-                                                <span css={tw`min-w-0`}>
-                                                    <strong css={tw`block truncate text-sm font-bold text-neutral-900`}>{nest.name}</strong>
-                                                    <small css={tw`mt-0.5 block text-xs text-neutral-500`}>
-                                                        {nest.fromPrice
-                                                            ? `Dès ${Number(nest.fromPrice).toFixed(2).replace('.', ',')} €/mois`
-                                                            : 'Voir les offres'}
-                                                    </small>
-                                                </span>
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
+                                                {category.nests.length}
+                                            </span>
+                                        </button>
+                                    );
+                                })}
                             </div>
 
-                            <div css={tw`mt-3.5 border-t border-neutral-100 pt-3 text-right text-xs text-neutral-500`}>
-                                {totalNests} jeu{totalNests !== 1 && 'x'} disponible{totalNests !== 1 && 's'}
+                            {/* Games of the active category */}
+                            <div css={tw`flex min-w-0 flex-1 flex-col gap-0.5 p-1 pl-2`}>
+                                {activeCategory.nests.length === 0 && (
+                                    <span css={tw`px-3 py-2 text-sm italic text-neutral-400`}>Aucun jeu pour le moment</span>
+                                )}
+                                {activeCategory.nests.map(nest => {
+                                    const visual = nestVisual(nest.name);
+                                    const accent = accentStyles[visual.accent];
+
+                                    return (
+                                        <Link
+                                            key={nest.id}
+                                            to={`/jeu/${nest.slug}`}
+                                            onClick={() => setOpen(false)}
+                                            css={[
+                                                tw`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-150`,
+                                                accent.hover,
+                                            ]}
+                                        >
+                                            {visual.icon ? (
+                                                <span css={[ tw`grid h-9 w-9 flex-shrink-0 place-items-center text-lg`, accent.iconText ]}>
+                                                    <FontAwesomeIcon icon={visual.icon}/>
+                                                </span>
+                                            ) : (
+                                                <span css={[ tw`grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg text-sm font-bold text-white`, accent.avatarBg ]}>
+                                                    {visual.letter}
+                                                </span>
+                                            )}
+                                            <span css={tw`min-w-0`}>
+                                                <strong css={tw`block truncate text-sm font-bold text-neutral-900`}>{nest.name}</strong>
+                                                <small css={tw`mt-0.5 block text-xs text-neutral-500`}>
+                                                    {nest.fromPrice
+                                                        ? `Dès ${Number(nest.fromPrice).toFixed(2).replace('.', ',')} €/mois`
+                                                        : 'Voir les offres'}
+                                                </small>
+                                            </span>
+                                        </Link>
+                                    );
+                                })}
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             )}

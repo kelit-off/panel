@@ -57,6 +57,7 @@ export default ({ children }: Props) => {
                     <h4 css={tw`mb-3.5 text-xs font-bold uppercase tracking-wider text-neutral-400`}>Ressources</h4>
                     <ul css={tw`space-y-2.5`}>
                         <li><a href={'#faq'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Questions fréquentes</a></li>
+                        <li><Link to={'/outils/calculateur-ram-minecraft'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Calculateur de RAM Minecraft</Link></li>
                         <li><Link to={accountLink} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Espace client</Link></li>
                         <li><a href={'#'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Mentions légales</a></li>
                     </ul>
@@ -65,7 +66,7 @@ export default ({ children }: Props) => {
                 <div>
                     <h4 css={tw`mb-3.5 text-xs font-bold uppercase tracking-wider text-neutral-400`}>Contact</h4>
                     <ul css={tw`space-y-2.5`}>
-                        <li><a href={'#'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Ouvrir un ticket</a></li>
+                        <li><a href={'/account/tickets'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Ouvrir un ticket</a></li>
                     </ul>
                 </div>
             </footer>

@@ -58,10 +58,10 @@ const TerminalDiv = styled.div`
 `;
 
 const CommandInput = styled.input`
-    ${tw`text-sm transition-colors duration-150 px-2 bg-transparent border-0 border-b-2 border-transparent text-neutral-100 p-2 pl-0 w-full focus:ring-0`};
+    ${tw`w-full border-0 bg-transparent px-0 py-3 text-sm text-neutral-100 focus:ring-0`};
 
-    &:focus {
-        ${tw`border-cyan-700`};
+    &::placeholder {
+        ${tw`text-neutral-500`};
     }
 `;
 
@@ -202,29 +202,28 @@ export default () => {
     }, [ connected, instance ]);
 
     return (
-        <div css={tw`text-xs font-mono relative`}>
+        <div css={tw`relative overflow-hidden rounded-xl border border-white border-opacity-5 bg-black font-mono text-xs`}>
             <SpinnerOverlay visible={!connected} size={'large'} />
-            <div
-                css={[
-                    tw`rounded-t p-2 bg-black w-full`,
-                    !canSendCommands && tw`rounded-b`,
-                ]}
-                style={{ minHeight: '16rem' }}
-            >
+            <div css={tw`flex items-center justify-between border-b border-white border-opacity-5 bg-neutral-900 px-4 py-2.5 font-sans`}>
+                <span css={tw`font-header text-xs font-semibold text-neutral-300`}>Console</span>
+                <span css={tw`inline-flex items-center gap-2 text-xs text-neutral-400`}>
+                    <span css={tw`inline-block h-2 w-2 rounded-full`} style={{ background: connected ? '#22c55e' : '#fab219' }}/>
+                    {connected ? 'Connecté' : 'Connexion…'}
+                </span>
+            </div>
+            <div css={tw`w-full p-3`} style={{ minHeight: '20rem' }}>
                 <TerminalDiv id={'terminal'} ref={ref} />
             </div>
             {canSendCommands &&
-                <div css={tw`rounded-b bg-neutral-900 text-neutral-100 flex items-baseline`}>
-                    <div css={tw`flex-shrink-0 p-2 font-bold`}>$</div>
-                    <div css={tw`w-full`}>
-                        <CommandInput
-                            type={'text'}
-                            placeholder={'Type a command...'}
-                            aria-label={'Console command input.'}
-                            disabled={!instance || !connected}
-                            onKeyDown={handleCommandKeyDown}
-                        />
-                    </div>
+                <div css={tw`flex items-center border-t border-white border-opacity-5 bg-neutral-900 px-4`}>
+                    <span css={tw`flex-shrink-0 pr-3 font-bold text-primary-400`}>$</span>
+                    <CommandInput
+                        type={'text'}
+                        placeholder={'Saisissez une commande…'}
+                        aria-label={'Saisie de commande pour la console'}
+                        disabled={!instance || !connected}
+                        onKeyDown={handleCommandKeyDown}
+                    />
                 </div>
             }
         </div>

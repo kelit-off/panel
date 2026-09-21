@@ -30,12 +30,6 @@ export default () => {
                         Accueil
                     </Link>
                     <GamesDropdown/>
-                    <a
-                        href={'#faq'}
-                        css={tw`inline-flex h-10 items-center rounded-lg px-3.5 text-sm font-semibold text-neutral-500 transition-colors duration-150 hover:bg-neutral-100 hover:text-neutral-900`}
-                    >
-                        FAQ
-                    </a>
                 </nav>
 
                 <div css={tw`flex items-center gap-2.5`}>

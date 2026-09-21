@@ -18,8 +18,8 @@ export interface StoreNestProducts {
     products: StoreNestProduct[];
 }
 
-export default async (nestId: number | string): Promise<StoreNestProducts> => {
-    const { data } = await http.get(`/api/vitrine/nests/${nestId}/products`);
+export default async (nestSlug: string): Promise<StoreNestProducts> => {
+    const { data } = await http.get(`/api/vitrine/nests/${nestSlug}/products`);
 
     return data;
 };

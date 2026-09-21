@@ -39,22 +39,22 @@ const ConflictStateRenderer = () => {
     return (
         status === 'installing' || status === 'install_failed' ?
             <ScreenBlock
-                title={'Running Installer'}
+                title={'Installation en cours'}
                 image={ServerInstallSvg}
-                message={'Your server should be ready soon, please try again in a few minutes.'}
+                message={'Votre serveur sera bientôt prêt, revenez dans quelques minutes.'}
             />
             :
             status === 'suspended' ?
                 <ScreenBlock
-                    title={'Server Suspended'}
+                    title={'Serveur suspendu'}
                     image={ServerErrorSvg}
-                    message={'This server is suspended and cannot be accessed.'}
+                    message={'Ce serveur est suspendu et n’est pas accessible pour le moment.'}
                 />
                 :
                 <ScreenBlock
-                    title={isTransferring ? 'Transferring' : 'Restoring from Backup'}
+                    title={isTransferring ? 'Transfert en cours' : 'Restauration en cours'}
                     image={ServerRestoreSvg}
-                    message={isTransferring ? 'Your server is being transfered to a new node, please check back later.' : 'Your server is currently being restored from a backup, please check back in a few minutes.'}
+                    message={isTransferring ? 'Votre serveur est en cours de transfert vers un nouveau node, revenez plus tard.' : 'Votre serveur est en cours de restauration depuis une sauvegarde, revenez dans quelques minutes.'}
                 />
     );
 };
@@ -103,28 +103,28 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                             <div>
                                 <NavLink to={`${match.url}`} exact>Console</NavLink>
                                 <Can action={'file.*'}>
-                                    <NavLink to={`${match.url}/files`}>File Manager</NavLink>
+                                    <NavLink to={`${match.url}/files`}>Fichiers</NavLink>
                                 </Can>
                                 <Can action={'database.*'}>
-                                    <NavLink to={`${match.url}/databases`}>Databases</NavLink>
+                                    <NavLink to={`${match.url}/databases`}>Bases de données</NavLink>
                                 </Can>
                                 <Can action={'schedule.*'}>
-                                    <NavLink to={`${match.url}/schedules`}>Schedules</NavLink>
+                                    <NavLink to={`${match.url}/schedules`}>Tâches planifiées</NavLink>
                                 </Can>
                                 <Can action={'user.*'}>
-                                    <NavLink to={`${match.url}/users`}>Users</NavLink>
+                                    <NavLink to={`${match.url}/users`}>Utilisateurs</NavLink>
                                 </Can>
                                 <Can action={'backup.*'}>
-                                    <NavLink to={`${match.url}/backups`}>Backups</NavLink>
+                                    <NavLink to={`${match.url}/backups`}>Sauvegardes</NavLink>
                                 </Can>
                                 <Can action={'allocation.*'}>
-                                    <NavLink to={`${match.url}/network`}>Network</NavLink>
+                                    <NavLink to={`${match.url}/network`}>Réseau</NavLink>
                                 </Can>
                                 <Can action={'startup.*'}>
-                                    <NavLink to={`${match.url}/startup`}>Startup</NavLink>
+                                    <NavLink to={`${match.url}/startup`}>Démarrage</NavLink>
                                 </Can>
                                 <Can action={[ 'settings.*', 'file.sftp' ]} matchAny>
-                                    <NavLink to={`${match.url}/settings`}>Settings</NavLink>
+                                    <NavLink to={`${match.url}/settings`}>Paramètres</NavLink>
                                 </Can>
                                 {rootAdmin &&
                                 <a href={'/admin/servers/' + serverId} rel="noreferrer" target={'_blank'}>

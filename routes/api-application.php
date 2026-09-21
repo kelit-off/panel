@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/version', 'VersionController');
 Route::get('/overview', [\Pterodactyl\Http\Controllers\Api\Application\Overview\OverviewController::class, 'index']);
 Route::get('/analytics', [\Pterodactyl\Http\Controllers\Api\Application\Overview\AnalyticsController::class, 'index']);
+Route::get('/analytics/revenue', [\Pterodactyl\Http\Controllers\Api\Application\Overview\BusinessAnalyticsController::class, 'revenue']);
+Route::get('/analytics/customers', [\Pterodactyl\Http\Controllers\Api\Application\Overview\BusinessAnalyticsController::class, 'customers']);
+Route::get('/analytics/funnel', [\Pterodactyl\Http\Controllers\Api\Application\Overview\BusinessAnalyticsController::class, 'funnel']);
+Route::get('/analytics/capacity', [\Pterodactyl\Http\Controllers\Api\Application\Overview\BusinessAnalyticsController::class, 'capacity']);
 
 /*
 |--------------------------------------------------------------------------
