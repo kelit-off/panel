@@ -30,6 +30,12 @@ export default () => {
                         Accueil
                     </Link>
                     <GamesDropdown/>
+                    <Link
+                        to={'/outils/calculateur-ram-minecraft'}
+                        css={tw`inline-flex h-10 items-center rounded-lg px-3.5 text-sm font-semibold text-neutral-500 transition-colors duration-150 hover:bg-neutral-100 hover:text-neutral-900`}
+                    >
+                        Calculateur de RAM
+                    </Link>
                 </nav>
 
                 <div css={tw`flex items-center gap-2.5`}>
