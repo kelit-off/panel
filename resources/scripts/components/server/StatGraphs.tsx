@@ -29,8 +29,8 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
             line: {
                 tension: 0.3,
                 borderWidth: 2,
-                backgroundColor: 'rgba(59, 130, 246, 0.18)',
-                borderColor: '#60a5fa',
+                backgroundColor: 'rgba(61, 220, 151, 0.18)',
+                borderColor: '#3ddc97',
             },
         },
         scales: {
@@ -46,7 +46,7 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
                 gridLines: {
                     drawTicks: false,
                     color: 'rgba(229, 232, 235, 0.08)',
-                    zeroLineColor: 'rgba(96, 165, 250, 0.4)',
+                    zeroLineColor: 'rgba(61, 220, 151, 0.4)',
                     zeroLineWidth: 2,
                 },
                 ticks: merge(ticks || {}, {

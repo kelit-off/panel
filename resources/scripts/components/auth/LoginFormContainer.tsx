@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useStoreState } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faServer } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 interface ContainerProps {
     title?: string;
@@ -21,9 +21,7 @@ const Container = ({ title, subtitle, sidebar, children }: ContainerProps) => {
     return (
         <div css={tw`flex min-h-screen flex-col items-center justify-center bg-[#f6f8fb] px-4 py-10 font-vitrine text-neutral-900`}>
             <Link to={'/'} css={tw`mb-8 flex items-center gap-2.5`}>
-                <div css={tw`flex h-9 w-9 items-center justify-center rounded-lg bg-primary-600 shadow-lg`}>
-                    <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
-                </div>
+                <img src={'/favicons/favicon.svg'} alt={''} css={tw`h-9 w-9 flex-shrink-0`}/>
                 <span css={tw`font-vitrine-display text-xl font-bold tracking-tight`}>{name}</span>
             </Link>
 

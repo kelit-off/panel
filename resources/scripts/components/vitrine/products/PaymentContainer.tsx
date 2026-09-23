@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faSpinner, faUserPlus, faSignInAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import LandingLayout from '@/components/vitrine/landing/LandingLayout';
 import createSubscriptionIntent, { SubscriptionIntent } from '@/api/store/createSubscriptionIntent';
-import { httpErrorToHuman } from '@/api/http';
+import http, { httpErrorToHuman } from '@/api/http';
 
 const formatPrice = (price: string): string => Number(price).toFixed(2).replace('.', ',');
 
@@ -69,7 +69,7 @@ const PaymentForm = ({ intent }: { intent: SubscriptionIntent }) => {
                 css={tw`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 text-sm font-bold text-white transition-colors duration-150 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60`}
             >
                 {submitting && <FontAwesomeIcon icon={faSpinner} spin/>}
-                {submitting ? 'Paiement en cours…' : `Payer ${formatPrice(intent.product.price)} €`}
+                {submitting ? 'Paiement en cours…' : `Commander avec obligation de paiement — ${formatPrice(intent.product.price)} €`}
             </button>
             <p css={tw`mt-4 flex items-center justify-center gap-1.5 text-xs text-neutral-400`}>
                 <FontAwesomeIcon icon={faLock}/>
@@ -160,7 +160,85 @@ const ConfigureForm = ({ onSubmit }: { onSubmit: (name: string) => void }) => {
     );
 };
 
-type Step = 'configure' | 'auth' | 'payment';
+const Checkbox = ({ checked, onChange, children }: { checked: boolean; onChange: (value: boolean) => void; children: React.ReactNode }) => (
+    <label css={tw`mt-3 flex cursor-pointer items-start gap-2.5 text-left text-xs leading-relaxed text-neutral-600`}>
+        <input
+            type={'checkbox'}
+            checked={checked}
+            onChange={e => onChange(e.currentTarget.checked)}
+            css={tw`mt-0.5 h-4 w-4 flex-shrink-0 rounded border-neutral-300 text-primary-600 focus:ring-primary-400`}
+        />
+        <span>{children}</span>
+    </label>
+);
+
+const ConsentForm = ({ productName, price, onSubmit }: { productName: string; price: string; onSubmit: () => void }) => {
+    const [ acceptsCgv, setAcceptsCgv ] = useState(false);
+    const [ immediateStart, setImmediateStart ] = useState(false);
+    const ready = acceptsCgv && immediateStart;
+
+    return (
+        <>
+            <span css={tw`text-xs font-extrabold uppercase tracking-widest text-primary-600`}>Récapitulatif</span>
+            <h1 css={tw`mt-2 font-vitrine-display text-2xl font-bold text-neutral-900`}>{productName}</h1>
+            <p css={tw`mt-1 text-sm text-neutral-500`}>
+                {formatPrice(price)} € par mois, résiliable à tout moment depuis ton espace client.
+            </p>
+
+            <div css={tw`mt-6 rounded-xl bg-neutral-50 p-4`}>
+                <Checkbox checked={acceptsCgv} onChange={setAcceptsCgv}>
+                    J&apos;ai lu et j&apos;accepte les <a href={'/cgv'} target={'_blank'} rel={'noreferrer'} css={tw`font-semibold text-primary-600`}>conditions générales de vente</a> et
+                    les <a href={'/cgu'} target={'_blank'} rel={'noreferrer'} css={tw`font-semibold text-primary-600`}>conditions d&apos;utilisation</a>.
+                </Checkbox>
+                <Checkbox checked={immediateStart} onChange={setImmediateStart}>
+                    Je demande la fourniture immédiate du service dès le paiement confirmé et je reconnais
+                    perdre mon droit de rétractation de 14 jours une fois le service pleinement exécuté
+                    (au prorata si je me rétracte avant, comme expliqué dans les CGV).
+                </Checkbox>
+            </div>
+
+            <button
+                type={'button'}
+                disabled={!ready}
+                onClick={onSubmit}
+                css={tw`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 text-sm font-bold text-white transition-colors duration-150 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-40`}
+            >
+                Continuer vers le paiement
+                <FontAwesomeIcon icon={faArrowRight}/>
+            </button>
+        </>
+    );
+};
+
+// Fetches the plan's name and price to show on the consent step, which happens
+// before an order (and therefore a SubscriptionIntent) exists yet.
+const ConsentPricedForm = ({ productId, onSubmit }: { productId: string; onSubmit: () => void }) => {
+    const [ product, setProduct ] = useState<{ name: string; price: string } | null>(null);
+    const [ error, setError ] = useState('');
+
+    useEffect(() => {
+        http.get(`/api/store/products/${productId}`)
+            .then(({ data }) => setProduct({ name: data.name, price: data.price }))
+            .catch(err => setError(httpErrorToHuman(err)));
+    }, [ productId ]);
+
+    if (error) {
+        return <p css={tw`text-center text-sm text-red-500`}>{error}</p>;
+    }
+
+    if (!product) {
+        return (
+            <p css={tw`text-center text-sm text-neutral-400`}>
+                <FontAwesomeIcon icon={faSpinner} spin css={tw`mr-2`}/>
+                Chargement…
+            </p>
+        );
+    }
+
+    return <ConsentForm productName={product.name} price={product.price} onSubmit={onSubmit}/>;
+};
+
+type Step = 'configure' | 'auth' | 'consent' | 'payment';
 
 export default () => {
     const { productId } = useParams<{ productId: string }>();
@@ -169,34 +247,38 @@ export default () => {
     const [ intent, setIntent ] = useState<SubscriptionIntent | null>(null);
     const [ stripePromise, setStripePromise ] = useState<Promise<Stripe | null> | null>(null);
     const [ error, setError ] = useState('');
+    const [ preparing, setPreparing ] = useState(false);
 
     // A name saved before an auth redirect means the visitor already went
     // through the "configure" step once; skip straight past it, either to
-    // payment (now logged in) or back to the auth choice (still not).
+    // consent (now logged in) or back to the auth choice (still not).
     useEffect(() => {
         const storedName = sessionStorage.getItem(nameStorageKey(productId));
 
-        setStep(storedName ? (isLoggedIn ? 'payment' : 'auth') : 'configure');
+        setStep(storedName ? (isLoggedIn ? 'consent' : 'auth') : 'configure');
     }, [ productId, isLoggedIn ]);
 
-    useEffect(() => {
-        if (step !== 'payment') return;
+    const onConfigured = (name: string) => {
+        sessionStorage.setItem(nameStorageKey(productId), name);
+        setStep(isLoggedIn ? 'consent' : 'auth');
+    };
 
+    const onConsented = () => {
         const name = sessionStorage.getItem(nameStorageKey(productId));
         if (!name) return;
 
-        createSubscriptionIntent(productId, name)
+        setPreparing(true);
+        setError('');
+
+        createSubscriptionIntent(productId, name, true)
             .then(data => {
                 sessionStorage.removeItem(nameStorageKey(productId));
                 setIntent(data);
                 setStripePromise(loadStripe(data.publishableKey));
+                setStep('payment');
             })
-            .catch(err => setError(httpErrorToHuman(err)));
-    }, [ productId, step ]);
-
-    const onConfigured = (name: string) => {
-        sessionStorage.setItem(nameStorageKey(productId), name);
-        setStep(isLoggedIn ? 'payment' : 'auth');
+            .catch(err => setError(httpErrorToHuman(err)))
+            .finally(() => setPreparing(false));
     };
 
     return (
@@ -207,6 +289,17 @@ export default () => {
                         <ConfigureForm onSubmit={onConfigured}/>
                     ) : step === 'auth' ? (
                         <AuthPrompt/>
+                    ) : step === 'consent' ? (
+                        error ? (
+                            <p css={tw`text-center text-sm text-red-500`}>{error}</p>
+                        ) : preparing ? (
+                            <p css={tw`text-center text-sm text-neutral-400`}>
+                                <FontAwesomeIcon icon={faSpinner} spin css={tw`mr-2`}/>
+                                Préparation du paiement…
+                            </p>
+                        ) : (
+                            <ConsentPricedForm productId={productId} onSubmit={onConsented}/>
+                        )
                     ) : error ? (
                         <p css={tw`text-center text-sm text-red-500`}>{error}</p>
                     ) : !intent || !stripePromise ? (

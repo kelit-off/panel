@@ -4,7 +4,6 @@ import { useStoreState } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import GamesDropdown from '@/components/vitrine/components/GamesDropdown';
 
@@ -16,9 +15,7 @@ export default () => {
         <div css={tw`sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/90 font-vitrine backdrop-blur`}>
             <div css={tw`mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8`}>
                 <Link to={'/'} css={tw`flex flex-shrink-0 items-center gap-2.5`}>
-                    <div css={tw`flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 shadow-lg`}>
-                        <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
-                    </div>
+                    <img src={'/favicons/favicon.svg'} alt={''} css={tw`h-8 w-8 flex-shrink-0`}/>
                     <span css={tw`font-vitrine-display text-lg font-bold tracking-tight text-neutral-900`}>{name}</span>
                 </Link>
 

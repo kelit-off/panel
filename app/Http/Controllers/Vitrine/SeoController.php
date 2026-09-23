@@ -146,6 +146,10 @@ class SeoController extends Controller
         array_unshift($urls, [ 'loc' => $this->seo->url('/'), 'lastmod' => $latest, 'priority' => '1.0' ]);
         $urls[] = [ 'loc' => $this->seo->url(config('storefront.ram_tool.path')), 'lastmod' => null, 'priority' => '0.7' ];
 
+        foreach ([ '/mentions-legales', '/cgv', '/cgu', '/confidentialite' ] as $path) {
+            $urls[] = [ 'loc' => $this->seo->url($path), 'lastmod' => null, 'priority' => '0.3' ];
+        }
+
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
         foreach ($urls as $url) {
             $xml .= "  <url>\n    <loc>" . htmlspecialchars($url['loc'], ENT_XML1) . "</loc>\n";

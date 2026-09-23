@@ -201,6 +201,11 @@ Route::group(['prefix' => '/products'], function () {
 | Endpoint: /api/application/tickets
 |
 */
+Route::group(['prefix' => '/reports'], function () {
+    Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\Reports\ReportController::class, 'index']);
+    Route::post('/{report}/respond', [\Pterodactyl\Http\Controllers\Api\Application\Reports\ReportController::class, 'respond']);
+});
+
 Route::group(['prefix' => '/tickets'], function () {
     Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\Tickets\TicketController::class, 'index']);
     Route::get('/{ticket}', [\Pterodactyl\Http\Controllers\Api\Application\Tickets\TicketController::class, 'view']);

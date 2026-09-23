@@ -48,7 +48,7 @@ const dotColors: Record<Tone, string> = { green: '#22c55e', red: '#ef4444', yell
 const card = tw`rounded-xl border border-white border-opacity-5 bg-neutral-900`;
 const numeric = { fontVariantNumeric: 'tabular-nums' } as const;
 
-const usageColor = (ratio: number): string => (ratio >= 0.95 ? '#ef4444' : ratio >= 0.8 ? '#fab219' : '#3b82f6');
+const usageColor = (ratio: number): string => (ratio >= 0.95 ? '#ef4444' : ratio >= 0.8 ? '#fab219' : '#3ddc97');
 
 const Metric = ({ icon, label, value, limit, ratio, footer }: {
     icon: IconDefinition;

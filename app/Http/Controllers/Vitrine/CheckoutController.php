@@ -30,6 +30,19 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Name and price of a plan, shown on the checkout consent step before an
+     * order exists yet — the same information already public on its game page.
+     */
+    public function product(Product $product): JsonResponse
+    {
+        if (!$product->is_active) {
+            return response()->json([ 'error' => "Cette offre n'est plus disponible." ], 404);
+        }
+
+        return response()->json([ 'name' => $product->name, 'price' => $product->price ]);
+    }
+
+    /**
      * Starts a subscription in Stripe's "incomplete" state and returns the
      * PaymentIntent client secret so the frontend can collect card details
      * with Stripe Elements on our own page, without redirecting to a
@@ -49,6 +62,10 @@ class CheckoutController extends Controller
 
         $data = $request->validate([
             'name' => ['required', 'string', 'between:1,60'],
+            // Required and must be true: the server is created the instant payment is
+            // confirmed, which is only lawful before the 14-day withdrawal period ends if
+            // the customer expressly asked for it (Code de la consommation, art. L221-28 1°).
+            'immediate_start' => ['required', 'accepted'],
         ]);
 
         $order = Order::query()->create([
@@ -57,6 +74,7 @@ class CheckoutController extends Controller
             'nest_id' => $product->nest_id,
             'name' => $data['name'],
             'status' => Order::STATUS_PENDING,
+            'immediate_start_consented_at' => now(),
         ]);
 
         $customer = $request->user()->createOrGetStripeCustomer();

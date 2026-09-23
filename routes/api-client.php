@@ -17,6 +17,12 @@ use Pterodactyl\Http\Middleware\Api\Client\Server\AuthenticateServerAccess;
 Route::get('/', 'ClientController@index')->name('api:client.index');
 Route::get('/permissions', 'ClientController@permissions');
 
+Route::group(['prefix' => '/orders'], function () {
+    Route::get('/', [Client\OrderController::class, 'index']);
+    Route::post('/{order}/cancel', [Client\OrderController::class, 'cancel']);
+    Route::post('/{order}/withdraw', [Client\OrderController::class, 'withdraw']);
+});
+
 Route::group(['prefix' => '/tickets'], function () {
     Route::get('/', [Client\TicketController::class, 'index']);
     Route::post('/', [Client\TicketController::class, 'store']);

@@ -64,6 +64,8 @@ class Order extends Model
         'terminate_at',
         'paid_at',
         'ended_at',
+        'immediate_start_consented_at',
+        'refunded_amount',
     ];
 
     /**
@@ -74,6 +76,8 @@ class Order extends Model
         'terminate_at' => 'datetime',
         'paid_at' => 'datetime',
         'ended_at' => 'datetime',
+        'immediate_start_consented_at' => 'datetime',
+        'refunded_amount' => 'float',
         'user_id' => 'integer',
         'product_id' => 'integer',
         'nest_id' => 'integer',
@@ -94,6 +98,8 @@ class Order extends Model
         'terminate_at' => 'sometimes|nullable|date',
         'paid_at' => 'sometimes|nullable|date',
         'ended_at' => 'sometimes|nullable|date',
+        'immediate_start_consented_at' => 'sometimes|nullable|date',
+        'refunded_amount' => 'sometimes|nullable|numeric',
     ];
 
     /**

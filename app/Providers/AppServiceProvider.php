@@ -3,6 +3,7 @@
 namespace Pterodactyl\Providers;
 
 use Illuminate\Support\Str;
+use Laravel\Cashier\Cashier;
 use Laravel\Sanctum\Sanctum;
 use Pterodactyl\Models\User;
 use Pterodactyl\Models\Server;
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Cashier::useCustomerModel(User::class);
 
         User::observe(UserObserver::class);
         Server::observe(ServerObserver::class);

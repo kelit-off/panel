@@ -90,7 +90,7 @@ const NumberField = ({ id, label, value, min, max, sliderMax, onChange }: {
                     value={Math.min(value, sliderMax ?? max)}
                     onChange={e => onChange(clamp(Number(e.currentTarget.value)))}
                     css={tw`h-2 flex-1 cursor-pointer`}
-                    style={{ accentColor: '#2563eb' } as React.CSSProperties}
+                    style={{ accentColor: '#0e9a62' } as React.CSSProperties}
                 />
                 <input
                     type={'number'}

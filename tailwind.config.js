@@ -12,9 +12,22 @@ module.exports = {
                 'vitrine-display': [ '"Space Grotesk"', '"Manrope"', 'system-ui', 'sans-serif' ],
             },
             colors: {
-                black: '#131a20',
-                // Deprecated, prefer "blue"...
-                primary: colors.blue,
+                black: '#0b0f14',
+                // Brand accent (logo mark): #3DDC97 on dark backgrounds, #0E9A62
+                // on light ones — 400/600 below carry those exact values so every
+                // primary-* usage across the app follows the same palette.
+                primary: {
+                    50: '#eafbf3',
+                    100: '#d2f6e4',
+                    200: '#a6edc9',
+                    300: '#71dfac',
+                    400: '#3ddc97',
+                    500: '#22c285',
+                    600: '#0e9a62',
+                    700: '#0b7f50',
+                    800: '#0a6742',
+                    900: '#085234',
+                },
                 // Deprecate, prefer "gray"...
                 neutral: colors.gray,
                 cyan: colors.cyan,

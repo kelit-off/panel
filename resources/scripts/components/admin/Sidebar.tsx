@@ -23,10 +23,10 @@ const Wrapper = styled.div`
 
     &:active, &.active {
       ${tw`text-neutral-50`};
-      background: rgba(59, 130, 246, 0.16);
+      background: rgba(14, 154, 98, 0.18);
 
       & > svg {
-        ${tw`text-blue-400`};
+        ${tw`text-primary-400`};
       }
     }
   }

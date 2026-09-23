@@ -4,7 +4,7 @@ import { useStoreState } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faServer, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
     children: React.ReactNode;
@@ -20,12 +20,10 @@ export default ({ children }: Props) => {
                 {children}
             </div>
 
-            <footer css={tw`grid grid-cols-1 gap-10 border-t border-neutral-200 bg-white px-6 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-8`}>
+            <footer css={tw`grid grid-cols-1 gap-10 border-t border-neutral-200 bg-white px-6 py-12 sm:grid-cols-2 lg:grid-cols-5 lg:px-8`}>
                 <div css={tw`lg:col-span-1`}>
                     <Link to={'/'} css={tw`flex items-center gap-2.5`}>
-                        <div css={tw`flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600`}>
-                            <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
-                        </div>
+                        <img src={'/favicons/favicon.svg'} alt={''} css={tw`h-8 w-8 flex-shrink-0`}/>
                         <span css={tw`font-vitrine-display text-lg font-bold tracking-tight text-neutral-900`}>{name}</span>
                     </Link>
                     <p css={tw`mt-3 max-w-xs text-sm leading-relaxed text-neutral-500`}>
@@ -59,7 +57,6 @@ export default ({ children }: Props) => {
                         <li><a href={'#faq'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Questions fréquentes</a></li>
                         <li><Link to={'/outils/calculateur-ram-minecraft'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Calculateur de RAM Minecraft</Link></li>
                         <li><Link to={accountLink} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Espace client</Link></li>
-                        <li><a href={'#'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Mentions légales</a></li>
                     </ul>
                 </div>
 
@@ -67,11 +64,22 @@ export default ({ children }: Props) => {
                     <h4 css={tw`mb-3.5 text-xs font-bold uppercase tracking-wider text-neutral-400`}>Contact</h4>
                     <ul css={tw`space-y-2.5`}>
                         <li><a href={'/account/tickets'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Ouvrir un ticket</a></li>
+                        <li><a href={'/signalement'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Signaler un contenu</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 css={tw`mb-3.5 text-xs font-bold uppercase tracking-wider text-neutral-400`}>Légal</h4>
+                    <ul css={tw`space-y-2.5`}>
+                        <li><a href={'/mentions-legales'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Mentions légales</a></li>
+                        <li><a href={'/cgv'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>CGV</a></li>
+                        <li><a href={'/cgu'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>CGU</a></li>
+                        <li><a href={'/confidentialite'} css={tw`text-sm text-neutral-500 hover:text-neutral-900`}>Confidentialité</a></li>
                     </ul>
                 </div>
             </footer>
 
-            <div css={tw`flex flex-col items-center gap-1 bg-[#0f1729] px-6 py-5 text-center text-xs text-[#8b98ad]`}>
+            <div css={tw`flex flex-col items-center gap-1 bg-[#0b0f14] px-6 py-5 text-center text-xs text-[#8b98ad]`}>
                 <span css={tw`font-mono`}>Géré par une petite équipe, pas par un centre d&apos;appels.</span>
                 <span>&copy; {(new Date()).getFullYear()} {name}. Tous droits réservés.</span>
             </div>

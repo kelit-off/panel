@@ -16,6 +16,7 @@ import LocationEditContainer from '@/components/admin/locations/LocationEditCont
 import InvoicesContainer from '@/components/admin/invoices/InvoicesContainer';
 import TicketsContainer from '@/components/admin/tickets/TicketsContainer';
 import TicketEditContainer from '@/components/admin/tickets/TicketEditContainer';
+import ReportsContainer from '@/components/admin/reports/ReportsContainer';
 import CategoriesContainer from '@/components/admin/categories/CategoriesContainer';
 import CategoryEditContainer from '@/components/admin/categories/CategoryEditContainer';
 import ProductsContainer from '@/components/admin/products/ProductsContainer';
@@ -57,7 +58,7 @@ import {
     ViewGridIcon,
 } from '@heroicons/react/outline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faServer } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Sidebar from '@/components/admin/Sidebar';
 import useUserPersistedState from '@/plugins/useUserPersistedState';
 import UsersContainer from '@/components/admin/users/UsersContainer';
@@ -78,9 +79,7 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                     style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}
                     onClick={() => setCollapsed(!collapsed)}
                 >
-                    <div css={tw`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary-600 shadow-lg`}>
-                        <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
-                    </div>
+                    <img src={'/favicons/favicon.svg'} alt={''} css={tw`h-8 w-8 flex-shrink-0`}/>
                     {!collapsed &&
                     <div css={tw`flex flex-col`}>
                         <span css={tw`font-header text-base font-extrabold leading-tight text-neutral-50 whitespace-nowrap`}>{applicationName}</span>
@@ -138,6 +137,10 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                     <NavLink to={`${match.url}/tickets`}>
                         <ChatAltIcon/><span>Tickets</span>
                     </NavLink>
+                    <Sidebar.Section>Modération</Sidebar.Section>
+                    <NavLink to={`${match.url}/reports`}>
+                        <FontAwesomeIcon icon={faExclamationTriangle}/><span>Signalements</span>
+                    </NavLink>
                 </Sidebar.Wrapper>
                 <NavLink to={'/'} css={tw`mt-auto mb-3`}>
                     <ReplyIcon/><span>Retour au site</span>
@@ -189,6 +192,7 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                         <Route path={`${match.path}/invoices`} component={InvoicesContainer} exact/>
                         <Route path={`${match.path}/tickets`} component={TicketsContainer} exact/>
                         <Route path={`${match.path}/tickets/:id`} component={TicketEditContainer} exact/>
+                        <Route path={`${match.path}/reports`} component={ReportsContainer} exact/>
                         <Route path={'*'} component={NotFound}/>
                     </Switch>
                 </div>

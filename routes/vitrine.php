@@ -32,11 +32,22 @@ Route::middleware(RecordAiCrawler::class)->group(function () {
     Route::get('/sitemap.xml', 'SeoController@sitemap');
     Route::get('/llms.txt', 'SeoController@llms');
     Route::get('/llms-full.txt', 'SeoController@llmsFull');
+
+    Route::get('/mentions-legales', 'LegalController@mentionsLegales');
+    Route::get('/cgv', 'LegalController@cgv');
+    Route::get('/cgu', 'LegalController@cgu');
+    Route::get('/confidentialite', 'LegalController@confidentialite');
+    Route::get('/dpa', 'LegalController@dpa');
+    Route::get('/signalement', 'LegalController@reportForm');
+    Route::post('/signalement', 'LegalController@reportSubmit')->middleware('throttle:10,1');
 });
 
 // Route::get('/locales/{locale}/{namespace}.json', 'LocaleController')
 //     ->withoutMiddleware(RequireTwoFactorAuthentication::class)
 //     ->where('namespace', '.*');
+
+Route::get('/api/store/products/{product}', 'CheckoutController@product')
+    ->middleware(RecordAiCrawler::class);
 
 Route::post('/api/store/products/{product}/checkout', 'CheckoutController@store')
     ->middleware('auth');

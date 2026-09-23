@@ -4,7 +4,7 @@ import { useStoreState } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faCog, faServer, faShieldAlt, faSignOutAlt, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faCog, faShieldAlt, faSignOutAlt, faStore } from '@fortawesome/free-solid-svg-icons';
 import http from '@/api/http';
 import FlashMessageRender from '@/components/FlashMessageRender';
 
@@ -95,9 +95,7 @@ export default ({ children }: { children: React.ReactNode }) => {
             <header css={tw`sticky top-0 z-30 border-b border-neutral-200 bg-white/90 backdrop-blur`}>
                 <div css={tw`mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8`}>
                     <Link to={'/account'} css={tw`flex flex-shrink-0 items-center gap-2.5`}>
-                        <div css={tw`flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 shadow-lg`}>
-                            <FontAwesomeIcon icon={faServer} css={tw`text-sm text-white`}/>
-                        </div>
+                        <img src={'/favicons/favicon.svg'} alt={''} css={tw`h-8 w-8 flex-shrink-0`}/>
                         <span css={tw`font-vitrine-display text-lg font-bold tracking-tight`}>{name}</span>
                     </Link>
                     <nav css={tw`hidden items-center gap-1 md:flex`}>
