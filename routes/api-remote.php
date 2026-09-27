@@ -26,6 +26,8 @@ Route::group(['prefix' => '/servers/{uuid}'], function () {
     Route::get('/transfer/success', 'Servers\ServerTransferController@success');
 });
 
+Route::get('/webhosting/caddy', 'WebHostingController@caddy');
+
 Route::group(['prefix' => '/backups'], function () {
     Route::get('/{backup}', 'Backups\BackupRemoteUploadController');
     Route::post('/{backup}', 'Backups\BackupStatusController@index');

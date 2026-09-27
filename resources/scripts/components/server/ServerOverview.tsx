@@ -9,6 +9,7 @@ import { usePermissions } from '@/plugins/usePermissions';
 import CopyOnClick from '@/components/elements/CopyOnClick';
 import { SocketEvent, SocketRequest } from '@/components/server/events';
 import UptimeDuration from '@/components/server/UptimeDuration';
+import useIsWebsite from '@/plugins/useIsWebsite';
 
 export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
 
@@ -45,7 +46,7 @@ const statusInfo = (status: string | null, installing: boolean, transferring: bo
 
 const dotColors: Record<Tone, string> = { green: '#22c55e', red: '#ef4444', yellow: '#fab219' };
 
-const card = tw`rounded-xl border border-white border-opacity-5 bg-neutral-900`;
+export const card = tw`rounded-xl border border-white border-opacity-5 bg-neutral-900`;
 const numeric = { fontVariantNumeric: 'tabular-nums' } as const;
 
 const usageColor = (ratio: number): string => (ratio >= 0.95 ? '#ef4444' : ratio >= 0.8 ? '#fab219' : '#3ddc97');
@@ -112,8 +113,14 @@ const Notice = ({ children }: { children: React.ReactNode }) => (
     <p css={tw`rounded-lg bg-yellow-500 bg-opacity-10 px-4 py-3 text-sm leading-relaxed text-yellow-200`}>{children}</p>
 );
 
-export default () => {
+interface Props {
+    // Replaces the default "ip:port" line under the name, e.g. with a website's domain.
+    address?: React.ReactNode;
+}
+
+export default ({ address: addressOverride }: Props) => {
     const [ stats, setStats ] = useState<Stats>(emptyStats);
+    const website = useIsWebsite();
     const [ killArmed, setKillArmed ] = useState(false);
 
     const status = ServerContext.useStoreState(state => state.status.value);
@@ -196,7 +203,7 @@ export default () => {
 
                         <h1 css={tw`mt-3 break-words font-header text-2xl font-extrabold tracking-tight text-neutral-50 sm:text-3xl`}>{name}</h1>
 
-                        {address && (
+                        {addressOverride !== undefined ? addressOverride : address && (
                             <CopyOnClick text={address}>
                                 <span css={tw`mt-3 inline-flex max-w-full cursor-pointer items-center gap-2.5 rounded-lg bg-white bg-opacity-5 px-3 py-2 text-sm text-neutral-200 transition-colors duration-150 hover:bg-opacity-10`}>
                                     <FontAwesomeIcon icon={faEthernet} fixedWidth css={tw`flex-shrink-0 text-neutral-500`}/>
@@ -232,12 +239,12 @@ export default () => {
 
                 {isInstalling && (
                     <div css={tw`mt-5`}>
-                        <Notice>Ce serveur exécute son installation : la plupart des actions sont indisponibles pour le moment.</Notice>
+                        <Notice>{website ? 'Ce site' : 'Ce serveur'} exécute son installation : la plupart des actions sont indisponibles pour le moment.</Notice>
                     </div>
                 )}
                 {!isInstalling && isTransferring && (
                     <div css={tw`mt-5`}>
-                        <Notice>Ce serveur est en cours de transfert vers un autre node : toutes les actions sont indisponibles.</Notice>
+                        <Notice>{website ? 'Ce site' : 'Ce serveur'} est en cours de transfert vers un autre node : toutes les actions sont indisponibles.</Notice>
                     </div>
                 )}
             </div>

@@ -22,6 +22,9 @@ import { httpErrorToHuman } from '@/api/http';
 import { useStoreState } from 'easy-peasy';
 import SubNavigation from '@/components/elements/SubNavigation';
 import NetworkContainer from '@/components/server/network/NetworkContainer';
+import DomainsContainer from '@/components/server/domains/DomainsContainer';
+import WebsiteDashboard from '@/components/server/website/WebsiteDashboard';
+import useIsWebsite from '@/plugins/useIsWebsite';
 import InstallListener from '@/components/server/InstallListener';
 import StartupContainer from '@/components/server/startup/StartupContainer';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
@@ -35,26 +38,27 @@ import ServerErrorSvg from '@/assets/images/server_error.svg';
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
     const isTransferring = ServerContext.useStoreState(state => state.server.data?.isTransferring || false);
+    const noun = useIsWebsite() ? 'site' : 'serveur';
 
     return (
         status === 'installing' || status === 'install_failed' ?
             <ScreenBlock
                 title={'Installation en cours'}
                 image={ServerInstallSvg}
-                message={'Votre serveur sera bientôt prêt, revenez dans quelques minutes.'}
+                message={`Votre ${noun} sera bientôt prêt, revenez dans quelques minutes.`}
             />
             :
             status === 'suspended' ?
                 <ScreenBlock
-                    title={'Serveur suspendu'}
+                    title={noun === 'site' ? 'Site suspendu' : 'Serveur suspendu'}
                     image={ServerErrorSvg}
-                    message={'Ce serveur est suspendu et n’est pas accessible pour le moment.'}
+                    message={`Ce ${noun} est suspendu et n’est pas accessible pour le moment.`}
                 />
                 :
                 <ScreenBlock
                     title={isTransferring ? 'Transfert en cours' : 'Restauration en cours'}
                     image={ServerRestoreSvg}
-                    message={isTransferring ? 'Votre serveur est en cours de transfert vers un nouveau node, revenez plus tard.' : 'Votre serveur est en cours de restauration depuis une sauvegarde, revenez dans quelques minutes.'}
+                    message={isTransferring ? `Votre ${noun} est en cours de transfert vers un nouveau node, revenez plus tard.` : `Votre ${noun} est en cours de restauration depuis une sauvegarde, revenez dans quelques minutes.`}
                 />
     );
 };
@@ -67,6 +71,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     const uuid = ServerContext.useStoreState(state => state.server.data?.uuid);
     const inConflictState = ServerContext.useStoreState(state => state.server.inConflictState);
     const serverId = ServerContext.useStoreState(state => state.server.data?.internalId);
+    const isWebsite = useIsWebsite();
     const getServer = ServerContext.useStoreActions(actions => actions.server.getServer);
     const clearServerState = ServerContext.useStoreActions(actions => actions.clearServerState);
 
@@ -101,28 +106,54 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                     <CSSTransition timeout={150} classNames={'fade'} appear in>
                         <SubNavigation>
                             <div>
-                                <NavLink to={`${match.url}`} exact>Console</NavLink>
-                                <Can action={'file.*'}>
-                                    <NavLink to={`${match.url}/files`}>Fichiers</NavLink>
-                                </Can>
-                                <Can action={'database.*'}>
-                                    <NavLink to={`${match.url}/databases`}>Bases de données</NavLink>
-                                </Can>
-                                <Can action={'schedule.*'}>
-                                    <NavLink to={`${match.url}/schedules`}>Tâches planifiées</NavLink>
-                                </Can>
-                                <Can action={'user.*'}>
-                                    <NavLink to={`${match.url}/users`}>Utilisateurs</NavLink>
-                                </Can>
-                                <Can action={'backup.*'}>
-                                    <NavLink to={`${match.url}/backups`}>Sauvegardes</NavLink>
-                                </Can>
-                                <Can action={'allocation.*'}>
-                                    <NavLink to={`${match.url}/network`}>Réseau</NavLink>
-                                </Can>
-                                <Can action={'startup.*'}>
-                                    <NavLink to={`${match.url}/startup`}>Démarrage</NavLink>
-                                </Can>
+                                {isWebsite ?
+                                    <>
+                                        <NavLink to={`${match.url}`} exact>Tableau de bord</NavLink>
+                                        <Can action={'file.*'}>
+                                            <NavLink to={`${match.url}/files`}>Fichiers</NavLink>
+                                        </Can>
+                                        <Can action={'domain.*'}>
+                                            <NavLink to={`${match.url}/domains`}>Domaines</NavLink>
+                                        </Can>
+                                        <Can action={'database.*'}>
+                                            <NavLink to={`${match.url}/databases`}>Bases de données</NavLink>
+                                        </Can>
+                                        <Can action={'backup.*'}>
+                                            <NavLink to={`${match.url}/backups`}>Sauvegardes</NavLink>
+                                        </Can>
+                                        <Can action={'user.*'}>
+                                            <NavLink to={`${match.url}/users`}>Utilisateurs</NavLink>
+                                        </Can>
+                                        <Can action={'startup.*'}>
+                                            <NavLink to={`${match.url}/startup`}>Configuration</NavLink>
+                                        </Can>
+                                    </>
+                                    :
+                                    <>
+                                        <NavLink to={`${match.url}`} exact>Console</NavLink>
+                                        <Can action={'file.*'}>
+                                            <NavLink to={`${match.url}/files`}>Fichiers</NavLink>
+                                        </Can>
+                                        <Can action={'database.*'}>
+                                            <NavLink to={`${match.url}/databases`}>Bases de données</NavLink>
+                                        </Can>
+                                        <Can action={'schedule.*'}>
+                                            <NavLink to={`${match.url}/schedules`}>Tâches planifiées</NavLink>
+                                        </Can>
+                                        <Can action={'user.*'}>
+                                            <NavLink to={`${match.url}/users`}>Utilisateurs</NavLink>
+                                        </Can>
+                                        <Can action={'backup.*'}>
+                                            <NavLink to={`${match.url}/backups`}>Sauvegardes</NavLink>
+                                        </Can>
+                                        <Can action={'allocation.*'}>
+                                            <NavLink to={`${match.url}/network`}>Réseau</NavLink>
+                                        </Can>
+                                        <Can action={'startup.*'}>
+                                            <NavLink to={`${match.url}/startup`}>Démarrage</NavLink>
+                                        </Can>
+                                    </>
+                                }
                                 <Can action={[ 'settings.*', 'file.sftp' ]} matchAny>
                                     <NavLink to={`${match.url}/settings`}>Paramètres</NavLink>
                                 </Can>
@@ -143,7 +174,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                         <ErrorBoundary>
                             <TransitionRouter>
                                 <Switch location={location}>
-                                    <Route path={`${match.path}`} component={ServerConsole} exact/>
+                                    <Route path={`${match.path}`} component={isWebsite ? WebsiteDashboard : ServerConsole} exact/>
                                     <Route path={`${match.path}/files`} exact>
                                         <RequireServerPermission permissions={'file.*'}>
                                             <FileManagerContainer/>
@@ -159,6 +190,13 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                             <DatabasesContainer/>
                                         </RequireServerPermission>
                                     </Route>
+                                    {isWebsite &&
+                                    <Route path={`${match.path}/domains`} exact>
+                                        <RequireServerPermission permissions={'domain.*'}>
+                                            <DomainsContainer/>
+                                        </RequireServerPermission>
+                                    </Route>
+                                    }
                                     <Route path={`${match.path}/schedules`} exact>
                                         <RequireServerPermission permissions={'schedule.*'}>
                                             <ScheduleContainer/>
