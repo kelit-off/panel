@@ -122,6 +122,13 @@ Route::group([
         Route::delete('/allocations/{allocation}', 'Servers\NetworkAllocationController@delete');
     });
 
+    Route::group(['prefix' => '/domains'], function () {
+        Route::get('/', [Client\Servers\DomainController::class, 'index']);
+        Route::post('/', [Client\Servers\DomainController::class, 'store']);
+        Route::post('/{domain}/verify', [Client\Servers\DomainController::class, 'verify']);
+        Route::delete('/{domain}', [Client\Servers\DomainController::class, 'delete']);
+    });
+
     Route::group(['prefix' => '/users'], function () {
         Route::get('/', 'Servers\SubuserController@index');
         Route::post('/', 'Servers\SubuserController@store');

@@ -244,6 +244,16 @@ class Server extends Model
     }
 
     /**
+     * Gets all domains attached to a website server.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function domains()
+    {
+        return $this->hasMany(ServerDomain::class);
+    }
+
+    /**
      * Returns the location that a server belongs to.
      *
      * @return \Znck\Eloquent\Relations\BelongsToThrough

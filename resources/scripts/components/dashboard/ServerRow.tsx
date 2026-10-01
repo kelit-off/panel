@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEthernet, faHdd, faMemory, faMicrochip, faServer } from '@fortawesome/free-solid-svg-icons';
+import { faEthernet, faGlobe, faHdd, faMemory, faMicrochip, faServer } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { Server } from '@definitions/user';
 import { getServerResourceUsage, ServerPowerState, ServerStats } from '@/api/server';
@@ -9,6 +9,7 @@ import tw, { styled } from 'twin.macro';
 import GreyRowBox from '@/components/elements/GreyRowBox';
 import Spinner from '@/components/elements/Spinner';
 import isEqual from 'react-fast-compare';
+import { isWebsite } from '@/plugins/useIsWebsite';
 
 // Determines if the current value is in an alarm threshold so we can show it in red rather
 // than the more faded default style.
@@ -42,6 +43,7 @@ export default ({ server, className }: { server: Server; className?: string }) =
     const interval = useRef<number>(null);
     const [ isSuspended, setIsSuspended ] = useState(server.status === 'suspended');
     const [ stats, setStats ] = useState<ServerStats | null>(null);
+    const website = isWebsite(server.eggFeatures);
 
     const getStats = () => getServerResourceUsage(server.uuid)
         .then(data => setStats(data))
@@ -81,7 +83,7 @@ export default ({ server, className }: { server: Server; className?: string }) =
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
             <div css={tw`flex items-center col-span-12 sm:col-span-5 lg:col-span-6`}>
                 <div className={'icon'} css={tw`mr-4`}>
-                    <FontAwesomeIcon icon={faServer}/>
+                    <FontAwesomeIcon icon={website ? faGlobe : faServer}/>
                 </div>
                 <div>
                     <p css={tw`text-lg break-words`}>{server.name}</p>
@@ -91,16 +93,22 @@ export default ({ server, className }: { server: Server; className?: string }) =
                 </div>
             </div>
             <div css={tw`hidden lg:col-span-2 lg:flex ml-4 justify-end h-full`}>
-                <FontAwesomeIcon icon={faEthernet} css={tw`text-neutral-500`}/>
-                <p css={tw`text-sm text-neutral-400 ml-2`}>
-                    {
-                        server.allocations.filter(alloc => alloc.isDefault).map(allocation => (
-                            <React.Fragment key={allocation.ip + allocation.port.toString()}>
-                                {allocation.alias || formatIp(allocation.ip)}:{allocation.port}
-                            </React.Fragment>
-                        ))
-                    }
-                </p>
+                {website ?
+                    <p css={tw`text-sm text-neutral-400`}>Site web</p>
+                    :
+                    <>
+                        <FontAwesomeIcon icon={faEthernet} css={tw`text-neutral-500`}/>
+                        <p css={tw`text-sm text-neutral-400 ml-2`}>
+                            {
+                                server.allocations.filter(alloc => alloc.isDefault).map(allocation => (
+                                    <React.Fragment key={allocation.ip + allocation.port.toString()}>
+                                        {allocation.alias || formatIp(allocation.ip)}:{allocation.port}
+                                    </React.Fragment>
+                                ))
+                            }
+                        </p>
+                    </>
+                }
             </div>
             <div css={tw`hidden col-span-7 lg:col-span-4 sm:flex items-baseline justify-center`}>
                 {(!stats || isSuspended) ?
