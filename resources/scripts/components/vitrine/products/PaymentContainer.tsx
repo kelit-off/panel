@@ -13,6 +13,9 @@ import http, { httpErrorToHuman } from '@/api/http';
 
 const formatPrice = (price: string): string => Number(price).toFixed(2).replace('.', ',');
 
+// First-month price once a referral discount is applied.
+const discounted = (price: string, percent?: number | null): string => String(Number(price) * (1 - (percent || 0) / 100));
+
 // The server name is chosen before the visitor is asked to log in or create
 // an account, so it needs to survive the full-page redirect to /auth/login
 // or /auth/register and back. sessionStorage (rather than component state)
@@ -69,7 +72,7 @@ const PaymentForm = ({ intent }: { intent: SubscriptionIntent }) => {
                 css={tw`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 text-sm font-bold text-white transition-colors duration-150 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60`}
             >
                 {submitting && <FontAwesomeIcon icon={faSpinner} spin/>}
-                {submitting ? 'Paiement en cours…' : `Commander avec obligation de paiement — ${formatPrice(intent.product.price)} €`}
+                {submitting ? 'Paiement en cours…' : `Commander avec obligation de paiement — ${formatPrice(discounted(intent.product.price, intent.product.discountPercent))} €`}
             </button>
             <p css={tw`mt-4 flex items-center justify-center gap-1.5 text-xs text-neutral-400`}>
                 <FontAwesomeIcon icon={faLock}/>
@@ -172,7 +175,7 @@ const Checkbox = ({ checked, onChange, children }: { checked: boolean; onChange:
     </label>
 );
 
-const ConsentForm = ({ productName, price, onSubmit }: { productName: string; price: string; onSubmit: () => void }) => {
+const ConsentForm = ({ productName, price, discountPercent, onSubmit }: { productName: string; price: string; discountPercent?: number | null; onSubmit: () => void }) => {
     const [ acceptsCgv, setAcceptsCgv ] = useState(false);
     const [ immediateStart, setImmediateStart ] = useState(false);
     const ready = acceptsCgv && immediateStart;
@@ -184,6 +187,11 @@ const ConsentForm = ({ productName, price, onSubmit }: { productName: string; pr
             <p css={tw`mt-1 text-sm text-neutral-500`}>
                 {formatPrice(price)} € par mois, résiliable à tout moment depuis ton espace client.
             </p>
+            {!!discountPercent && (
+                <p css={tw`mt-3 rounded-lg bg-green-50 px-3.5 py-2.5 text-sm font-semibold text-green-700`}>
+                    Parrainage : −{discountPercent} % sur ton premier mois, soit {formatPrice(discounted(price, discountPercent))} € au lieu de {formatPrice(price)} €.
+                </p>
+            )}
 
             <div css={tw`mt-6 rounded-xl bg-neutral-50 p-4`}>
                 <Checkbox checked={acceptsCgv} onChange={setAcceptsCgv}>
@@ -213,12 +221,12 @@ const ConsentForm = ({ productName, price, onSubmit }: { productName: string; pr
 // Fetches the plan's name and price to show on the consent step, which happens
 // before an order (and therefore a SubscriptionIntent) exists yet.
 const ConsentPricedForm = ({ productId, onSubmit }: { productId: string; onSubmit: () => void }) => {
-    const [ product, setProduct ] = useState<{ name: string; price: string } | null>(null);
+    const [ product, setProduct ] = useState<{ name: string; price: string; discountPercent: number | null } | null>(null);
     const [ error, setError ] = useState('');
 
     useEffect(() => {
         http.get(`/api/store/products/${productId}`)
-            .then(({ data }) => setProduct({ name: data.name, price: data.price }))
+            .then(({ data }) => setProduct({ name: data.name, price: data.price, discountPercent: data.discount_percent ?? null }))
             .catch(err => setError(httpErrorToHuman(err)));
     }, [ productId ]);
 
@@ -235,7 +243,7 @@ const ConsentPricedForm = ({ productId, onSubmit }: { productId: string; onSubmi
         );
     }
 
-    return <ConsentForm productName={product.name} price={product.price} onSubmit={onSubmit}/>;
+    return <ConsentForm productName={product.name} price={product.price} discountPercent={product.discountPercent} onSubmit={onSubmit}/>;
 };
 
 type Step = 'configure' | 'auth' | 'consent' | 'payment';
@@ -312,7 +320,9 @@ export default () => {
                             <span css={tw`text-xs font-extrabold uppercase tracking-widest text-primary-600`}>Paiement</span>
                             <h1 css={tw`mt-2 font-vitrine-display text-2xl font-bold text-neutral-900`}>{intent.product.name}</h1>
                             <p css={tw`mt-1 text-sm text-neutral-500`}>
-                                {formatPrice(intent.product.price)} € facturés chaque mois, résiliable à tout moment.
+                                {intent.product.discountPercent
+                                    ? `${formatPrice(discounted(intent.product.price, intent.product.discountPercent))} € le premier mois (−${intent.product.discountPercent} % parrainage), puis ${formatPrice(intent.product.price)} € par mois, résiliable à tout moment.`
+                                    : `${formatPrice(intent.product.price)} € facturés chaque mois, résiliable à tout moment.`}
                             </p>
 
                             <Elements stripe={stripePromise} options={{ clientSecret: intent.clientSecret }}>

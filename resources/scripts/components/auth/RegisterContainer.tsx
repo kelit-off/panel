@@ -28,6 +28,19 @@ const RegisterContainer = ({ location }: RouteComponentProps) => {
     const redirectTo = new URLSearchParams(location.search).get('redirect_to');
     const query = redirectTo ? `?redirect_to=${encodeURIComponent(redirectTo)}` : '';
 
+    // The code arrives in the shared link; keep it in sessionStorage so it survives
+    // a detour (e.g. to the login page) before the account is actually created.
+    const referralCode = (() => {
+        const fromUrl = new URLSearchParams(location.search).get('ref');
+        try {
+            if (fromUrl) sessionStorage.setItem('referral:code', fromUrl);
+
+            return fromUrl || sessionStorage.getItem('referral:code');
+        } catch (e) {
+            return fromUrl;
+        }
+    })();
+
     useEffect(() => {
         clearFlashes(undefined);
     }, []);
@@ -45,7 +58,7 @@ const RegisterContainer = ({ location }: RouteComponentProps) => {
             return;
         }
 
-        register({ ...values, recaptchaData: token })
+        register({ ...values, recaptchaData: token, referralCode })
             .then(response => {
                 if (response.complete) {
                     // @ts-ignore
@@ -79,7 +92,12 @@ const RegisterContainer = ({ location }: RouteComponentProps) => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Créer un compte'} subtitle={'Un compte suffit pour commander et gérer vos services.'}>
+                <LoginFormContainer
+                    title={'Créer un compte'}
+                    subtitle={referralCode
+                        ? 'Vous êtes parrainé : profitez d\'une réduction sur votre premier mois.'
+                        : 'Un compte suffit pour commander et gérer vos services.'}
+                >
                     <Field
                         light
                         type={'text'}

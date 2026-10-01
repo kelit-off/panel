@@ -23,6 +23,8 @@ Route::group(['prefix' => '/orders'], function () {
     Route::post('/{order}/withdraw', [Client\OrderController::class, 'withdraw']);
 });
 
+Route::get('/referral', [Client\ReferralController::class, 'index']);
+
 Route::group(['prefix' => '/tickets'], function () {
     Route::get('/', [Client\TicketController::class, 'index']);
     Route::post('/', [Client\TicketController::class, 'store']);

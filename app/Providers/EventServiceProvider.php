@@ -4,6 +4,7 @@ namespace Pterodactyl\Providers;
 
 use Laravel\Cashier\Events\WebhookReceived;
 use Pterodactyl\Events\Server\Installed as ServerInstalledEvent;
+use Pterodactyl\Listeners\CountReferralOnInvoicePaid;
 use Pterodactyl\Listeners\ProvisionServerOnSubscriptionActivated;
 use Pterodactyl\Listeners\SuspendServerOnSubscriptionEnded;
 use Pterodactyl\Notifications\ServerInstalled as ServerInstalledNotification;
@@ -23,6 +24,7 @@ class EventServiceProvider extends ServiceProvider
         WebhookReceived::class => [
             ProvisionServerOnSubscriptionActivated::class,
             SuspendServerOnSubscriptionEnded::class,
+            CountReferralOnInvoicePaid::class,
         ],
     ];
 }

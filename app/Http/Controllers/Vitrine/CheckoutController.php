@@ -8,9 +8,14 @@ use Illuminate\Http\JsonResponse;
 use Pterodactyl\Models\Order;
 use Pterodactyl\Models\Product;
 use Pterodactyl\Http\Controllers\Controller;
+use Pterodactyl\Services\Referrals\ReferralService;
 
 class CheckoutController extends Controller
 {
+    public function __construct(private ReferralService $referrals)
+    {
+    }
+
     /**
      * Returns the current status of an order so the post-checkout page can
      * show the visitor whether their server is ready yet.
@@ -33,13 +38,17 @@ class CheckoutController extends Controller
      * Name and price of a plan, shown on the checkout consent step before an
      * order exists yet — the same information already public on its game page.
      */
-    public function product(Product $product): JsonResponse
+    public function product(Request $request, Product $product): JsonResponse
     {
         if (!$product->is_active) {
             return response()->json([ 'error' => "Cette offre n'est plus disponible." ], 404);
         }
 
-        return response()->json([ 'name' => $product->name, 'price' => $product->price ]);
+        return response()->json([
+            'name' => $product->name,
+            'price' => $product->price,
+            'discount_percent' => $request->user() ? $this->referrals->discountPercent($request->user()) : null,
+        ]);
     }
 
     /**
@@ -79,6 +88,9 @@ class CheckoutController extends Controller
 
         $customer = $request->user()->createOrGetStripeCustomer();
 
+        $couponId = $this->referrals->claimDiscount($request->user(), $order);
+        $discountPercent = $couponId ? $this->referrals->discountPercent($request->user()) : null;
+
         $subscription = Cashier::stripe()->subscriptions->create([
             'customer' => $customer->id,
             'items' => [[ 'price' => $product->stripe_price_id ]],
@@ -86,13 +98,13 @@ class CheckoutController extends Controller
             'payment_settings' => [ 'save_default_payment_method' => 'on_subscription' ],
             'expand' => [ 'latest_invoice.payment_intent' ],
             'metadata' => [ 'order_id' => $order->id ],
-        ]);
+        ] + ($couponId ? [ 'discounts' => [[ 'coupon' => $couponId ]] ] : []));
 
         $order->update([ 'stripe_subscription_id' => $subscription->id ]);
 
         return response()->json([
             'order' => [ 'id' => $order->id ],
-            'product' => [ 'name' => $product->name, 'price' => $product->price ],
+            'product' => [ 'name' => $product->name, 'price' => $product->price, 'discount_percent' => $discountPercent ],
             'publishableKey' => config('cashier.key'),
             'clientSecret' => $subscription->latest_invoice->payment_intent->client_secret,
         ]);

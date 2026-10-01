@@ -12,6 +12,7 @@ const links = [
     { to: '/account', label: 'Tableau de bord', exact: true },
     { to: '/account/services', label: 'Mes services' },
     { to: '/account/billing', label: 'Factures' },
+    { to: '/account/referral', label: 'Parrainage' },
     { to: '/account/tickets', label: 'Support' },
 ];
 

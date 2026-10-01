@@ -7,9 +7,10 @@ export interface RegisterData {
     password: string;
     passwordConfirmation: string;
     recaptchaData?: string | null;
+    referralCode?: string | null;
 }
 
-export default ({ username, email, password, passwordConfirmation, recaptchaData }: RegisterData): Promise<LoginResponse> => {
+export default ({ username, email, password, passwordConfirmation, recaptchaData, referralCode }: RegisterData): Promise<LoginResponse> => {
     return new Promise((resolve, reject) => {
         http.post('/auth/register', {
             username,
@@ -17,6 +18,7 @@ export default ({ username, email, password, passwordConfirmation, recaptchaData
             password,
             password_confirmation: passwordConfirmation,
             'g-recaptcha-response': recaptchaData,
+            referral_code: referralCode || undefined,
         })
             .then(({ data }) => {
                 if (!(data instanceof Object)) {

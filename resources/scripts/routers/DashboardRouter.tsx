@@ -4,6 +4,7 @@ import ClientShell from '@/components/client/ClientShell';
 import ClientDashboard from '@/components/client/ClientDashboard';
 import ServicesPage from '@/components/client/ServicesPage';
 import InvoicesPage from '@/components/client/InvoicesPage';
+import ReferralPage from '@/components/client/ReferralPage';
 import TicketsPage from '@/components/client/TicketsPage';
 import NewTicketPage from '@/components/client/NewTicketPage';
 import TicketPage from '@/components/client/TicketPage';
@@ -20,6 +21,7 @@ export default ({ location }: RouteComponentProps) => (
             <Route path={'/account'} exact><ClientDashboard/></Route>
             <Route path={'/account/services'} exact><ServicesPage/></Route>
             <Route path={'/account/billing'} exact><InvoicesPage/></Route>
+            <Route path={'/account/referral'} exact><ReferralPage/></Route>
             <Route path={'/account/tickets'} exact><TicketsPage/></Route>
             <Route path={'/account/tickets/new'} exact><NewTicketPage/></Route>
             <Route path={'/account/tickets/:id'} exact><TicketPage/></Route>

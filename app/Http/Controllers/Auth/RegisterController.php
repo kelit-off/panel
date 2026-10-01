@@ -8,9 +8,14 @@ use Pterodactyl\Models\User;
 use Illuminate\Http\JsonResponse;
 use Pterodactyl\Rules\Username;
 use Illuminate\Support\Facades\Hash;
+use Pterodactyl\Services\Referrals\ReferralService;
 
 class RegisterController extends AbstractLoginController
 {
+    public function __construct(private ReferralService $referrals)
+    {
+    }
+
     /**
      * Creates a new customer account and logs them in immediately, so a
      * visitor can register and continue straight to checkout without an
@@ -22,6 +27,7 @@ class RegisterController extends AbstractLoginController
             'username' => ['required', 'between:1,191', 'unique:users,username', new Username()],
             'email' => ['required', 'email', 'between:1,191', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'referral_code' => ['sometimes', 'nullable', 'string', 'max:16'],
         ]);
 
         // uuid isn't mass-assignable through the model's normal $fillable list,
@@ -33,6 +39,8 @@ class RegisterController extends AbstractLoginController
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ])->save();
+
+        $this->referrals->attach($user, $data['referral_code'] ?? null, $request->ip());
 
         // Model::getValidator() memoizes its validator per-instance using the
         // create-mode rules (no "ignore self" on unique checks) the first time
