@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\BadResponseException;
 use Pterodactyl\Tests\Integration\IntegrationTestCase;
 use Pterodactyl\Repositories\Wings\DaemonPowerRepository;
 use Pterodactyl\Exceptions\Http\Connection\DaemonConnectionException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RunTaskJobTest extends IntegrationTestCase
 {
@@ -66,8 +67,8 @@ class RunTaskJobTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider isManualRunDataProvider
      */
+    #[DataProvider('isManualRunDataProvider')]
     public function testJobIsExecuted(bool $isManualRun)
     {
         $server = $this->createServerModel();
@@ -107,8 +108,8 @@ class RunTaskJobTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider isManualRunDataProvider
      */
+    #[DataProvider('isManualRunDataProvider')]
     public function testExceptionDuringRunIsHandledCorrectly(bool $continueOnFailure)
     {
         $server = $this->createServerModel();
@@ -149,7 +150,7 @@ class RunTaskJobTest extends IntegrationTestCase
     /**
      * @return array
      */
-    public function isManualRunDataProvider()
+    public static function isManualRunDataProvider()
     {
         return [[true], [false]];
     }

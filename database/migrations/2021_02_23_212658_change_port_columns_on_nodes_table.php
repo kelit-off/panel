@@ -22,7 +22,7 @@ class ChangePortColumnsOnNodesTable extends Migration
 
         Schema::table('nodes', function (Blueprint $table) {
             $table->integer('listen_port_http')->unsigned()->default(8080)->after('fqdn')->change();
-            $table->integer('listen_port_sftp')->unsigned()->default(2022)->after('listen_port_sftp')->change();
+            $table->integer('listen_port_sftp')->unsigned()->default(2022)->change();
 
             $table->integer('public_port_http')->unsigned()->default(8080)->after('listen_port_http');
             $table->integer('public_port_sftp')->unsigned()->default(2022)->after('listen_port_sftp');

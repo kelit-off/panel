@@ -17,7 +17,7 @@ const Row = styled.div`
   ${tw`flex items-center w-full h-10 px-3 rounded-sm cursor-pointer bg-neutral-700 hover:bg-neutral-600 mb-px`};
 `;
 
-const Clickable: React.FC<{ file: FileObject }> = memo(({ file, children }) => {
+const Clickable: React.FC<React.PropsWithChildren<{ file: FileObject }>> = memo(({ file, children }) => {
     const [ canReadContents ] = usePermissions([ 'file.read-content' ]);
     const directory = ServerContext.useStoreState(state => state.files.directory);
 

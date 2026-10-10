@@ -6,6 +6,7 @@ use Pterodactyl\Models\Schedule;
 use Pterodactyl\Helpers\Utilities;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UpdateServerScheduleTest extends ClientApiIntegrationTestCase
 {
@@ -28,8 +29,8 @@ class UpdateServerScheduleTest extends ClientApiIntegrationTestCase
      * Test that a schedule can be updated.
      *
      * @param array $permissions
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testScheduleCanBeUpdated($permissions)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -112,7 +113,7 @@ class UpdateServerScheduleTest extends ClientApiIntegrationTestCase
         $this->assertFalse($schedule->is_processing);
     }
 
-    public function permissionsDataProvider(): array
+    public static function permissionsDataProvider(): array
     {
         return [[[]], [[Permission::ACTION_SCHEDULE_UPDATE]]];
     }

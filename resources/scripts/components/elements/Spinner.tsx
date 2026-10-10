@@ -12,7 +12,7 @@ interface Props {
 
 interface Spinner extends React.FC<Props> {
     Size: Record<'SMALL' | 'BASE' | 'LARGE', SpinnerSize>;
-    Suspense: React.FC<Props>;
+    Suspense: React.FC<React.PropsWithChildren<Props>>;
 }
 
 const spin = keyframes`

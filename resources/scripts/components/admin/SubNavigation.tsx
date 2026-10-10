@@ -24,7 +24,7 @@ interface Props {
 }
 
 interface PropsWithIcon extends Props {
-    icon: React.ComponentType;
+    icon: React.ComponentType<React.PropsWithChildren<unknown>>;
     children?: never;
 }
 

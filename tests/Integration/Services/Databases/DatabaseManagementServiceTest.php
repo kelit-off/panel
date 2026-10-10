@@ -13,6 +13,7 @@ use Pterodactyl\Services\Databases\DatabaseManagementService;
 use Pterodactyl\Exceptions\Repository\DuplicateDatabaseNameException;
 use Pterodactyl\Exceptions\Service\Database\TooManyDatabasesException;
 use Pterodactyl\Exceptions\Service\Database\DatabaseClientFeatureNotEnabledException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DatabaseManagementServiceTest extends IntegrationTestCase
 {
@@ -75,8 +76,8 @@ class DatabaseManagementServiceTest extends IntegrationTestCase
      * Test that a missing or invalid database name format causes an exception to be thrown.
      *
      * @param array $data
-     * @dataProvider invalidDataDataProvider
      */
+    #[DataProvider('invalidDataDataProvider')]
     public function testEmptyDatabaseNameOrInvalidNameTriggersAnException($data)
     {
         $server = $this->createServerModel();
@@ -199,7 +200,7 @@ class DatabaseManagementServiceTest extends IntegrationTestCase
         $this->assertDatabaseMissing('databases', ['server_id' => $server->id]);
     }
 
-    public function invalidDataDataProvider(): array
+    public static function invalidDataDataProvider(): array
     {
         return [
             [[]],

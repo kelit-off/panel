@@ -8,7 +8,7 @@ import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faSpinner, faUserPlus, faSignInAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import LandingLayout from '@/components/vitrine/landing/LandingLayout';
-import createSubscriptionIntent, { SubscriptionIntent } from '@/api/store/createSubscriptionIntent';
+import createSubscriptionIntent, { checkPromoCode, PromoPreview, SubscriptionIntent } from '@/api/store/createSubscriptionIntent';
 import http, { httpErrorToHuman } from '@/api/http';
 
 const formatPrice = (price: string): string => Number(price).toFixed(2).replace('.', ',');
@@ -72,7 +72,7 @@ const PaymentForm = ({ intent }: { intent: SubscriptionIntent }) => {
                 css={tw`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 text-sm font-bold text-white transition-colors duration-150 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60`}
             >
                 {submitting && <FontAwesomeIcon icon={faSpinner} spin/>}
-                {submitting ? 'Paiement en cours…' : `Commander avec obligation de paiement — ${formatPrice(discounted(intent.product.price, intent.product.discountPercent))} €`}
+                {submitting ? 'Paiement en cours…' : `Commander avec obligation de paiement — ${formatPrice(intent.product.promoPrice ?? discounted(intent.product.price, intent.product.discountPercent))} €`}
             </button>
             <p css={tw`mt-4 flex items-center justify-center gap-1.5 text-xs text-neutral-400`}>
                 <FontAwesomeIcon icon={faLock}/>
@@ -175,7 +175,66 @@ const Checkbox = ({ checked, onChange, children }: { checked: boolean; onChange:
     </label>
 );
 
-const ConsentForm = ({ productName, price, discountPercent, onSubmit }: { productName: string; price: string; discountPercent?: number | null; onSubmit: () => void }) => {
+const promoDuration = (promo: PromoPreview): string => {
+    if (promo.duration === 'forever') return 'à vie';
+    if (promo.duration === 'repeating') return `pendant ${promo.durationInMonths} mois`;
+
+    return 'sur le premier mois';
+};
+
+const PromoField = ({ productId, promo, onChange }: { productId: string; promo: PromoPreview | null; onChange: (promo: PromoPreview | null) => void }) => {
+    const [ code, setCode ] = useState('');
+    const [ checking, setChecking ] = useState(false);
+    const [ error, setError ] = useState('');
+
+    const apply = () => {
+        if (!code.trim()) return;
+
+        setChecking(true);
+        setError('');
+        checkPromoCode(productId, code)
+            .then(onChange)
+            .catch(err => setError(httpErrorToHuman(err)))
+            .finally(() => setChecking(false));
+    };
+
+    if (promo) {
+        return (
+            <p css={tw`mt-3 flex items-center justify-between rounded-lg bg-green-50 px-3.5 py-2.5 text-sm font-semibold text-green-700`}>
+                <span>Code {promo.code} appliqué : {promo.percentOff ? `−${promo.percentOff} %` : `−${formatPrice(String(promo.amountOff))} €`} {promoDuration(promo)}</span>
+                <button type={'button'} onClick={() => { onChange(null); setCode(''); }} css={tw`ml-3 text-xs font-bold underline`}>Retirer</button>
+            </p>
+        );
+    }
+
+    return (
+        <div css={tw`mt-4`}>
+            <div css={tw`flex gap-2`}>
+                <input
+                    type={'text'}
+                    value={code}
+                    maxLength={40}
+                    placeholder={'Code promo'}
+                    onChange={e => setCode(e.target.value.toUpperCase())}
+                    onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); apply(); } }}
+                    css={tw`h-10 min-w-0 flex-1 rounded-lg border border-neutral-200 px-3 text-sm uppercase text-neutral-900 outline-none transition-colors duration-150 focus:border-primary-400`}
+                />
+                <button
+                    type={'button'}
+                    disabled={checking || !code.trim()}
+                    onClick={apply}
+                    css={tw`h-10 rounded-lg border border-neutral-200 px-4 text-sm font-bold text-neutral-900 transition-colors duration-150 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-40`}
+                >
+                    {checking ? <FontAwesomeIcon icon={faSpinner} spin/> : 'Appliquer'}
+                </button>
+            </div>
+            {error && <p css={tw`mt-2 text-sm text-red-500`}>{error}</p>}
+        </div>
+    );
+};
+
+const ConsentForm = ({ productId, productName, price, discountPercent, onSubmit }: { productId: string; productName: string; price: string; discountPercent?: number | null; onSubmit: (promoCode?: string) => void }) => {
+    const [ promo, setPromo ] = useState<PromoPreview | null>(null);
     const [ acceptsCgv, setAcceptsCgv ] = useState(false);
     const [ immediateStart, setImmediateStart ] = useState(false);
     const ready = acceptsCgv && immediateStart;
@@ -187,7 +246,8 @@ const ConsentForm = ({ productName, price, discountPercent, onSubmit }: { produc
             <p css={tw`mt-1 text-sm text-neutral-500`}>
                 {formatPrice(price)} € par mois, résiliable à tout moment depuis ton espace client.
             </p>
-            {!!discountPercent && (
+            <PromoField productId={productId} promo={promo} onChange={setPromo}/>
+            {!!discountPercent && !promo && (
                 <p css={tw`mt-3 rounded-lg bg-green-50 px-3.5 py-2.5 text-sm font-semibold text-green-700`}>
                     Parrainage : −{discountPercent} % sur ton premier mois, soit {formatPrice(discounted(price, discountPercent))} € au lieu de {formatPrice(price)} €.
                 </p>
@@ -208,7 +268,7 @@ const ConsentForm = ({ productName, price, discountPercent, onSubmit }: { produc
             <button
                 type={'button'}
                 disabled={!ready}
-                onClick={onSubmit}
+                onClick={() => onSubmit(promo?.code)}
                 css={tw`mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary-600 text-sm font-bold text-white transition-colors duration-150 hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-40`}
             >
                 Continuer vers le paiement
@@ -220,7 +280,7 @@ const ConsentForm = ({ productName, price, discountPercent, onSubmit }: { produc
 
 // Fetches the plan's name and price to show on the consent step, which happens
 // before an order (and therefore a SubscriptionIntent) exists yet.
-const ConsentPricedForm = ({ productId, onSubmit }: { productId: string; onSubmit: () => void }) => {
+const ConsentPricedForm = ({ productId, onSubmit }: { productId: string; onSubmit: (promoCode?: string) => void }) => {
     const [ product, setProduct ] = useState<{ name: string; price: string; discountPercent: number | null } | null>(null);
     const [ error, setError ] = useState('');
 
@@ -243,7 +303,7 @@ const ConsentPricedForm = ({ productId, onSubmit }: { productId: string; onSubmi
         );
     }
 
-    return <ConsentForm productName={product.name} price={product.price} discountPercent={product.discountPercent} onSubmit={onSubmit}/>;
+    return <ConsentForm productId={productId} productName={product.name} price={product.price} discountPercent={product.discountPercent} onSubmit={onSubmit}/>;
 };
 
 type Step = 'configure' | 'auth' | 'consent' | 'payment';
@@ -271,14 +331,14 @@ export default () => {
         setStep(isLoggedIn ? 'consent' : 'auth');
     };
 
-    const onConsented = () => {
+    const onConsented = (promoCode?: string) => {
         const name = sessionStorage.getItem(nameStorageKey(productId));
         if (!name) return;
 
         setPreparing(true);
         setError('');
 
-        createSubscriptionIntent(productId, name, true)
+        createSubscriptionIntent(productId, name, true, promoCode)
             .then(data => {
                 sessionStorage.removeItem(nameStorageKey(productId));
                 setIntent(data);
@@ -320,7 +380,9 @@ export default () => {
                             <span css={tw`text-xs font-extrabold uppercase tracking-widest text-primary-600`}>Paiement</span>
                             <h1 css={tw`mt-2 font-vitrine-display text-2xl font-bold text-neutral-900`}>{intent.product.name}</h1>
                             <p css={tw`mt-1 text-sm text-neutral-500`}>
-                                {intent.product.discountPercent
+                                {intent.product.promoPrice
+                                    ? `${formatPrice(intent.product.promoPrice)} € avec ton code promo (au lieu de ${formatPrice(intent.product.price)} €), résiliable à tout moment.`
+                                    : intent.product.discountPercent
                                     ? `${formatPrice(discounted(intent.product.price, intent.product.discountPercent))} € le premier mois (−${intent.product.discountPercent} % parrainage), puis ${formatPrice(intent.product.price)} € par mois, résiliable à tout moment.`
                                     : `${formatPrice(intent.product.price)} € facturés chaque mois, résiliable à tout moment.`}
                             </p>

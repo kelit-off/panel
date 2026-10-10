@@ -11,5 +11,5 @@ interface NestRepositoryInterface extends RepositoryInterface
      *
      * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
      */
-    public function getWithEggs(int $id = null): Nest;
+    public function getWithEggs(?int $id = null): Nest;
 }

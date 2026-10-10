@@ -73,6 +73,8 @@ class Schedule extends Model
      * @var array
      */
     protected $casts = [
+        'last_run_at' => 'datetime',
+        'next_run_at' => 'datetime',
         'id' => 'integer',
         'server_id' => 'integer',
         'is_active' => 'boolean',
@@ -80,15 +82,6 @@ class Schedule extends Model
         'only_when_online' => 'boolean',
     ];
 
-    /**
-     * Columns to mutate to a date.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'last_run_at',
-        'next_run_at',
-    ];
 
     /**
      * @var array

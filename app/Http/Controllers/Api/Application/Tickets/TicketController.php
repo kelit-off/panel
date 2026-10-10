@@ -19,8 +19,8 @@ class TicketController extends ApplicationApiController
     public function index(GetTicketsRequest $request): JsonResponse
     {
         $tickets = QueryBuilder::for(SupportTicket::query()->with('user'))
-            ->allowedFilters(['status', 'subject'])
-            ->allowedSorts(['id', 'updated_at', 'created_at'])
+            ->allowedFilters(...['status', 'subject'])
+            ->allowedSorts(...['id', 'updated_at', 'created_at'])
             ->orderByDesc('updated_at')
             ->paginate((int) $request->query('per_page', '25'));
 

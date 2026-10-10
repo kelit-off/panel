@@ -22,6 +22,7 @@ import CategoryEditContainer from '@/components/admin/categories/CategoryEditCon
 import ProductsContainer from '@/components/admin/products/ProductsContainer';
 import NewProductContainer from '@/components/admin/products/NewProductContainer';
 import ProductEditContainer from '@/components/admin/products/ProductEditContainer';
+import PromoCodesContainer from '@/components/admin/promoCodes/PromoCodesContainer';
 import ServersContainer from '@/components/admin/servers/ServersContainer';
 import NewServerContainer from '@/components/admin/servers/NewServerContainer';
 import ServerRouter from '@/components/admin/servers/ServerRouter';
@@ -131,6 +132,9 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                     <NavLink to={`${match.url}/products`}>
                         <ShoppingCartIcon/><span>Offres</span>
                     </NavLink>
+                    <NavLink to={`${match.url}/promo-codes`}>
+                        <TagIcon/><span>Codes promo</span>
+                    </NavLink>
                     <NavLink to={`${match.url}/invoices`}>
                         <CreditCardIcon/><span>Factures</span>
                     </NavLink>
@@ -189,6 +193,7 @@ const AdminRouter = ({ location, match }: RouteComponentProps) => {
                         <Route path={`${match.path}/products`} component={ProductsContainer} exact/>
                         <Route path={`${match.path}/products/new`} component={NewProductContainer} exact/>
                         <Route path={`${match.path}/products/:id`} component={ProductEditContainer} exact/>
+                        <Route path={`${match.path}/promo-codes`} component={PromoCodesContainer} exact/>
                         <Route path={`${match.path}/invoices`} component={InvoicesContainer} exact/>
                         <Route path={`${match.path}/tickets`} component={TicketsContainer} exact/>
                         <Route path={`${match.path}/tickets/:id`} component={TicketEditContainer} exact/>

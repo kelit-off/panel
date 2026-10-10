@@ -10,7 +10,7 @@ declare module 'react' {
 
 declare module 'styled-components' {
     interface StyledComponentBase<
-        C extends string | ComponentType<any>,
+        C extends string | ComponentType<React.PropsWithChildren<any>>,
         // eslint-disable-next-line @typescript-eslint/ban-types
         T extends object,
         // eslint-disable-next-line @typescript-eslint/ban-types

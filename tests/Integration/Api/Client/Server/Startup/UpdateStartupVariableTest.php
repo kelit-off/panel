@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Models\EggVariable;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UpdateStartupVariableTest extends ClientApiIntegrationTestCase
 {
@@ -14,8 +15,8 @@ class UpdateStartupVariableTest extends ClientApiIntegrationTestCase
      * Test that a startup variable can be edited successfully for a server.
      *
      * @param array $permissions
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testStartupVariableCanBeUpdated($permissions)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -49,8 +50,8 @@ class UpdateStartupVariableTest extends ClientApiIntegrationTestCase
      * Test that variables that are either not user_viewable, or not user_editable, cannot be
      * updated via this endpoint.
      *
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testStartupVariableCannotBeUpdatedIfNotUserViewableOrEditable(array $permissions)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -153,7 +154,7 @@ class UpdateStartupVariableTest extends ClientApiIntegrationTestCase
     /**
      * @return \array[][]
      */
-    public function permissionsDataProvider()
+    public static function permissionsDataProvider()
     {
         return [[[]], [[Permission::ACTION_STARTUP_UPDATE]]];
     }

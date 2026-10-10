@@ -3,14 +3,15 @@
 namespace Pterodactyl\Tests\Unit\Helpers;
 
 use Pterodactyl\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class IsDigitTest extends TestCase
 {
     /**
      * Test the is_digit helper.
      *
-     * @dataProvider helperDataProvider
      */
+    #[DataProvider('helperDataProvider')]
     public function testHelper($value, $response)
     {
         $this->assertSame($response, is_digit($value));
@@ -21,7 +22,7 @@ class IsDigitTest extends TestCase
      *
      * @return array
      */
-    public function helperDataProvider()
+    public static function helperDataProvider()
     {
         return [
             [true, false],

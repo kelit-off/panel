@@ -4,12 +4,13 @@ namespace Pterodactyl\Tests\Unit\Helpers;
 
 use Pterodactyl\Tests\TestCase;
 use Pterodactyl\Traits\Commands\EnvironmentWriterTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class EnvironmentWriterTraitTest extends TestCase
 {
     /**
-     * @dataProvider variableDataProvider
      */
+    #[DataProvider('variableDataProvider')]
     public function testVariableIsEscapedProperly($input, $expected)
     {
         $output = (new FooClass())->escapeEnvironmentValue($input);
@@ -17,7 +18,7 @@ class EnvironmentWriterTraitTest extends TestCase
         $this->assertSame($expected, $output);
     }
 
-    public function variableDataProvider(): array
+    public static function variableDataProvider(): array
     {
         return [
             ['foo', 'foo'],

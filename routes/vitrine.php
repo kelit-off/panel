@@ -52,6 +52,9 @@ Route::get('/api/store/products/{product}', 'CheckoutController@product')
 Route::post('/api/store/products/{product}/checkout', 'CheckoutController@store')
     ->middleware('auth');
 
+Route::post('/api/store/products/{product}/promo', 'CheckoutController@promo')
+    ->middleware([ 'auth', 'throttle:15,1' ]);
+
 Route::get('/api/store/orders/{order}', 'CheckoutController@show')
     ->middleware('auth');
 

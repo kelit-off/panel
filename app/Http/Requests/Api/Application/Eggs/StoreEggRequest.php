@@ -6,7 +6,7 @@ use Pterodactyl\Http\Requests\Api\Application\ApplicationApiRequest;
 
 class StoreEggRequest extends ApplicationApiRequest
 {
-    public function rules(array $rules = null): array
+    public function rules(?array $rules = null): array
     {
         return [
             'nest_id' => 'required|bail|numeric|exists:nests,id',

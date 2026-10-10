@@ -43,6 +43,7 @@ class Backup extends Model
      * @var array
      */
     protected $casts = [
+        'completed_at' => 'datetime',
         'id' => 'int',
         'is_successful' => 'bool',
         'is_locked' => 'bool',
@@ -50,12 +51,6 @@ class Backup extends Model
         'bytes' => 'int',
     ];
 
-    /**
-     * @var array
-     */
-    protected $dates = [
-        'completed_at',
-    ];
 
     /**
      * @var array

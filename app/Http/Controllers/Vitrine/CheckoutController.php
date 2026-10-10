@@ -9,10 +9,12 @@ use Pterodactyl\Models\Order;
 use Pterodactyl\Models\Product;
 use Pterodactyl\Http\Controllers\Controller;
 use Pterodactyl\Services\Referrals\ReferralService;
+use Pterodactyl\Services\PromoCodes\PromoCodeService;
+use Pterodactyl\Exceptions\DisplayException;
 
 class CheckoutController extends Controller
 {
-    public function __construct(private ReferralService $referrals)
+    public function __construct(private ReferralService $referrals, private PromoCodeService $promoCodes)
     {
     }
 
@@ -52,6 +54,30 @@ class CheckoutController extends Controller
     }
 
     /**
+     * Checks a promo code against a plan so the checkout can show the new price
+     * before any order or Stripe subscription is created.
+     */
+    public function promo(Request $request, Product $product): JsonResponse
+    {
+        $data = $request->validate([ 'code' => ['required', 'string', 'max:40'] ]);
+
+        try {
+            $promo = $this->promoCodes->validate($data['code'], $request->user(), $product);
+        } catch (DisplayException $exception) {
+            return response()->json([ 'error' => $exception->getMessage() ], 422);
+        }
+
+        return response()->json([
+            'code' => $promo->code,
+            'percent_off' => $promo->percent_off,
+            'amount_off' => $promo->amount_off,
+            'duration' => $promo->duration,
+            'duration_in_months' => $promo->duration_in_months,
+            'discounted_price' => number_format($this->promoCodes->discountedPrice($promo, $product), 2, '.', ''),
+        ]);
+    }
+
+    /**
      * Starts a subscription in Stripe's "incomplete" state and returns the
      * PaymentIntent client secret so the frontend can collect card details
      * with Stripe Elements on our own page, without redirecting to a
@@ -75,11 +101,22 @@ class CheckoutController extends Controller
             // confirmed, which is only lawful before the 14-day withdrawal period ends if
             // the customer expressly asked for it (Code de la consommation, art. L221-28 1°).
             'immediate_start' => ['required', 'accepted'],
+            'promo_code' => ['nullable', 'string', 'max:40'],
         ]);
+
+        $promo = null;
+        if (!empty($data['promo_code'])) {
+            try {
+                $promo = $this->promoCodes->validate($data['promo_code'], $request->user(), $product);
+            } catch (DisplayException $exception) {
+                return response()->json([ 'error' => $exception->getMessage() ], 422);
+            }
+        }
 
         $order = Order::query()->create([
             'user_id' => $request->user()->id,
             'product_id' => $product->id,
+            'promo_code_id' => $promo?->id,
             'nest_id' => $product->nest_id,
             'name' => $data['name'],
             'status' => Order::STATUS_PENDING,
@@ -88,8 +125,15 @@ class CheckoutController extends Controller
 
         $customer = $request->user()->createOrGetStripeCustomer();
 
-        $couponId = $this->referrals->claimDiscount($request->user(), $order);
-        $discountPercent = $couponId ? $this->referrals->discountPercent($request->user()) : null;
+        // An explicit promo code wins over the automatic referral discount, which is
+        // then left untouched for a later order (Stripe takes a single coupon here).
+        if ($promo) {
+            $couponId = $this->promoCodes->couponId($promo);
+            $discountPercent = null;
+        } else {
+            $couponId = $this->referrals->claimDiscount($request->user(), $order);
+            $discountPercent = $couponId ? $this->referrals->discountPercent($request->user()) : null;
+        }
 
         $subscription = Cashier::stripe()->subscriptions->create([
             'customer' => $customer->id,
@@ -104,7 +148,7 @@ class CheckoutController extends Controller
 
         return response()->json([
             'order' => [ 'id' => $order->id ],
-            'product' => [ 'name' => $product->name, 'price' => $product->price, 'discount_percent' => $discountPercent ],
+            'product' => [ 'name' => $product->name, 'price' => $product->price, 'discount_percent' => $discountPercent, 'promo_price' => $promo ? number_format($this->promoCodes->discountedPrice($promo, $product), 2, '.', '') : null ],
             'publishableKey' => config('cashier.key'),
             'clientSecret' => $subscription->latest_invoice->payment_intent->client_secret,
         ]);

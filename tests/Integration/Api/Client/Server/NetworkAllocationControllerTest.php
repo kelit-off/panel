@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Pterodactyl\Models\Allocation;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class NetworkAllocationControllerTest extends ClientApiIntegrationTestCase
 {
@@ -49,8 +50,8 @@ class NetworkAllocationControllerTest extends ClientApiIntegrationTestCase
     /**
      * Tests that notes on an allocation can be set correctly.
      *
-     * @dataProvider updatePermissionsDataProvider
      */
+    #[DataProvider('updatePermissionsDataProvider')]
     public function testAllocationNotesCanBeUpdated(array $permissions)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -97,8 +98,8 @@ class NetworkAllocationControllerTest extends ClientApiIntegrationTestCase
     }
 
     /**
-     * @dataProvider updatePermissionsDataProvider
      */
+    #[DataProvider('updatePermissionsDataProvider')]
     public function testPrimaryAllocationCanBeModified(array $permissions)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -133,7 +134,7 @@ class NetworkAllocationControllerTest extends ClientApiIntegrationTestCase
             ->assertForbidden();
     }
 
-    public function updatePermissionsDataProvider()
+    public static function updatePermissionsDataProvider()
     {
         return [[[]], [[Permission::ACTION_ALLOCATION_UPDATE]]];
     }

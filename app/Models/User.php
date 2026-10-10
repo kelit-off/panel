@@ -82,15 +82,12 @@ class User extends Model implements
      * @var array
      */
     protected $casts = [
+        'totp_authenticated_at' => 'datetime',
         'root_admin' => 'boolean',
         'use_totp' => 'boolean',
         'gravatar' => 'boolean',
     ];
 
-    /**
-     * @var array
-     */
-    protected $dates = ['totp_authenticated_at'];
 
     /**
      * The attributes excluded from the model's JSON form.

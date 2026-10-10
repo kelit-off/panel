@@ -195,6 +195,21 @@ Route::group(['prefix' => '/products'], function () {
 
 /*
 |--------------------------------------------------------------------------
+| Promo Code Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/promo-codes
+|
+*/
+Route::group(['prefix' => '/promo-codes'], function () {
+    Route::get('/', [\Pterodactyl\Http\Controllers\Api\Application\PromoCodes\PromoCodeController::class, 'index']);
+    Route::post('/', [\Pterodactyl\Http\Controllers\Api\Application\PromoCodes\PromoCodeController::class, 'store']);
+    Route::patch('/{promoCode}', [\Pterodactyl\Http\Controllers\Api\Application\PromoCodes\PromoCodeController::class, 'update']);
+    Route::delete('/{promoCode}', [\Pterodactyl\Http\Controllers\Api\Application\PromoCodes\PromoCodeController::class, 'delete']);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Ticket Controller Routes
 |--------------------------------------------------------------------------
 |

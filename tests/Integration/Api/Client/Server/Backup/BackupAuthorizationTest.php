@@ -8,12 +8,13 @@ use Pterodactyl\Models\Backup;
 use Pterodactyl\Models\Subuser;
 use Pterodactyl\Services\Backups\DeleteBackupService;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class BackupAuthorizationTest extends ClientApiIntegrationTestCase
 {
     /**
-     * @dataProvider methodDataProvider
      */
+    #[DataProvider('methodDataProvider')]
     public function testAccessToAServersBackupIsRestrictedProperly(string $method, string $endpoint)
     {
         // The API $user is the owner of $server1.
@@ -58,7 +59,7 @@ class BackupAuthorizationTest extends ClientApiIntegrationTestCase
     /**
      * @return \string[][]
      */
-    public function methodDataProvider(): array
+    public static function methodDataProvider(): array
     {
         return [
             ['GET', ''],

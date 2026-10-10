@@ -14,6 +14,7 @@ use Pterodactyl\Jobs\Schedule\RunTaskJob;
 use Pterodactyl\Exceptions\DisplayException;
 use Pterodactyl\Tests\Integration\IntegrationTestCase;
 use Pterodactyl\Services\Schedules\ProcessScheduleService;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ProcessScheduleServiceTest extends IntegrationTestCase
 {
@@ -59,8 +60,8 @@ class ProcessScheduleServiceTest extends IntegrationTestCase
      * Test that a job is dispatched as expected using the initial delay.
      *
      * @param bool $now
-     * @dataProvider dispatchNowDataProvider
      */
+    #[DataProvider('dispatchNowDataProvider')]
     public function testJobCanBeDispatchedWithExpectedInitialDelay($now)
     {
         Bus::fake();
@@ -151,7 +152,7 @@ class ProcessScheduleServiceTest extends IntegrationTestCase
         $this->assertDatabaseHas('tasks', ['id' => $task->id, 'is_queued' => false]);
     }
 
-    public function dispatchNowDataProvider(): array
+    public static function dispatchNowDataProvider(): array
     {
         return [[true], [false]];
     }

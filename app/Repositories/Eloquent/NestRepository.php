@@ -30,7 +30,7 @@ class NestRepository extends EloquentRepository implements NestRepositoryInterfa
      *
      * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
      */
-    public function getWithEggs(int $id = null): Nest
+    public function getWithEggs(?int $id = null): Nest
     {
         $instance = $this->getBuilder()->with('eggs', 'eggs.variables');
 

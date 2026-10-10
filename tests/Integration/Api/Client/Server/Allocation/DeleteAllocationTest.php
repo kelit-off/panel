@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Pterodactyl\Models\Allocation;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DeleteAllocationTest extends ClientApiIntegrationTestCase
 {
@@ -13,8 +14,8 @@ class DeleteAllocationTest extends ClientApiIntegrationTestCase
      * Test that an allocation is deleted from the server and the notes are properly reset
      * to an empty value on assignment.
      *
-     * @dataProvider permissionDataProvider
      */
+    #[DataProvider('permissionDataProvider')]
     public function testAllocationCanBeDeletedFromServer(array $permission)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -83,7 +84,7 @@ class DeleteAllocationTest extends ClientApiIntegrationTestCase
     /**
      * @return array
      */
-    public function permissionDataProvider()
+    public static function permissionDataProvider()
     {
         return [[[Permission::ACTION_ALLOCATION_DELETE]], [[]]];
     }

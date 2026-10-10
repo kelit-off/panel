@@ -6,6 +6,7 @@ use Illuminate\Http\Response;
 use Pterodactyl\Models\Allocation;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CreateNewAllocationTest extends ClientApiIntegrationTestCase
 {
@@ -24,8 +25,8 @@ class CreateNewAllocationTest extends ClientApiIntegrationTestCase
     /**
      * Tests that a new allocation can be properly assigned to a server.
      *
-     * @dataProvider permissionDataProvider
      */
+    #[DataProvider('permissionDataProvider')]
     public function testNewAllocationCanBeAssignedToServer(array $permission)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -89,7 +90,7 @@ class CreateNewAllocationTest extends ClientApiIntegrationTestCase
     /**
      * @return array
      */
-    public function permissionDataProvider()
+    public static function permissionDataProvider()
     {
         return [[[Permission::ACTION_ALLOCATION_CREATE]], [[]]];
     }

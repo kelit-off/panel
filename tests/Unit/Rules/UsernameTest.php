@@ -4,6 +4,7 @@ namespace Pterodactyl\Tests\Unit\Rules;
 
 use Pterodactyl\Rules\Username;
 use Pterodactyl\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UsernameTest extends TestCase
 {
@@ -18,8 +19,8 @@ class UsernameTest extends TestCase
     /**
      * Test valid usernames.
      *
-     * @dataProvider validUsernameDataProvider
      */
+    #[DataProvider('validUsernameDataProvider')]
     public function testValidUsernames(string $username)
     {
         $this->assertTrue((new Username())->passes('test', $username), 'Assert username is valid.');
@@ -28,8 +29,8 @@ class UsernameTest extends TestCase
     /**
      * Test invalid usernames return false.
      *
-     * @dataProvider invalidUsernameDataProvider
      */
+    #[DataProvider('invalidUsernameDataProvider')]
     public function testInvalidUsernames(string $username)
     {
         $this->assertFalse((new Username())->passes('test', $username), 'Assert username is not valid.');
@@ -38,7 +39,7 @@ class UsernameTest extends TestCase
     /**
      * Provide valid usernames.
      */
-    public function validUsernameDataProvider(): array
+    public static function validUsernameDataProvider(): array
     {
         return [
             ['username'],
@@ -54,7 +55,7 @@ class UsernameTest extends TestCase
     /**
      * Provide invalid usernames.
      */
-    public function invalidUsernameDataProvider(): array
+    public static function invalidUsernameDataProvider(): array
     {
         return [
             ['_username'],

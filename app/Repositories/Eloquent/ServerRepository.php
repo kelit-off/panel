@@ -37,7 +37,7 @@ class ServerRepository extends EloquentRepository implements ServerRepositoryInt
     /**
      * Return a collection of servers with their associated data for rebuild operations.
      */
-    public function getDataForRebuild(int $server = null, int $node = null): Collection
+    public function getDataForRebuild(?int $server = null, ?int $node = null): Collection
     {
         $instance = $this->getBuilder()->with(['allocation', 'allocations', 'egg', 'node']);
 
@@ -53,7 +53,7 @@ class ServerRepository extends EloquentRepository implements ServerRepositoryInt
     /**
      * Return a collection of servers with their associated data for reinstall operations.
      */
-    public function getDataForReinstall(int $server = null, int $node = null): Collection
+    public function getDataForReinstall(?int $server = null, ?int $node = null): Collection
     {
         $instance = $this->getBuilder()->with(['allocation', 'allocations', 'egg', 'node']);
 

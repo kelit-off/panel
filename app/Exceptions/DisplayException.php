@@ -27,7 +27,7 @@ class DisplayException extends PterodactylException
      * @param string $level
      * @param int $code
      */
-    public function __construct($message, Throwable $previous = null, $level = self::LEVEL_ERROR, $code = 0)
+    public function __construct($message, ?Throwable $previous = null, $level = self::LEVEL_ERROR, $code = 0)
     {
         parent::__construct($message, $code, $previous);
 

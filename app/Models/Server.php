@@ -50,12 +50,6 @@ class Server extends Model
      */
     protected $with = ['allocation'];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [self::CREATED_AT, self::UPDATED_AT, 'deleted_at'];
 
     /**
      * Fields that are not mass assignable.

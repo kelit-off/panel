@@ -9,6 +9,7 @@ use Pterodactyl\Models\Subuser;
 use Pterodactyl\Models\Permission;
 use Illuminate\Foundation\Testing\WithFaker;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CreateServerSubuserTest extends ClientApiIntegrationTestCase
 {
@@ -18,8 +19,8 @@ class CreateServerSubuserTest extends ClientApiIntegrationTestCase
      * Test that a subuser can be created for a server.
      *
      * @param array $permissions
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testSubuserCanBeCreated($permissions)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -156,7 +157,7 @@ class CreateServerSubuserTest extends ClientApiIntegrationTestCase
         $response->assertJsonPath('errors.0.detail', 'A user with that email address is already assigned as a subuser for this server.');
     }
 
-    public function permissionsDataProvider(): array
+    public static function permissionsDataProvider(): array
     {
         return [[[]], [[Permission::ACTION_USER_CREATE]]];
     }

@@ -97,7 +97,7 @@ class ServerCreationService
      * @throws \Pterodactyl\Exceptions\Service\Deployment\NoViableNodeException
      * @throws \Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException
      */
-    public function handle(array $data, DeploymentObject $deployment = null): Server
+    public function handle(array $data, ?DeploymentObject $deployment = null): Server
     {
         // If a deployment object has been passed we need to get the allocation
         // that the server should use, and assign the node from that allocation.

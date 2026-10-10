@@ -3,21 +3,29 @@
 namespace Pterodactyl\Extensions\Laravel\Sanctum;
 
 use Pterodactyl\Models\PersonalAccessToken;
-use Laravel\Sanctum\NewAccessToken as SanctumAccessToken;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
- * @property \Pterodactyl\Models\PersonalAccessToken $accessToken
+ * Sanctum 4 types the token on its own NewAccessToken class as Sanctum's model, which
+ * the panel's custom PersonalAccessToken model does not extend, so this is standalone.
  */
-class NewAccessToken extends SanctumAccessToken
+class NewAccessToken implements Arrayable, Jsonable
 {
-    /**
-     * NewAccessToken constructor.
-     *
-     * @noinspection PhpMissingParentConstructorInspection
-     */
-    public function __construct(PersonalAccessToken $accessToken, string $plainTextToken)
+    public function __construct(public PersonalAccessToken $accessToken, public string $plainTextToken)
     {
-        $this->accessToken = $accessToken;
-        $this->plainTextToken = $plainTextToken;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'accessToken' => $this->accessToken,
+            'plainTextToken' => $this->plainTextToken,
+        ];
+    }
+
+    public function toJson($options = 0): string
+    {
+        return json_encode($this->toArray(), $options);
     }
 }

@@ -54,7 +54,7 @@ class BackupManager
      *
      * @return \League\Flysystem\AdapterInterface
      */
-    public function adapter(string $name = null)
+    public function adapter(?string $name = null)
     {
         return $this->get($name ?: $this->getDefaultAdapter());
     }

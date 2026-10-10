@@ -12,7 +12,7 @@ interface Props {
     className?: string;
 }
 
-const PermissionTitleBox: React.FC<Props> = memo(({ isEditable, title, permissions, className, children }) => {
+const PermissionTitleBox: React.FC<React.PropsWithChildren<Props>> = memo(({ isEditable, title, permissions, className, children }) => {
     const [ { value }, , { setValue } ] = useField<string[]>('permissions');
 
     const onCheckboxClicked = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

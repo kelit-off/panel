@@ -6,7 +6,7 @@ export interface RequireServerPermissionProps {
     permissions: string | string[]
 }
 
-const RequireServerPermission: React.FC<RequireServerPermissionProps> = ({ children, permissions }) => {
+const RequireServerPermission: React.FC<React.PropsWithChildren<RequireServerPermissionProps>> = ({ children, permissions }) => {
     return (
         <Can
             action={permissions}

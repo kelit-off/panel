@@ -6,6 +6,7 @@ use Pterodactyl\Models\Task;
 use Pterodactyl\Models\Schedule;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class GetServerSchedulesTest extends ClientApiIntegrationTestCase
 {
@@ -25,8 +26,8 @@ class GetServerSchedulesTest extends ClientApiIntegrationTestCase
      *
      * @param array $permissions
      * @param bool $individual
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testServerSchedulesAreReturned($permissions, $individual)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -91,7 +92,7 @@ class GetServerSchedulesTest extends ClientApiIntegrationTestCase
             ->assertForbidden();
     }
 
-    public function permissionsDataProvider(): array
+    public static function permissionsDataProvider(): array
     {
         return [
             [[], false],

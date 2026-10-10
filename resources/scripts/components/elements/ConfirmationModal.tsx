@@ -11,7 +11,7 @@ type Props = {
     showSpinnerOverlay?: boolean;
 };
 
-const ConfirmationModal: React.FC<Props> = ({ title, children, buttonText, onConfirmed }) => {
+const ConfirmationModal: React.FC<React.PropsWithChildren<Props>> = ({ title, children, buttonText, onConfirmed }) => {
     const { dismiss } = useContext(ModalContext);
 
     return (

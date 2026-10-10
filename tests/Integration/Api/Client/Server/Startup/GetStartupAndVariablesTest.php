@@ -6,6 +6,7 @@ use Pterodactyl\Models\User;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Models\EggVariable;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class GetStartupAndVariablesTest extends ClientApiIntegrationTestCase
 {
@@ -14,8 +15,8 @@ class GetStartupAndVariablesTest extends ClientApiIntegrationTestCase
      * that can be viewed by a user (e.g. user_viewable=true).
      *
      * @param array $permissions
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testStartupVariablesAreReturnedForServer($permissions)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -62,7 +63,7 @@ class GetStartupAndVariablesTest extends ClientApiIntegrationTestCase
     /**
      * @return array[]
      */
-    public function permissionsDataProvider()
+    public static function permissionsDataProvider()
     {
         return [[[]], [[Permission::ACTION_STARTUP_READ]]];
     }

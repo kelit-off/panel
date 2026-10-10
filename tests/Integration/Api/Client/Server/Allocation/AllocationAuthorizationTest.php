@@ -5,12 +5,13 @@ namespace Pterodactyl\Tests\Integration\Api\Client\Server\Allocation;
 use Pterodactyl\Models\Subuser;
 use Pterodactyl\Models\Allocation;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class AllocationAuthorizationTest extends ClientApiIntegrationTestCase
 {
     /**
-     * @dataProvider methodDataProvider
      */
+    #[DataProvider('methodDataProvider')]
     public function testAccessToAServersAllocationsIsRestrictedProperly(string $method, string $endpoint)
     {
         // The API $user is the owner of $server1.
@@ -49,7 +50,7 @@ class AllocationAuthorizationTest extends ClientApiIntegrationTestCase
     /**
      * @return \string[][]
      */
-    public function methodDataProvider(): array
+    public static function methodDataProvider(): array
     {
         return [
             ['POST', ''],

@@ -50,7 +50,7 @@
             @yield('below-container')
         @show
         @section('scripts')
-            {!! $asset->js('main.js') !!}
+            @vite('resources/scripts/index.tsx')
         @show
     </body>
 </html>

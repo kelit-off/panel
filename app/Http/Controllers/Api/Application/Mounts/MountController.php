@@ -40,8 +40,8 @@ class MountController extends ApplicationApiController
         }
 
         $mounts = QueryBuilder::for(Mount::query())
-            ->allowedFilters(['id', 'name', 'source', 'target'])
-            ->allowedSorts(['id', 'name', 'source', 'target'])
+            ->allowedFilters(...['id', 'name', 'source', 'target'])
+            ->allowedSorts(...['id', 'name', 'source', 'target'])
             ->paginate($perPage);
 
         return $this->fractal->collection($mounts)

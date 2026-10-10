@@ -5,6 +5,7 @@ namespace Pterodactyl\Tests\Integration\Api\Client\Server\Schedule;
 use Pterodactyl\Models\Subuser;
 use Pterodactyl\Models\Schedule;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ScheduleAuthorizationTest extends ClientApiIntegrationTestCase
 {
@@ -17,8 +18,8 @@ class ScheduleAuthorizationTest extends ClientApiIntegrationTestCase
      * The comments within the test code itself are better at explaining exactly what is
      * being tested and protected against.
      *
-     * @dataProvider methodDataProvider
      */
+    #[DataProvider('methodDataProvider')]
     public function testAccessToAServersSchedulesIsRestrictedProperly(string $method, string $endpoint)
     {
         // The API $user is the owner of $server1.
@@ -57,7 +58,7 @@ class ScheduleAuthorizationTest extends ClientApiIntegrationTestCase
     /**
      * @return \string[][]
      */
-    public function methodDataProvider(): array
+    public static function methodDataProvider(): array
     {
         return [
             ['GET', ''],

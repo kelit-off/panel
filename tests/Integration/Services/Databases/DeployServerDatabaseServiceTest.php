@@ -11,6 +11,7 @@ use Pterodactyl\Tests\Integration\IntegrationTestCase;
 use Pterodactyl\Services\Databases\DatabaseManagementService;
 use Pterodactyl\Services\Databases\DeployServerDatabaseService;
 use Pterodactyl\Exceptions\Service\Database\NoSuitableDatabaseHostException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DeployServerDatabaseServiceTest extends IntegrationTestCase
 {
@@ -45,8 +46,8 @@ class DeployServerDatabaseServiceTest extends IntegrationTestCase
      * Test that an error is thrown if either the database name or the remote host are empty.
      *
      * @param array $data
-     * @dataProvider invalidDataProvider
      */
+    #[DataProvider('invalidDataProvider')]
     public function testErrorIsThrownIfDatabaseNameIsEmpty($data)
     {
         $server = $this->createServerModel();
@@ -143,7 +144,7 @@ class DeployServerDatabaseServiceTest extends IntegrationTestCase
         $this->assertInstanceOf(Database::class, $response);
     }
 
-    public function invalidDataProvider(): array
+    public static function invalidDataProvider(): array
     {
         return [
             [['remote' => '%']],

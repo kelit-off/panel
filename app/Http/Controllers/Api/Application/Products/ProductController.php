@@ -49,8 +49,8 @@ class ProductController extends ApplicationApiController
         }
 
         $products = QueryBuilder::for(Product::query())
-            ->allowedFilters(['name'])
-            ->allowedSorts(['id', 'name', 'price'])
+            ->allowedFilters(...['name'])
+            ->allowedSorts(...['id', 'name', 'price'])
             ->paginate($perPage);
 
         return $this->fractal->collection($products)

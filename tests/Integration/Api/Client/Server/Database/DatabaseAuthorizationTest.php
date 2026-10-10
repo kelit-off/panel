@@ -10,12 +10,13 @@ use Pterodactyl\Contracts\Extensions\HashidsInterface;
 use Pterodactyl\Services\Databases\DatabasePasswordService;
 use Pterodactyl\Services\Databases\DatabaseManagementService;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DatabaseAuthorizationTest extends ClientApiIntegrationTestCase
 {
     /**
-     * @dataProvider methodDataProvider
      */
+    #[DataProvider('methodDataProvider')]
     public function testAccessToAServersDatabasesIsRestrictedProperly(string $method, string $endpoint)
     {
         // The API $user is the owner of $server1.
@@ -66,7 +67,7 @@ class DatabaseAuthorizationTest extends ClientApiIntegrationTestCase
     /**
      * @return \string[][]
      */
-    public function methodDataProvider(): array
+    public static function methodDataProvider(): array
     {
         return [
             ['POST', '/rotate-password'],

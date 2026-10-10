@@ -8,6 +8,7 @@ use Pterodactyl\Models\Server;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Repositories\Wings\DaemonServerRepository;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SettingsControllerTest extends ClientApiIntegrationTestCase
 {
@@ -15,8 +16,8 @@ class SettingsControllerTest extends ClientApiIntegrationTestCase
      * Test that the server's name can be changed.
      *
      * @param array $permissions
-     * @dataProvider renamePermissionsDataProvider
      */
+    #[DataProvider('renamePermissionsDataProvider')]
     public function testServerNameCanBeChanged($permissions)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -67,8 +68,8 @@ class SettingsControllerTest extends ClientApiIntegrationTestCase
      * than make sure the endpoint works since.
      *
      * @param array $permissions
-     * @dataProvider reinstallPermissionsDataProvider
      */
+    #[DataProvider('reinstallPermissionsDataProvider')]
     public function testServerCanBeReinstalled($permissions)
     {
         /** @var \Pterodactyl\Models\Server $server */
@@ -110,12 +111,12 @@ class SettingsControllerTest extends ClientApiIntegrationTestCase
         $this->assertTrue($server->isInstalled());
     }
 
-    public function renamePermissionsDataProvider(): array
+    public static function renamePermissionsDataProvider(): array
     {
         return [[[]], [[Permission::ACTION_SETTINGS_RENAME]]];
     }
 
-    public function reinstallPermissionsDataProvider(): array
+    public static function reinstallPermissionsDataProvider(): array
     {
         return [[[]], [[Permission::ACTION_SETTINGS_REINSTALL]]];
     }

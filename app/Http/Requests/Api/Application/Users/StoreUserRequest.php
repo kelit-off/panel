@@ -7,7 +7,7 @@ use Pterodactyl\Http\Requests\Api\Application\ApplicationApiRequest;
 
 class StoreUserRequest extends ApplicationApiRequest
 {
-    public function rules(array $rules = null): array
+    public function rules(?array $rules = null): array
     {
         $rules = $rules ?? User::getRules();
 

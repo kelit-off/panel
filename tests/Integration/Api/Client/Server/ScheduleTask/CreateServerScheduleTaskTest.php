@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Pterodactyl\Models\Schedule;
 use Pterodactyl\Models\Permission;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class CreateServerScheduleTaskTest extends ClientApiIntegrationTestCase
 {
@@ -14,8 +15,8 @@ class CreateServerScheduleTaskTest extends ClientApiIntegrationTestCase
      * Test that a task can be created.
      *
      * @param array $permissions
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testTaskCanBeCreated($permissions)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -171,7 +172,7 @@ class CreateServerScheduleTaskTest extends ClientApiIntegrationTestCase
             ->assertForbidden();
     }
 
-    public function permissionsDataProvider(): array
+    public static function permissionsDataProvider(): array
     {
         return [[[]], [[Permission::ACTION_SCHEDULE_UPDATE]]];
     }

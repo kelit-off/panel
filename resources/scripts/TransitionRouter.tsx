@@ -12,7 +12,7 @@ const StyledSwitchTransition = styled(SwitchTransition)`
     }
 `;
 
-const TransitionRouter: React.FC = ({ children }) => {
+const TransitionRouter: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
     return (
         <Route
             render={({ location }) => (

@@ -7,6 +7,7 @@ use Pterodactyl\Models\Server;
 use Pterodactyl\Models\Subuser;
 use Pterodactyl\Models\Allocation;
 use Pterodactyl\Models\Permission;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ClientControllerTest extends ClientApiIntegrationTestCase
 {
@@ -287,8 +288,8 @@ class ClientControllerTest extends ClientApiIntegrationTestCase
      * ?type=admin or ?type=admin-all in the request.
      *
      * @param string $type
-     * @dataProvider filterTypeDataProvider
      */
+    #[DataProvider('filterTypeDataProvider')]
     public function testNoServersAreReturnedIfAdminFilterIsPassedByRegularUser($type)
     {
         /** @var \Pterodactyl\Models\User[] $users */
@@ -335,7 +336,7 @@ class ClientControllerTest extends ClientApiIntegrationTestCase
     /**
      * @return array
      */
-    public function filterTypeDataProvider()
+    public static function filterTypeDataProvider()
     {
         return [['admin'], ['admin-all']];
     }

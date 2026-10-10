@@ -218,7 +218,7 @@ export default ({ className, style, overrides, initialContent, extensions, mode,
         });
     };
 
-    const ref = useCallback((node) => {
+    const ref = useCallback((node: HTMLElement | null) => {
         if (!node) {
             return;
         }

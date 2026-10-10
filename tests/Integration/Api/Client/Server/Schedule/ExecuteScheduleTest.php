@@ -9,14 +9,15 @@ use Pterodactyl\Models\Permission;
 use Illuminate\Support\Facades\Bus;
 use Pterodactyl\Jobs\Schedule\RunTaskJob;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ExecuteScheduleTest extends ClientApiIntegrationTestCase
 {
     /**
      * Test that a schedule can be executed and is updated in the database correctly.
      *
-     * @dataProvider permissionsDataProvider
      */
+    #[DataProvider('permissionsDataProvider')]
     public function testScheduleIsExecutedRightAway(array $permissions)
     {
         [$user, $server] = $this->generateTestAccount($permissions);
@@ -84,7 +85,7 @@ class ExecuteScheduleTest extends ClientApiIntegrationTestCase
         $this->actingAs($user)->postJson($this->link($schedule, '/execute'))->assertForbidden();
     }
 
-    public function permissionsDataProvider(): array
+    public static function permissionsDataProvider(): array
     {
         return [[[]], [[Permission::ACTION_SCHEDULE_UPDATE]]];
     }

@@ -46,9 +46,9 @@ abstract class ClientApiIntegrationTestCase extends IntegrationTestCase
      *
      * @return \Illuminate\Testing\TestResponse
      */
-    protected function createTestResponse($response)
+    protected function createTestResponse($response, $request)
     {
-        return TestResponse::fromBaseResponse($response);
+        return TestResponse::fromBaseResponse($response, $request);
     }
 
     /**

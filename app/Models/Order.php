@@ -6,6 +6,7 @@ namespace Pterodactyl\Models;
  * @property int $id
  * @property int $user_id
  * @property int|null $product_id
+ * @property int|null $promo_code_id
  * @property int|null $nest_id
  * @property string|null $name
  * @property int|null $server_id
@@ -53,6 +54,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'promo_code_id',
         'nest_id',
         'name',
         'server_id',
@@ -80,6 +82,7 @@ class Order extends Model
         'refunded_amount' => 'float',
         'user_id' => 'integer',
         'product_id' => 'integer',
+        'promo_code_id' => 'integer',
         'nest_id' => 'integer',
         'server_id' => 'integer',
     ];
@@ -87,6 +90,7 @@ class Order extends Model
     public static array $validationRules = [
         'user_id' => 'required|numeric|exists:users,id',
         'product_id' => 'sometimes|nullable|numeric|exists:products,id',
+        'promo_code_id' => 'sometimes|nullable|numeric',
         'nest_id' => 'sometimes|nullable|numeric|exists:nests,id',
         'name' => 'sometimes|nullable|string|between:1,191',
         'server_id' => 'sometimes|nullable|numeric|exists:servers,id',

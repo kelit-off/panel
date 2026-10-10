@@ -7,14 +7,15 @@ use Pterodactyl\Models\User;
 use Pterodactyl\Models\Subuser;
 use Pterodactyl\Repositories\Wings\DaemonServerRepository;
 use Pterodactyl\Tests\Integration\Api\Client\ClientApiIntegrationTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SubuserAuthorizationTest extends ClientApiIntegrationTestCase
 {
     /**
      * Test that mismatched subusers are not accessible to a server.
      *
-     * @dataProvider methodDataProvider
      */
+    #[DataProvider('methodDataProvider')]
     public function testUserCannotAccessResourceBelongingToOtherServers(string $method)
     {
         // Generic subuser, the specific resource we're trying to access.
@@ -53,7 +54,7 @@ class SubuserAuthorizationTest extends ClientApiIntegrationTestCase
     /**
      * @return \string[][]
      */
-    public function methodDataProvider(): array
+    public static function methodDataProvider(): array
     {
         return [['GET'], ['POST'], ['DELETE']];
     }

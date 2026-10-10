@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import tw from 'twin.macro';
 import FlashMessageRender from '@/components/FlashMessageRender';
 
-const AdminContentBlock: React.FC<{ title?: string; showFlashKey?: string; className?: string }> = ({ children, title, showFlashKey }) => {
+const AdminContentBlock: React.FC<React.PropsWithChildren<{ title?: string; showFlashKey?: string; className?: string }>> = ({ children, title, showFlashKey }) => {
     useEffect(() => {
         if (!title) {
             return;
